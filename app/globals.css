@@ -38,7 +38,9 @@ a {
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
@@ -745,6 +747,60 @@ nav a:hover,
   line-height: 1.86;
 }
 
+.articleBody h2 {
+  margin: 38px 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.08;
+}
+
+.articleBody blockquote {
+  margin: 34px 0;
+  border-left: 5px solid var(--green);
+  padding: 8px 0 8px 22px;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.45rem, 3vw, 2.2rem);
+  line-height: 1.24;
+}
+
+.articleMedia {
+  margin: 34px 0;
+}
+
+.articleMedia img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft);
+}
+
+.articleMedia figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.videoFrame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #000000;
+  aspect-ratio: 16 / 9;
+}
+
+.videoFrame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .editorialGrid {
   margin-top: 34px;
   display: grid;
@@ -791,6 +847,259 @@ nav a:hover,
   border-radius: var(--radius);
   background: #ffffff;
   padding: 16px;
+}
+
+.adminLoginCard,
+.adminSetup {
+  max-width: 620px;
+}
+
+.adminLoginCard {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  padding: 30px;
+}
+
+.adminLoginCard h1 {
+  margin: 18px 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.adminLoginCard p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.adminLoginCard form {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.adminLoginCard input,
+.composerSidebar input,
+.composerSidebar select,
+.editorBlock input,
+.editorBlock textarea,
+.titleInput,
+.excerptInput {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.adminLoginCard input,
+.composerSidebar input,
+.composerSidebar select,
+.editorBlock input {
+  min-height: 46px;
+  padding: 0 13px;
+}
+
+.adminComposer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 22px;
+  align-items: start;
+}
+
+.composerMain,
+.sidebarPanel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.composerMain {
+  padding: 28px;
+}
+
+.titleInput {
+  border: 0;
+  padding: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.titleInput:focus,
+.excerptInput:focus,
+.editorBlock input:focus,
+.editorBlock textarea:focus,
+.composerSidebar input:focus,
+.composerSidebar select:focus,
+.adminLoginCard input:focus {
+  outline: 3px solid rgba(99, 217, 137, 0.35);
+  outline-offset: 2px;
+}
+
+.excerptInput {
+  margin-top: 16px;
+  padding: 14px;
+  resize: vertical;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.blockToolbar {
+  margin: 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.blockToolbar button,
+.blockHandle button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.blockToolbar button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 13px;
+  font-weight: 800;
+}
+
+.editorBlocks {
+  display: grid;
+  gap: 16px;
+}
+
+.editorBlock {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 16px;
+}
+
+.blockHandle {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.blockHandle span {
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.blockHandle button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+}
+
+.editorBlock textarea {
+  min-height: 120px;
+  padding: 13px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.mediaInputs {
+  display: grid;
+  gap: 10px;
+}
+
+.sidebarPanel {
+  position: sticky;
+  top: 100px;
+  padding: 20px;
+}
+
+.sidebarPanel h2 {
+  margin: 0 0 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+}
+
+.sidebarPanel label {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.sidebarPanel .checkRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.checkRow input {
+  width: 18px;
+  min-height: 18px;
+}
+
+.adminSaveButton {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+
+.adminMessage {
+  margin: 14px 0 0;
+  color: #a23522;
+  line-height: 1.55;
+}
+
+.adminMessage.success {
+  color: var(--green-dark);
+}
+
+.volunteerGrid {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.volunteerCta {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: #ffffff;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.volunteerCta h2 {
+  margin: 0 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.volunteerCta p {
+  max-width: 620px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.65;
 }
 
 .notFound {
@@ -844,6 +1153,8 @@ nav a:hover,
   .articleGrid,
   .joinGrid,
   .footerGrid,
+  .adminComposer,
+  .volunteerGrid,
   .editorialGrid,
   .promptPanel div {
     grid-template-columns: 1fr;
@@ -886,6 +1197,14 @@ nav a:hover,
     display: block;
     margin-bottom: 8px;
   }
+
+  .sidebarPanel {
+    position: static;
+  }
+
+  .volunteerCta {
+    display: grid;
+  }
 }
 
 @media (max-width: 520px) {
@@ -920,6 +1239,9 @@ nav a:hover,
   .pillarCard,
   .articleCard,
   .promptPanel,
+  .composerMain,
+  .adminLoginCard,
+  .volunteerCta,
   .editorialCard {
     padding: 20px;
   }

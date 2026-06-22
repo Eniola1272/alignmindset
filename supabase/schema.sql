@@ -120,3 +120,6 @@ insert into public.posts (
   now()
 )
 on conflict (slug) do nothing;
+
+comment on column public.posts.body is
+  'JSON array of article blocks. Supported block types: paragraph, heading, quote, image, video.';

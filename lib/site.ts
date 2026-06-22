@@ -9,6 +9,7 @@ export const site = {
     { label: "Programs", href: "/#programs" },
     { label: "Framework", href: "/#framework" },
     { label: "Blog", href: "/blog" },
+    { label: "Volunteer", href: "/volunteer" },
     { label: "Editorial", href: "/editorial" }
   ]
 };
@@ -79,7 +80,7 @@ export const programs = [
 
 export const communityRhythm = [
   "Monday mindset note",
-  "Wednesday discussion question",
+  "Wednesday live session",
   "Friday practical resource",
-  "Weekend live session or recap"
+  "Weekend recap and action challenge"
 ];

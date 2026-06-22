@@ -18,8 +18,25 @@ export type Article = {
   readMinutes: number;
   author: string;
   featured: boolean;
-  body: string[];
+  body: ArticleBlock[];
 };
+
+export type ArticleBlock =
+  | {
+      type: "paragraph" | "heading" | "quote";
+      content: string;
+    }
+  | {
+      type: "image";
+      url: string;
+      alt?: string;
+      caption?: string;
+    }
+  | {
+      type: "video";
+      url: string;
+      caption?: string;
+    };
 
 type SupabasePost = {
   id: string;
@@ -31,7 +48,7 @@ type SupabasePost = {
   read_minutes: number;
   author: string;
   featured: boolean;
-  body: string[];
+  body: unknown;
 };
 
 export const categories: ArticleCategory[] = [
@@ -43,7 +60,7 @@ export const categories: ArticleCategory[] = [
   "Community"
 ];
 
-export const seedArticles: Article[] = [
+const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
   {
     id: "seed-1",
     slug: "align-your-identity-before-your-goals",
@@ -154,6 +171,85 @@ export const seedArticles: Article[] = [
   }
 ];
 
+export const seedArticles: Article[] = rawSeedArticles.map((article) => ({
+  ...article,
+  body: normalizeBody(article.body)
+}));
+
+function normalizeBody(body: unknown): ArticleBlock[] {
+  if (!Array.isArray(body)) {
+    return [];
+  }
+
+  const normalizedBlocks = body.map<ArticleBlock | null>((block) => {
+      if (typeof block === "string") {
+        return {
+          type: "paragraph",
+          content: block
+        } satisfies ArticleBlock;
+      }
+
+      if (!block || typeof block !== "object") {
+        return null;
+      }
+
+      const item = block as Partial<ArticleBlock>;
+
+      if (
+        (item.type === "paragraph" ||
+          item.type === "heading" ||
+          item.type === "quote") &&
+        "content" in item &&
+        typeof item.content === "string" &&
+        item.content.trim()
+      ) {
+        return {
+          type: item.type,
+          content: item.content
+        } satisfies ArticleBlock;
+      }
+
+      if (
+        item.type === "image" &&
+        "url" in item &&
+        typeof item.url === "string" &&
+        item.url.trim()
+      ) {
+        return {
+          type: "image",
+          url: item.url,
+          alt: "alt" in item && typeof item.alt === "string" ? item.alt : "",
+          caption:
+            "caption" in item && typeof item.caption === "string"
+              ? item.caption
+              : ""
+        } satisfies ArticleBlock;
+      }
+
+      if (
+        item.type === "video" &&
+        "url" in item &&
+        typeof item.url === "string" &&
+        item.url.trim()
+      ) {
+        return {
+          type: "video",
+          url: item.url,
+          caption:
+            "caption" in item && typeof item.caption === "string"
+              ? item.caption
+              : ""
+        } satisfies ArticleBlock;
+      }
+
+      return null;
+    });
+
+  return normalizedBlocks.filter(
+    (block): block is ArticleBlock => Boolean(block)
+  );
+}
+
 function mapPost(post: SupabasePost): Article {
   return {
     id: post.id,
@@ -165,7 +261,7 @@ function mapPost(post: SupabasePost): Article {
     readMinutes: post.read_minutes,
     author: post.author,
     featured: post.featured,
-    body: post.body
+    body: normalizeBody(post.body)
   };
 }
 

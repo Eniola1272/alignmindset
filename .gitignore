@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # system
 .DS_Store
+
+# generated logo intermediates
+public/brand/*-key.png

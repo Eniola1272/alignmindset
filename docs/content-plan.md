@@ -10,6 +10,8 @@ Align Mindset Initiative helps people align identity, systems, skills, and disci
 - Blog: public article library, powered by seed data first and Supabase when configured.
 - Article pages: simple educational essays with strong reading flow.
 - Editorial: internal-facing article production system and weekly prompt bank.
+- Admin: private block editor for writing posts with text, images, quotes, and videos.
+- Volunteer: role descriptions for people who want to help run the community.
 
 ## Blogging System
 
@@ -25,9 +27,9 @@ Use six content lanes:
 ## Weekly Rhythm
 
 - Monday: publish a mindset note or short essay.
-- Wednesday: post a discussion question in the community.
+- Wednesday: host the live session and capture member questions.
 - Friday: share a practical guide, resource, or checklist.
-- Weekend: host a session, recap a session, or issue an action challenge.
+- Weekend: publish the recap and issue an action challenge.
 
 ## Article Template
 
@@ -45,9 +47,10 @@ Use six content lanes:
 Supabase is a good fit for this phase because the project needs:
 
 - Published posts and draft status.
+- Rich article bodies stored as JSON blocks.
 - Subscriber capture.
 - Article idea collection.
-- A future private admin dashboard.
+- A private admin dashboard.
 - Authentication later for editors and volunteers.
 
-Start simple with the SQL schema in `supabase/schema.sql`. Add a private admin interface only after the public site and publishing rhythm are working.
+Start simple with the SQL schema in `supabase/schema.sql`. The admin dashboard uses `ADMIN_SECRET` plus the Supabase service role key to save posts securely from the server.

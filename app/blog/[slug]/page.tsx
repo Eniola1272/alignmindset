@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ArticleBody } from "@/components/article-body";
 import { getArticleBySlug, getArticles } from "@/lib/articles";
 
 type ArticlePageProps = {
@@ -57,11 +58,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <h1>{article.title}</h1>
           <p>{article.excerpt}</p>
         </div>
-        <div className="articleBody">
-          {article.body.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
+        <ArticleBody blocks={article.body} />
       </div>
     </article>
   );
