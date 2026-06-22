@@ -3,15 +3,12 @@ import Link from "next/link";
 export function Logo() {
   return (
     <Link className="logo" href="/" aria-label="Align Mindset home">
-      <span className="logoMark" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-        <span />
+      <span className="logoImageWrap" aria-hidden="true">
+        <img src="/brand/align-mindset-logo.png" alt="" />
       </span>
       <span>
-        <strong>Align Mindset</strong>
-        <small>Initiative</small>
+        <strong>Initiative</strong>
+        <small>Growth community</small>
       </span>
     </Link>
   );

@@ -70,7 +70,7 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-width: 170px;
+  min-width: 218px;
 }
 
 .logo strong,
@@ -87,9 +87,28 @@ select {
 .logo small {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.logoImageWrap {
+  width: 128px;
+  height: 54px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  background: #050505;
+  border: 1px solid rgba(23, 20, 33, 0.16);
+}
+
+.logoImageWrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
 .logoMark {
@@ -1212,12 +1231,14 @@ nav a:hover,
     min-width: 0;
   }
 
-  .logo strong {
-    font-size: 0.93rem;
+  .logo > span:last-child {
+    display: none;
   }
 
-  .logo small {
-    font-size: 0.66rem;
+  .logoImageWrap {
+    width: 116px;
+    height: 46px;
+    padding: 5px 7px;
   }
 
   .hero p,
