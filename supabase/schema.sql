@@ -1,0 +1,122 @@
+create extension if not exists pgcrypto;
+
+do $$ begin
+  create type post_status as enum ('draft', 'review', 'published', 'archived');
+exception
+  when duplicate_object then null;
+end $$;
+
+do $$ begin
+  create type post_category as enum (
+    'Identity',
+    'Systems',
+    'Skills',
+    'Action',
+    'Assets',
+    'Community'
+  );
+exception
+  when duplicate_object then null;
+end $$;
+
+create table if not exists public.posts (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  title text not null,
+  excerpt text not null,
+  category post_category not null,
+  status post_status not null default 'draft',
+  author text not null default 'Align Mindset Team',
+  body jsonb not null default '[]'::jsonb,
+  featured boolean not null default false,
+  read_minutes integer not null default 4 check (read_minutes > 0),
+  published_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.subscribers (
+  id uuid primary key default gen_random_uuid(),
+  email text unique not null,
+  source text not null default 'website',
+  subscribed_at timestamptz not null default now()
+);
+
+create table if not exists public.article_ideas (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  source text not null default 'community',
+  category post_category not null default 'Identity',
+  reader_promise text not null,
+  status text not null default 'captured',
+  created_at timestamptz not null default now()
+);
+
+create index if not exists posts_status_published_at_idx
+  on public.posts (status, published_at desc);
+
+create index if not exists posts_category_idx
+  on public.posts (category);
+
+alter table public.posts enable row level security;
+alter table public.subscribers enable row level security;
+alter table public.article_ideas enable row level security;
+
+drop policy if exists "Published posts are readable" on public.posts;
+create policy "Published posts are readable"
+  on public.posts for select
+  using (status = 'published');
+
+drop policy if exists "Subscribers can join from website" on public.subscribers;
+create policy "Subscribers can join from website"
+  on public.subscribers for insert
+  with check (true);
+
+drop policy if exists "Article ideas can be captured" on public.article_ideas;
+create policy "Article ideas can be captured"
+  on public.article_ideas for insert
+  with check (true);
+
+create or replace function public.set_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+drop trigger if exists posts_set_updated_at on public.posts;
+create trigger posts_set_updated_at
+  before update on public.posts
+  for each row
+  execute function public.set_updated_at();
+
+insert into public.posts (
+  slug,
+  title,
+  excerpt,
+  category,
+  status,
+  author,
+  body,
+  featured,
+  read_minutes,
+  published_at
+) values
+(
+  'align-your-identity-before-your-goals',
+  'Align Your Identity Before Your Goals',
+  'Goals become easier to sustain when your daily choices match who you are intentionally becoming.',
+  'Identity',
+  'published',
+  'Align Mindset Team',
+  '[
+    "Most people begin with a target: pass the exam, earn more, build a business, become disciplined. Targets matter, but they often collapse when they are not supported by identity.",
+    "Identity asks a deeper question: who must I become to make this goal normal? A person who studies consistently does not only need a timetable. They need to see themselves as someone who protects learning time even when the mood changes.",
+    "This is why Align Mindset starts with identity. When people are clear about the kind of person they are becoming, systems become easier to build, skills become easier to practice, and action becomes less dramatic."
+  ]'::jsonb,
+  true,
+  5,
+  now()
+)
+on conflict (slug) do nothing;
