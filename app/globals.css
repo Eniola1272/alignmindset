@@ -251,17 +251,47 @@ nav a:hover,
 
 .proofBand {
   padding: 28px 0 18px;
+  overflow: hidden;
 }
 
-.proofGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.proofCarousel {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000000 8%,
+    #000000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000000 8%,
+    #000000 92%,
+    transparent 100%
+  );
+}
+
+.proofTrack {
+  width: max-content;
+  display: flex;
   gap: 16px;
+  padding: 10px 16px 18px;
+  animation: testimonialMarquee 34s linear infinite;
+  will-change: transform;
+}
+
+.proofCarousel:hover .proofTrack,
+.proofCarousel:focus-within .proofTrack {
+  animation-play-state: paused;
 }
 
 .testimonialCard {
+  width: clamp(280px, 31vw, 380px);
   min-height: 190px;
   padding: 18px;
+  flex: 0 0 auto;
 }
 
 .testimonialCard > div {
@@ -295,6 +325,29 @@ nav a:hover,
   color: var(--muted);
   line-height: 1.62;
   margin: 0;
+}
+
+@keyframes testimonialMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 8px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proofTrack {
+    width: auto;
+    overflow-x: auto;
+    animation: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .testimonialCard {
+    scroll-snap-align: center;
+  }
 }
 
 .sectionPad,

@@ -91,19 +91,28 @@ export default async function Home() {
       </section>
 
       <section className="proofBand">
-        <div className="shell proofGrid">
-          {testimonials.map((item) => (
-            <article key={item.name} className="testimonialCard">
-              <div>
-                <span>{item.name.charAt(0)}</span>
+        <div
+          className="proofCarousel"
+          aria-label="Community member testimonials"
+        >
+          <div className="proofTrack">
+            {[...testimonials, ...testimonials].map((item, index) => (
+              <article
+                key={`${item.name}-${index}`}
+                className="testimonialCard"
+                aria-hidden={index >= testimonials.length}
+              >
                 <div>
-                  <strong>{item.name}</strong>
-                  <small>{item.role}</small>
+                  <span>{item.name.charAt(0)}</span>
+                  <div>
+                    <strong>{item.name}</strong>
+                    <small>{item.role}</small>
+                  </div>
                 </div>
-              </div>
-              <p>{item.quote}</p>
-            </article>
-          ))}
+                <p>{item.quote}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
