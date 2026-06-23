@@ -6,10 +6,6 @@ export function Logo() {
       <span className="logoImageWrap" aria-hidden="true">
         <img src="/brand/align-mindset-logo.png" alt="" />
       </span>
-      <span>
-        <strong>Initiative</strong>
-        <small>Growth community</small>
-      </span>
     </Link>
   );
 }

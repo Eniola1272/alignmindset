@@ -48,7 +48,10 @@ Supabase is a good fit for this phase because the project needs:
 
 - Published posts and draft status.
 - Rich article bodies stored as JSON blocks.
+- Featured images for article cards and article pages.
 - Subscriber capture.
+- Subscriber overview with email/SMS opt-in fields.
+- Newsletter and SMS campaign logging, with optional webhook delivery.
 - Article idea collection.
 - A private admin dashboard.
 - Authentication later for editors and volunteers.

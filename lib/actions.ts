@@ -1,7 +1,12 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { clearAdminCookie, isAdminAuthenticated, setAdminCookie } from "@/lib/admin";
+import {
+  clearAdminCookie,
+  isAdminAuthenticated,
+  setAdminCookie
+} from "@/lib/admin";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
 import { createSupabaseServerClient } from "@/lib/supabase";
 
@@ -15,6 +20,8 @@ export async function subscribeToNewsletter(
   formData: FormData
 ): Promise<FormState> {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const name = String(formData.get("name") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
 
   if (!email || !email.includes("@")) {
     return {
@@ -36,6 +43,10 @@ export async function subscribeToNewsletter(
   const { error } = await supabase.from("subscribers").upsert(
     {
       email,
+      name,
+      phone,
+      newsletter_opt_in: true,
+      sms_opt_in: Boolean(phone),
       source: "website",
       subscribed_at: new Date().toISOString()
     },
@@ -180,6 +191,7 @@ export async function savePost(
   const status = String(formData.get("status") ?? "draft");
   const readMinutes = Number(formData.get("readMinutes") ?? 4);
   const featured = formData.get("featured") === "on";
+  const featuredImageUrl = String(formData.get("featuredImageUrl") ?? "").trim();
   const body = parseBlocks(formData.get("body"));
 
   if (!title || !excerpt || !slug) {
@@ -230,6 +242,7 @@ export async function savePost(
       author,
       body,
       featured,
+      featured_image_url: featuredImageUrl || null,
       read_minutes: Number.isFinite(readMinutes) ? readMinutes : 4,
       published_at: status === "published" ? new Date().toISOString() : null
     },
@@ -243,11 +256,160 @@ export async function savePost(
     };
   }
 
+  revalidatePath("/");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${slug}`);
+  revalidatePath("/admin");
+
   return {
     ok: true,
     message:
       status === "published"
         ? `Published "${title}" at /blog/${slug}.`
         : `Saved "${title}" as ${status}.`
+  };
+}
+
+export async function deletePost(formData: FormData) {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin?error=session");
+  }
+
+  const id = String(formData.get("id") ?? "");
+  const slug = String(formData.get("slug") ?? "");
+  const supabase = createSupabaseServerClient();
+
+  if (!id || !supabase) {
+    redirect("/admin?error=delete");
+  }
+
+  await supabase.from("posts").delete().eq("id", id);
+
+  revalidatePath("/");
+  revalidatePath("/blog");
+  if (slug) {
+    revalidatePath(`/blog/${slug}`);
+  }
+  revalidatePath("/admin");
+  redirect("/admin?deleted=1");
+}
+
+export async function sendBroadcast(
+  _previousState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  if (!(await isAdminAuthenticated())) {
+    return {
+      ok: false,
+      message: "Your admin session expired. Sign in again to send updates."
+    };
+  }
+
+  const channel = String(formData.get("channel") ?? "newsletter");
+  const subject = String(formData.get("subject") ?? "").trim();
+  const message = String(formData.get("message") ?? "").trim();
+
+  if (channel !== "newsletter" && channel !== "sms") {
+    return {
+      ok: false,
+      message: "Choose newsletter or SMS."
+    };
+  }
+
+  if (!message || (channel === "newsletter" && !subject)) {
+    return {
+      ok: false,
+      message: "Add a subject for newsletters and a message for every update."
+    };
+  }
+
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    return {
+      ok: false,
+      message: "Supabase service role credentials are required."
+    };
+  }
+
+  const { data: subscribers, error: subscriberError } = await supabase
+    .from("subscribers")
+    .select("email, phone, name, newsletter_opt_in, sms_opt_in")
+    .eq(channel === "newsletter" ? "newsletter_opt_in" : "sms_opt_in", true);
+
+  if (subscriberError) {
+    return {
+      ok: false,
+      message: subscriberError.message
+    };
+  }
+
+  const recipients = (subscribers ?? []).filter((subscriber) =>
+    channel === "newsletter" ? subscriber.email : subscriber.phone
+  );
+  const webhookUrl = process.env.BROADCAST_WEBHOOK_URL;
+  let status = webhookUrl ? "sent_to_webhook" : "saved_no_provider";
+
+  if (webhookUrl && recipients.length) {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(process.env.BROADCAST_WEBHOOK_SECRET
+          ? {
+              Authorization: `Bearer ${process.env.BROADCAST_WEBHOOK_SECRET}`
+            }
+          : {})
+      },
+      body: JSON.stringify({
+        channel,
+        subject,
+        message,
+        recipients
+      })
+    });
+
+    if (!response.ok) {
+      status = "webhook_failed";
+    }
+  }
+
+  const { error: campaignError } = await supabase
+    .from("broadcast_campaigns")
+    .insert({
+      channel,
+      subject: subject || null,
+      message,
+      recipient_count: recipients.length,
+      status,
+      provider: webhookUrl ? "webhook" : "none"
+    });
+
+  if (campaignError) {
+    return {
+      ok: false,
+      message: campaignError.message
+    };
+  }
+
+  revalidatePath("/admin");
+
+  if (!webhookUrl) {
+    return {
+      ok: true,
+      message: `Saved ${channel} update for ${recipients.length} recipients. Add BROADCAST_WEBHOOK_URL to actually send.`
+    };
+  }
+
+  if (status === "webhook_failed") {
+    return {
+      ok: false,
+      message: `The campaign was logged, but the webhook returned an error for ${recipients.length} recipients.`
+    };
+  }
+
+  return {
+    ok: true,
+    message: `Sent ${channel} update to the configured webhook for ${recipients.length} recipients.`
   };
 }

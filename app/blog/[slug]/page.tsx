@@ -58,6 +58,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <h1>{article.title}</h1>
           <p>{article.excerpt}</p>
         </div>
+        {article.featuredImageUrl ? (
+          <figure className="articleHeroImage">
+            <img src={article.featuredImageUrl} alt="" />
+          </figure>
+        ) : null}
         <ArticleBody blocks={article.body} />
       </div>
     </article>

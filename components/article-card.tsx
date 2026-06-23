@@ -5,6 +5,13 @@ import type { Article } from "@/lib/articles";
 export function ArticleCard({ article }: { article: Article }) {
   return (
     <article className="articleCard">
+      {article.featuredImageUrl ? (
+        <img
+          className="articleCardImage"
+          src={article.featuredImageUrl}
+          alt=""
+        />
+      ) : null}
       <div className="articleMeta">
         <span>{article.category}</span>
         <span>{article.readMinutes} min read</span>

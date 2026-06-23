@@ -69,39 +69,15 @@ select {
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-width: 218px;
-}
-
-.logo strong,
-.logo small {
-  display: block;
-  line-height: 1;
-}
-
-.logo strong {
-  font-size: 1rem;
-  letter-spacing: 0;
-}
-
-.logo small {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  min-width: 188px;
 }
 
 .logoImageWrap {
-  width: 128px;
-  height: 54px;
-  padding: 5px 8px;
-  border-radius: 6px;
+  width: 188px;
+  height: 56px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  background: #050505;
-  border: 1px solid rgba(23, 20, 33, 0.16);
 }
 
 .logoImageWrap img {
@@ -544,6 +520,16 @@ nav a:hover,
   flex-direction: column;
 }
 
+.articleCardImage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+  background: var(--soft);
+}
+
 .articleMeta {
   display: flex;
   gap: 10px;
@@ -639,6 +625,10 @@ nav a:hover,
   padding: 0 16px;
   background: #ffffff;
   color: var(--ink);
+}
+
+.newsletterForm > input {
+  margin-bottom: 10px;
 }
 
 .newsletterForm button {
@@ -757,6 +747,20 @@ nav a:hover,
 
 .articleBody {
   padding-top: 28px;
+}
+
+.articleHeroImage {
+  margin: 28px 0 0;
+}
+
+.articleHeroImage img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft);
 }
 
 .articleBody p {
@@ -1087,6 +1091,346 @@ nav a:hover,
   color: var(--green-dark);
 }
 
+.adminDashboard {
+  min-height: calc(100vh - 76px);
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  background: #f7f4ed;
+}
+
+.adminSidebar {
+  position: sticky;
+  top: 76px;
+  height: calc(100vh - 76px);
+  border-right: 1px solid var(--line);
+  background: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.adminBrand {
+  min-height: 82px;
+  border-radius: var(--radius);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+
+.adminBrand img {
+  width: 100%;
+  height: 62px;
+  object-fit: contain;
+}
+
+.adminSidebar nav {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+}
+
+.adminSidebar nav a,
+.tableActions a,
+.tableActions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.adminSidebar nav a {
+  min-height: 42px;
+  border-radius: var(--radius);
+  padding: 0 12px;
+  color: var(--muted);
+  font-weight: 850;
+}
+
+.adminSidebar nav a:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.adminLogout {
+  width: 100%;
+  margin-top: auto;
+}
+
+.adminContent {
+  min-width: 0;
+  padding: 28px;
+  display: grid;
+  gap: 22px;
+}
+
+.adminTopbar,
+.panelHeader,
+.broadcastHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.adminTopbar {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.adminTopbar span,
+.panelHeader span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.adminTopbar h1,
+.panelHeader h2,
+.broadcastHeader h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1;
+}
+
+.adminTopbar h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.adminPanel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.adminNotice {
+  border: 1px solid #ffd3c6;
+  border-radius: var(--radius);
+  margin: 0;
+  padding: 14px 16px;
+  background: #fff1ec;
+  color: #9b321f;
+  line-height: 1.55;
+}
+
+.adminNotice.success {
+  border-color: #bfeecb;
+  background: #effbf2;
+  color: var(--green-dark);
+}
+
+.adminStatsGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.adminStatsGrid div {
+  min-height: 104px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 16px;
+  display: grid;
+  align-content: space-between;
+}
+
+.adminStatsGrid strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.3rem;
+  line-height: 1;
+}
+
+.adminStatsGrid span,
+.campaignList small,
+.adminTable small,
+.emptyState,
+.broadcastHeader p {
+  color: var(--muted);
+}
+
+.adminTableWrap {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+.adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.adminTable th,
+.adminTable td {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 10px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.adminTable th {
+  color: var(--muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.adminTable td strong,
+.adminTable td small {
+  display: block;
+}
+
+.adminTable td small {
+  margin-top: 4px;
+}
+
+.statusPill,
+.miniPills span {
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  background: var(--soft);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: capitalize;
+}
+
+.status-published {
+  background: #dff8e7;
+  color: var(--green-dark);
+}
+
+.status-draft {
+  background: #fff4c8;
+}
+
+.status-review {
+  background: #e7f5fb;
+}
+
+.status-archived {
+  background: #ece8df;
+  color: var(--muted);
+}
+
+.tableActions,
+.miniPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tableActions a,
+.tableActions button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 34px;
+  padding: 0 11px;
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.tableActions button:hover {
+  color: #9b321f;
+}
+
+.adminTwoColumn {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 22px;
+}
+
+.broadcastForm,
+.campaignList {
+  display: grid;
+  gap: 14px;
+}
+
+.broadcastHeader {
+  justify-content: flex-start;
+}
+
+.broadcastHeader p {
+  margin: 6px 0 0;
+  line-height: 1.55;
+}
+
+.broadcastForm label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.broadcastForm input,
+.broadcastForm textarea,
+.broadcastForm select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.broadcastForm input,
+.broadcastForm select {
+  min-height: 46px;
+  padding: 0 13px;
+}
+
+.broadcastForm textarea {
+  padding: 13px;
+  line-height: 1.65;
+  resize: vertical;
+}
+
+.campaignList article {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 16px;
+}
+
+.campaignList article > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.campaignList article span {
+  color: var(--green-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.campaignList p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.editorPanel .adminComposer {
+  margin-top: 18px;
+}
+
 .volunteerGrid {
   margin-top: 34px;
   display: grid;
@@ -1172,11 +1516,27 @@ nav a:hover,
   .articleGrid,
   .joinGrid,
   .footerGrid,
+  .adminDashboard,
   .adminComposer,
+  .adminStatsGrid,
+  .adminTwoColumn,
   .volunteerGrid,
   .editorialGrid,
   .promptPanel div {
     grid-template-columns: 1fr;
+  }
+
+  .adminSidebar {
+    position: static;
+    height: auto;
+  }
+
+  .adminSidebar nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .adminContent {
+    padding: 16px;
   }
 
   .heroBoard div,
@@ -1228,17 +1588,12 @@ nav a:hover,
 
 @media (max-width: 520px) {
   .logo {
-    min-width: 0;
-  }
-
-  .logo > span:last-child {
-    display: none;
+    min-width: 142px;
   }
 
   .logoImageWrap {
-    width: 116px;
-    height: 46px;
-    padding: 5px 7px;
+    width: 142px;
+    height: 44px;
   }
 
   .hero p,

@@ -12,6 +12,7 @@ import {
   Video
 } from "lucide-react";
 import { savePost, type FormState } from "@/lib/actions";
+import type { AdminPost } from "@/lib/admin-data";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
 
 type EditableBlock = ArticleBlock & {
@@ -61,6 +62,13 @@ function createBlock(type: ArticleBlock["type"]): EditableBlock {
   };
 }
 
+function blockWithId(block: ArticleBlock): EditableBlock {
+  return {
+    ...block,
+    id: crypto.randomUUID()
+  } as EditableBlock;
+}
+
 function makeSlug(value: string) {
   return value
     .toLowerCase()
@@ -69,12 +77,12 @@ function makeSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-export function AdminEditor() {
+export function AdminEditor({ post }: { post?: AdminPost }) {
   const [state, formAction, pending] = useActionState(savePost, initialState);
-  const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
+  const [title, setTitle] = useState(post?.title ?? "");
+  const [slug, setSlug] = useState(post?.slug ?? "");
   const [blocks, setBlocks] = useState<EditableBlock[]>([
-    createBlock("paragraph")
+    ...(post?.body?.length ? post.body.map(blockWithId) : [createBlock("paragraph")])
   ]);
 
   const serializedBlocks = useMemo(
@@ -164,6 +172,7 @@ export function AdminEditor() {
           name="excerpt"
           placeholder="A sharp one-sentence promise for the reader..."
           rows={3}
+          defaultValue={post?.excerpt ?? ""}
           required
         />
 
@@ -299,7 +308,7 @@ export function AdminEditor() {
           </label>
           <label>
             Category
-            <select name="category" defaultValue="Identity">
+            <select name="category" defaultValue={post?.category ?? "Identity"}>
               {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}
@@ -309,7 +318,7 @@ export function AdminEditor() {
           </label>
           <label>
             Status
-            <select name="status" defaultValue="draft">
+            <select name="status" defaultValue={post?.status ?? "draft"}>
               <option value="draft">Draft</option>
               <option value="review">Review</option>
               <option value="published">Published</option>
@@ -318,14 +327,27 @@ export function AdminEditor() {
           </label>
           <label>
             Author
-            <input name="author" defaultValue="Align Mindset Team" />
+            <input name="author" defaultValue={post?.author ?? "Align Mindset Team"} />
+          </label>
+          <label>
+            Featured image URL
+            <input
+              name="featuredImageUrl"
+              placeholder="https://..."
+              defaultValue={post?.featuredImageUrl ?? ""}
+            />
           </label>
           <label>
             Read minutes
-            <input name="readMinutes" type="number" min="1" defaultValue="4" />
+            <input
+              name="readMinutes"
+              type="number"
+              min="1"
+              defaultValue={post?.readMinutes ?? 4}
+            />
           </label>
           <label className="checkRow">
-            <input name="featured" type="checkbox" />
+            <input name="featured" type="checkbox" defaultChecked={post?.featured} />
             Feature on homepage
           </label>
           <button className="primaryButton adminSaveButton" disabled={pending}>

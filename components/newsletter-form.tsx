@@ -18,6 +18,7 @@ export function NewsletterForm() {
   return (
     <form className="newsletterForm" action={formAction}>
       <label htmlFor="email">Get practical growth notes</label>
+      <input name="name" type="text" placeholder="Your name" />
       <div>
         <input
           id="email"
@@ -26,6 +27,7 @@ export function NewsletterForm() {
           placeholder="you@example.com"
           required
         />
+        <input name="phone" type="tel" placeholder="Phone for SMS updates" />
         <button type="submit" disabled={pending} aria-label="Subscribe">
           <Send size={18} aria-hidden="true" />
           <span>{pending ? "Joining" : "Join"}</span>

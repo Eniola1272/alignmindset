@@ -29,6 +29,7 @@ create table if not exists public.posts (
   author text not null default 'Align Mindset Team',
   body jsonb not null default '[]'::jsonb,
   featured boolean not null default false,
+  featured_image_url text,
   read_minutes integer not null default 4 check (read_minutes > 0),
   published_at timestamptz,
   created_at timestamptz not null default now(),
@@ -38,9 +39,35 @@ create table if not exists public.posts (
 create table if not exists public.subscribers (
   id uuid primary key default gen_random_uuid(),
   email text unique not null,
+  name text,
+  phone text,
   source text not null default 'website',
+  newsletter_opt_in boolean not null default true,
+  sms_opt_in boolean not null default false,
+  status text not null default 'active',
   subscribed_at timestamptz not null default now()
 );
+
+create table if not exists public.broadcast_campaigns (
+  id uuid primary key default gen_random_uuid(),
+  channel text not null check (channel in ('newsletter', 'sms')),
+  subject text,
+  message text not null,
+  recipient_count integer not null default 0,
+  status text not null default 'draft',
+  provider text not null default 'none',
+  created_at timestamptz not null default now()
+);
+
+alter table public.posts
+  add column if not exists featured_image_url text;
+
+alter table public.subscribers
+  add column if not exists name text,
+  add column if not exists phone text,
+  add column if not exists newsletter_opt_in boolean not null default true,
+  add column if not exists sms_opt_in boolean not null default false,
+  add column if not exists status text not null default 'active';
 
 create table if not exists public.article_ideas (
   id uuid primary key default gen_random_uuid(),
@@ -61,6 +88,7 @@ create index if not exists posts_category_idx
 alter table public.posts enable row level security;
 alter table public.subscribers enable row level security;
 alter table public.article_ideas enable row level security;
+alter table public.broadcast_campaigns enable row level security;
 
 drop policy if exists "Published posts are readable" on public.posts;
 create policy "Published posts are readable"
@@ -123,3 +151,9 @@ on conflict (slug) do nothing;
 
 comment on column public.posts.body is
   'JSON array of article blocks. Supported block types: paragraph, heading, quote, image, video.';
+
+comment on column public.posts.featured_image_url is
+  'Optional public image URL used by article cards and article pages.';
+
+comment on table public.broadcast_campaigns is
+  'Admin-only log of newsletter and SMS broadcasts. Delivery can be handled by BROADCAST_WEBHOOK_URL.';

@@ -49,8 +49,8 @@ export default async function Home() {
             Purposeful growth, made practical
           </div>
           <h1>
-            Help people achieve their goals and dreams by aligning who they are
-            becoming with what they do daily.
+            Helping you achieve your goals and dreams
+            
           </h1>
           <p>
             Align Mindset Initiative is a community and learning platform for

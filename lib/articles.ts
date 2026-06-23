@@ -18,6 +18,7 @@ export type Article = {
   readMinutes: number;
   author: string;
   featured: boolean;
+  featuredImageUrl?: string;
   body: ArticleBlock[];
 };
 
@@ -48,6 +49,7 @@ type SupabasePost = {
   read_minutes: number;
   author: string;
   featured: boolean;
+  featured_image_url?: string | null;
   body: unknown;
 };
 
@@ -72,6 +74,7 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
     readMinutes: 5,
     author: "Align Mindset Team",
     featured: true,
+    featuredImageUrl: "",
     body: [
       "Most people begin with a target: pass the exam, earn more, build a business, become disciplined. Targets matter, but they often collapse when they are not supported by identity.",
       "Identity asks a deeper question: who must I become to make this goal normal? A person who studies consistently does not only need a timetable. They need to see themselves as someone who protects learning time even when the mood changes.",
@@ -90,6 +93,7 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
     readMinutes: 6,
     author: "Align Mindset Team",
     featured: true,
+    featuredImageUrl: "",
     body: [
       "Motivation is useful, but it is not a reliable operating system. It rises and falls with mood, pressure, energy, and the people around you.",
       "A system is different. A system is the structure that tells you what happens next even when you are not inspired. It can be a study block, a weekly review, a mentor check-in, a quiet workspace, or a phone reminder.",
@@ -108,6 +112,7 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
     readMinutes: 7,
     author: "Align Mindset Team",
     featured: true,
+    featuredImageUrl: "",
     body: [
       "Skills create options. They help you contribute, earn, solve problems, communicate better, and become useful in rooms you want to enter.",
       "The best skill to start with is usually not the trendiest one. It is the skill that fits your direction, solves a real problem, and can be practiced publicly enough to create proof.",
@@ -126,6 +131,7 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
     readMinutes: 5,
     author: "Align Mindset Team",
     featured: false,
+    featuredImageUrl: "",
     body: [
       "Learning is powerful, but unused learning fades quickly. The question after every lesson should be: what can this become?",
       "A lesson can become a note. A note can become an article. An article can become a talk. A talk can become a workshop. A workshop can become a product or a service.",
@@ -144,6 +150,7 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
     readMinutes: 8,
     author: "Align Mindset Team",
     featured: false,
+    featuredImageUrl: "",
     body: [
       "A quiet group is not a failed group. Most communities have a small active core and a much larger silent audience. The goal is to create rhythm, not noise.",
       "Start by reintroducing the vision. Tell members what the group is for, what kind of value is coming, and how they can participate without pressure.",
@@ -162,6 +169,7 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
     readMinutes: 4,
     author: "Align Mindset Team",
     featured: false,
+    featuredImageUrl: "",
     body: [
       "Good teaching gives people clarity. Good challenges help people turn clarity into movement.",
       "Every Align Mindset session should end with one action that members can complete within a week. It should be specific, small enough to start, and meaningful enough to build momentum.",
@@ -261,6 +269,7 @@ function mapPost(post: SupabasePost): Article {
     readMinutes: post.read_minutes,
     author: post.author,
     featured: post.featured,
+    featuredImageUrl: post.featured_image_url ?? "",
     body: normalizeBody(post.body)
   };
 }
@@ -279,7 +288,7 @@ export async function getArticles(): Promise<Article[]> {
   const { data, error } = await supabase
     .from("posts")
     .select(
-      "id, slug, title, excerpt, category, published_at, read_minutes, author, featured, body"
+      "id, slug, title, excerpt, category, published_at, read_minutes, author, featured, featured_image_url, body"
     )
     .eq("status", "published")
     .order("published_at", { ascending: false });
