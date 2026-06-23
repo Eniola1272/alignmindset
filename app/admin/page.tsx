@@ -55,8 +55,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <div className="shell adminSetup">
           <SectionHeading
             eyebrow="Admin setup"
-            title="Add an admin secret before publishing from the dashboard."
-            copy="Set ADMIN_SECRET in your environment, restart the app, then return to this page."
+            title="Connect Supabase Auth before publishing from the dashboard."
+            copy="Add Supabase public keys, create an admin user in Supabase Auth, and set ADMIN_EMAILS to the approved admin email address."
           />
         </div>
       </section>
@@ -72,16 +72,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
           <h1>Admin sign in</h1>
           <p>
-            Use your private admin secret to open the Align Mindset publishing
-            dashboard.
+            Use your approved Align Mindset admin account to open the private
+            publishing dashboard.
           </p>
           <form action={loginToAdmin}>
-            <label htmlFor="secret">Admin secret</label>
-            <input id="secret" name="secret" type="password" required />
+            <label htmlFor="email">Email address</label>
+            <input id="email" name="email" type="email" required />
+            <label htmlFor="password">Password</label>
+            <input id="password" name="password" type="password" required />
             <button className="primaryButton">Open dashboard</button>
           </form>
           {params.error ? (
-            <p className="adminMessage">That secret did not match.</p>
+            <p className="adminMessage">
+              That account could not be verified for admin access.
+            </p>
           ) : null}
         </div>
       </section>

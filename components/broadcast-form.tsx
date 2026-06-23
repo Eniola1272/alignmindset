@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { Megaphone, Send } from "lucide-react";
 import { sendBroadcast, type FormState } from "@/lib/actions";
+import { useToast } from "@/components/toast-provider";
 
 const initialState: FormState = {
   ok: false,
@@ -10,13 +11,31 @@ const initialState: FormState = {
 };
 
 export function BroadcastForm() {
+  const { showToast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState(
     sendBroadcast,
     initialState
   );
 
+  useEffect(() => {
+    if (!state.message) {
+      return;
+    }
+
+    showToast({
+      title: state.ok ? "Update logged" : "Update not sent",
+      message: state.message,
+      tone: state.ok ? "success" : "error"
+    });
+
+    if (state.ok) {
+      formRef.current?.reset();
+    }
+  }, [showToast, state.message, state.ok]);
+
   return (
-    <form className="broadcastForm" action={formAction}>
+    <form ref={formRef} className="broadcastForm" action={formAction}>
       <div className="broadcastHeader">
         <Megaphone size={22} aria-hidden="true" />
         <div>
@@ -48,11 +67,6 @@ export function BroadcastForm() {
         <Send size={17} aria-hidden="true" />
         {pending ? "Sending" : "Send / log update"}
       </button>
-      {state.message ? (
-        <p className={state.ok ? "adminMessage success" : "adminMessage"}>
-          {state.message}
-        </p>
-      ) : null}
     </form>
   );
 }

@@ -53,7 +53,7 @@ Supabase is a good fit for this phase because the project needs:
 - Subscriber overview with email/SMS opt-in fields.
 - Newsletter and SMS campaign logging, with optional webhook delivery.
 - Article idea collection.
-- A private admin dashboard.
-- Authentication later for editors and volunteers.
+- A private admin dashboard protected by Supabase Auth.
+- Required `ADMIN_EMAILS` allowlist for approved editors.
 
-Start simple with the SQL schema in `supabase/schema.sql`. The admin dashboard uses `ADMIN_SECRET` plus the Supabase service role key to save posts securely from the server.
+Start simple with the SQL schema in `supabase/schema.sql`. The admin dashboard uses Supabase Auth accounts for access and the Supabase service role key to save posts securely from the server.

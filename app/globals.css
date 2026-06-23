@@ -712,6 +712,76 @@ nav a:hover,
   color: #b8f5ca;
 }
 
+.toastViewport {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 120;
+  display: grid;
+  width: min(390px, calc(100vw - 36px));
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toastItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  color: var(--ink);
+  pointer-events: auto;
+}
+
+.toastItem svg {
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+.toastItem strong {
+  display: block;
+  font-size: 0.94rem;
+}
+
+.toastItem p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.toastItem button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--muted);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.toast-success {
+  border-color: rgba(99, 217, 137, 0.55);
+}
+
+.toast-success > svg {
+  color: var(--green-dark);
+}
+
+.toast-error {
+  border-color: rgba(255, 150, 116, 0.62);
+}
+
+.toast-error > svg {
+  color: #a23522;
+}
+
 .siteFooter {
   padding: 52px 0 22px;
   border-top: 1px solid var(--line);

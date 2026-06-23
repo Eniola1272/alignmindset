@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { Send } from "lucide-react";
 import { subscribeToNewsletter, type FormState } from "@/lib/actions";
+import { useToast } from "@/components/toast-provider";
 
 const initialState: FormState = {
   ok: false,
@@ -10,13 +11,31 @@ const initialState: FormState = {
 };
 
 export function NewsletterForm() {
+  const { showToast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState(
     subscribeToNewsletter,
     initialState
   );
 
+  useEffect(() => {
+    if (!state.message) {
+      return;
+    }
+
+    showToast({
+      title: state.ok ? "You are on the list" : "Signup needs a check",
+      message: state.message,
+      tone: state.ok ? "success" : "error"
+    });
+
+    if (state.ok) {
+      formRef.current?.reset();
+    }
+  }, [showToast, state.message, state.ok]);
+
   return (
-    <form className="newsletterForm" action={formAction}>
+    <form ref={formRef} className="newsletterForm" action={formAction}>
       <label htmlFor="email">Get practical growth notes</label>
       <input name="name" type="text" placeholder="Your name" />
       <div>
@@ -33,11 +52,6 @@ export function NewsletterForm() {
           <span>{pending ? "Joining" : "Join"}</span>
         </button>
       </div>
-      {state.message ? (
-        <p className={state.ok ? "formMessage success" : "formMessage"}>
-          {state.message}
-        </p>
-      ) : null}
     </form>
   );
 }

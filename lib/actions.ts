@@ -4,11 +4,15 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   clearAdminCookie,
+  isAllowedAdminEmail,
   isAdminAuthenticated,
-  setAdminCookie
+  setAdminSession
 } from "@/lib/admin";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
-import { createSupabaseServerClient } from "@/lib/supabase";
+import {
+  createSupabaseAuthClient,
+  createSupabaseServerClient
+} from "@/lib/supabase";
 
 export type FormState = {
   ok: boolean;
@@ -156,13 +160,24 @@ function parseBlocks(value: FormDataEntryValue | null): ArticleBlock[] {
 }
 
 export async function loginToAdmin(formData: FormData) {
-  const secret = String(formData.get("secret") ?? "");
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const password = String(formData.get("password") ?? "");
+  const supabase = createSupabaseAuthClient();
 
-  if (!process.env.ADMIN_SECRET || secret !== process.env.ADMIN_SECRET) {
+  if (!supabase || !email || !password) {
     redirect("/admin?error=1");
   }
 
-  await setAdminCookie();
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error || !data.session || !isAllowedAdminEmail(data.user.email)) {
+    redirect("/admin?error=1");
+  }
+
+  await setAdminSession(data.session.access_token, data.session.refresh_token);
   redirect("/admin");
 }
 

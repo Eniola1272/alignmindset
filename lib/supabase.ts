@@ -16,6 +16,19 @@ export function createSupabaseBrowserClient() {
   return createClient(supabaseUrl, supabaseAnonKey);
 }
 
+export function createSupabaseAuthClient() {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return null;
+  }
+
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  });
+}
+
 export function createSupabaseServerClient() {
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return null;

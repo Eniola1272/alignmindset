@@ -1,42 +1,73 @@
 import "server-only";
 
-import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
+import { createSupabaseAuthClient, hasSupabaseConfig } from "@/lib/supabase";
 
-const adminCookieName = "align_admin";
+const accessCookieName = "align_admin_access";
+const refreshCookieName = "align_admin_refresh";
+const sessionMaxAge = 60 * 60 * 24 * 7;
 
 export function isAdminEnabled() {
-  return Boolean(process.env.ADMIN_SECRET);
+  return hasSupabaseConfig() && getAllowedAdminEmails().length > 0;
 }
 
-function getAdminToken() {
-  const secret = process.env.ADMIN_SECRET;
+function getAllowedAdminEmails() {
+  return (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean);
+}
 
-  if (!secret) {
-    return "";
-  }
+export function isAllowedAdminEmail(email?: string | null) {
+  const allowedEmails = getAllowedAdminEmails();
 
-  return createHash("sha256").update(secret).digest("hex");
+  return Boolean(email && allowedEmails.includes(email.toLowerCase()));
 }
 
 export async function isAdminAuthenticated() {
   const cookieStore = await cookies();
-  return cookieStore.get(adminCookieName)?.value === getAdminToken();
+  const accessToken = cookieStore.get(accessCookieName)?.value;
+  const refreshToken = cookieStore.get(refreshCookieName)?.value;
+  const supabase = createSupabaseAuthClient();
+
+  if (!supabase || !accessToken || !refreshToken) {
+    return false;
+  }
+
+  const { error: sessionError } = await supabase.auth.setSession({
+    access_token: accessToken,
+    refresh_token: refreshToken
+  });
+
+  if (sessionError) {
+    return false;
+  }
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data.user) {
+    return false;
+  }
+
+  return isAllowedAdminEmail(data.user.email);
 }
 
-export async function setAdminCookie() {
+export async function setAdminSession(accessToken: string, refreshToken: string) {
   const cookieStore = await cookies();
-
-  cookieStore.set(adminCookieName, getAdminToken(), {
+  const options = {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "lax" as const,
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 8
-  });
+    maxAge: sessionMaxAge
+  };
+
+  cookieStore.set(accessCookieName, accessToken, options);
+  cookieStore.set(refreshCookieName, refreshToken, options);
 }
 
 export async function clearAdminCookie() {
   const cookieStore = await cookies();
-  cookieStore.delete(adminCookieName);
+  cookieStore.delete(accessCookieName);
+  cookieStore.delete(refreshCookieName);
 }

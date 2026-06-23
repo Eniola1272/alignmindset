@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ToastProvider } from "@/components/toast-provider";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -26,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
+        <ToastProvider>
+          <SiteHeader />
+          <main>{children}</main>
+          <SiteFooter />
+        </ToastProvider>
       </body>
     </html>
   );

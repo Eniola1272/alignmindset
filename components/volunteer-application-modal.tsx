@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { ArrowRight, Send, X } from "lucide-react";
 import { submitVolunteerApplication, type FormState } from "@/lib/actions";
+import { useToast } from "@/components/toast-provider";
 
 const initialState: FormState = {
   ok: false,
@@ -11,6 +12,7 @@ const initialState: FormState = {
 
 export function VolunteerApplicationModal() {
   const [open, setOpen] = useState(false);
+  const { showToast } = useToast();
   const [state, formAction, pending] = useActionState(
     submitVolunteerApplication,
     initialState
@@ -18,10 +20,21 @@ export function VolunteerApplicationModal() {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
+    if (!state.message) {
+      return;
+    }
+
+    showToast({
+      title: state.ok ? "Application received" : "Check the form",
+      message: state.message,
+      tone: state.ok ? "success" : "error"
+    });
+
     if (state.ok) {
       formRef.current?.reset();
+      setOpen(false);
     }
-  }, [state.ok]);
+  }, [showToast, state.message, state.ok]);
 
   return (
     <>
@@ -98,11 +111,6 @@ export function VolunteerApplicationModal() {
                 <Send size={17} aria-hidden="true" />
                 {pending ? "Submitting" : "Submit application"}
               </button>
-              {state.message ? (
-                <p className={state.ok ? "formMessage success" : "formMessage"}>
-                  {state.message}
-                </p>
-              ) : null}
             </form>
           </div>
         </div>

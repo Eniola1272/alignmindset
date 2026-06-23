@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import {
   FileText,
   Heading2,
@@ -14,6 +14,7 @@ import {
 import { savePost, type FormState } from "@/lib/actions";
 import type { AdminPost } from "@/lib/admin-data";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
+import { useToast } from "@/components/toast-provider";
 
 type EditableBlock = ArticleBlock & {
   id: string;
@@ -78,12 +79,25 @@ function makeSlug(value: string) {
 }
 
 export function AdminEditor({ post }: { post?: AdminPost }) {
+  const { showToast } = useToast();
   const [state, formAction, pending] = useActionState(savePost, initialState);
   const [title, setTitle] = useState(post?.title ?? "");
   const [slug, setSlug] = useState(post?.slug ?? "");
   const [blocks, setBlocks] = useState<EditableBlock[]>([
     ...(post?.body?.length ? post.body.map(blockWithId) : [createBlock("paragraph")])
   ]);
+
+  useEffect(() => {
+    if (!state.message) {
+      return;
+    }
+
+    showToast({
+      title: state.ok ? "Article saved" : "Article not saved",
+      message: state.message,
+      tone: state.ok ? "success" : "error"
+    });
+  }, [showToast, state.message, state.ok]);
 
   const serializedBlocks = useMemo(
     () =>
@@ -363,11 +377,6 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
               </>
             )}
           </button>
-          {state.message ? (
-            <p className={state.ok ? "adminMessage success" : "adminMessage"}>
-              {state.message}
-            </p>
-          ) : null}
         </div>
       </aside>
     </form>
