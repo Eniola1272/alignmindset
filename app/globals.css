@@ -254,6 +254,12 @@ nav a:hover,
   overflow: hidden;
 }
 
+.lowerProof {
+  padding: 46px 0 44px;
+  background: #ffffff;
+  border-top: 1px solid var(--line);
+}
+
 .proofCarousel {
   width: 100%;
   overflow: hidden;
@@ -1518,6 +1524,125 @@ nav a:hover,
   line-height: 1.65;
 }
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(23, 20, 33, 0.62);
+  backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.volunteerModal {
+  width: min(720px, 100%);
+  max-height: min(90vh, 860px);
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: 0 24px 70px rgba(23, 20, 33, 0.28);
+  padding: 26px;
+  position: relative;
+}
+
+.modalClose {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.modalIntro {
+  max-width: 580px;
+  padding-right: 42px;
+}
+
+.modalIntro span {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modalIntro h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+  color: var(--ink);
+}
+
+.modalIntro p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.volunteerForm {
+  margin-top: 22px;
+  display: grid;
+  gap: 14px;
+}
+
+.formGridTwo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.volunteerForm label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.volunteerForm input,
+.volunteerForm textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.volunteerForm input {
+  min-height: 46px;
+  padding: 0 13px;
+}
+
+.volunteerForm textarea {
+  padding: 13px;
+  line-height: 1.65;
+  resize: vertical;
+}
+
+.volunteerForm input:focus,
+.volunteerForm textarea:focus {
+  outline: 3px solid rgba(99, 217, 137, 0.35);
+  outline-offset: 2px;
+}
+
+.modalSubmit {
+  width: fit-content;
+  border: 0;
+  cursor: pointer;
+}
+
 .notFound {
   max-width: 620px;
 }
@@ -1637,6 +1762,10 @@ nav a:hover,
   .volunteerCta {
     display: grid;
   }
+
+  .formGridTwo {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1670,8 +1799,13 @@ nav a:hover,
   .promptPanel,
   .composerMain,
   .adminLoginCard,
+  .volunteerModal,
   .volunteerCta,
   .editorialCard {
     padding: 20px;
+  }
+
+  .modalSubmit {
+    width: 100%;
   }
 }

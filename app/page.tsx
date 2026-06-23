@@ -90,32 +90,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="proofBand">
-        <div
-          className="proofCarousel"
-          aria-label="Community member testimonials"
-        >
-          <div className="proofTrack">
-            {[...testimonials, ...testimonials].map((item, index) => (
-              <article
-                key={`${item.name}-${index}`}
-                className="testimonialCard"
-                aria-hidden={index >= testimonials.length}
-              >
-                <div>
-                  <span>{item.name.charAt(0)}</span>
-                  <div>
-                    <strong>{item.name}</strong>
-                    <small>{item.role}</small>
-                  </div>
-                </div>
-                <p>{item.quote}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="sectionPad" id="programs">
         <div className="shell splitHeader">
           <SectionHeading
@@ -190,6 +164,32 @@ export default async function Home() {
           {articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
+        </div>
+      </section>
+
+      <section className="proofBand lowerProof">
+        <div
+          className="proofCarousel"
+          aria-label="Community member testimonials"
+        >
+          <div className="proofTrack">
+            {[...testimonials, ...testimonials].map((item, index) => (
+              <article
+                key={`${item.name}-${index}`}
+                className="testimonialCard"
+                aria-hidden={index >= testimonials.length}
+              >
+                <div>
+                  <span>{item.name.charAt(0)}</span>
+                  <div>
+                    <strong>{item.name}</strong>
+                    <small>{item.role}</small>
+                  </div>
+                </div>
+                <p>{item.quote}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -413,3 +413,62 @@ export async function sendBroadcast(
     message: `Sent ${channel} update to the configured webhook for ${recipients.length} recipients.`
   };
 }
+
+export async function submitVolunteerApplication(
+  _previousState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const name = String(formData.get("name") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const skills = String(formData.get("skills") ?? "").trim();
+  const motivation = String(formData.get("motivation") ?? "").trim();
+  const valueAdd = String(formData.get("valueAdd") ?? "").trim();
+
+  if (!name || !phone || !email || !skills || !motivation || !valueAdd) {
+    return {
+      ok: false,
+      message:
+        "Please complete every field so we can understand how you want to help."
+    };
+  }
+
+  if (!email.includes("@")) {
+    return {
+      ok: false,
+      message: "Add a valid email address."
+    };
+  }
+
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    return {
+      ok: true,
+      message:
+        "Application captured locally. Add Supabase credentials to store volunteer applications."
+    };
+  }
+
+  const { error } = await supabase.from("volunteer_applications").insert({
+    name,
+    phone,
+    email,
+    skills,
+    motivation,
+    value_add: valueAdd,
+    status: "new"
+  });
+
+  if (error) {
+    return {
+      ok: false,
+      message: error.message
+    };
+  }
+
+  return {
+    ok: true,
+    message: "Thank you. Your volunteer application has been received."
+  };
+}

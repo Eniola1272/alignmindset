@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
-  ArrowRight,
   CalendarDays,
   FileText,
   Megaphone,
@@ -10,7 +8,7 @@ import {
   UsersRound
 } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
-import { site } from "@/lib/site";
+import { VolunteerApplicationModal } from "@/components/volunteer-application-modal";
 
 export const metadata: Metadata = {
   title: "Volunteer",
@@ -76,14 +74,11 @@ export default function VolunteerPage() {
           <div>
             <h2>Ready to help build the structure?</h2>
             <p>
-              Send your name, preferred role, and one practical way you can
-              serve this month.
+              Send your details, skills, motivation, and how you hope to add
+              value to the community.
             </p>
           </div>
-          <Link className="primaryButton" href={`mailto:${site.email}`}>
-            Volunteer by email
-            <ArrowRight size={17} aria-hidden="true" />
-          </Link>
+          <VolunteerApplicationModal />
         </div>
       </div>
     </section>

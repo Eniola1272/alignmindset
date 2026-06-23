@@ -59,6 +59,18 @@ create table if not exists public.broadcast_campaigns (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.volunteer_applications (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  phone text not null,
+  email text not null,
+  skills text not null,
+  motivation text not null,
+  value_add text not null,
+  status text not null default 'new',
+  created_at timestamptz not null default now()
+);
+
 alter table public.posts
   add column if not exists featured_image_url text;
 
@@ -85,10 +97,14 @@ create index if not exists posts_status_published_at_idx
 create index if not exists posts_category_idx
   on public.posts (category);
 
+create index if not exists volunteer_applications_created_at_idx
+  on public.volunteer_applications (created_at desc);
+
 alter table public.posts enable row level security;
 alter table public.subscribers enable row level security;
 alter table public.article_ideas enable row level security;
 alter table public.broadcast_campaigns enable row level security;
+alter table public.volunteer_applications enable row level security;
 
 drop policy if exists "Published posts are readable" on public.posts;
 create policy "Published posts are readable"
@@ -103,6 +119,11 @@ create policy "Subscribers can join from website"
 drop policy if exists "Article ideas can be captured" on public.article_ideas;
 create policy "Article ideas can be captured"
   on public.article_ideas for insert
+  with check (true);
+
+drop policy if exists "Volunteer applications can be submitted" on public.volunteer_applications;
+create policy "Volunteer applications can be submitted"
+  on public.volunteer_applications for insert
   with check (true);
 
 create or replace function public.set_updated_at()
@@ -157,3 +178,6 @@ comment on column public.posts.featured_image_url is
 
 comment on table public.broadcast_campaigns is
   'Admin-only log of newsletter and SMS broadcasts. Delivery can be handled by BROADCAST_WEBHOOK_URL.';
+
+comment on table public.volunteer_applications is
+  'Volunteer application submissions from the public volunteer page.';
