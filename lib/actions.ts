@@ -13,6 +13,7 @@ import {
   createSupabaseAuthClient,
   createSupabaseServerClient
 } from "@/lib/supabase";
+import type { VolunteerStatus } from "@/lib/admin-data";
 
 export type FormState = {
   ok: boolean;
@@ -80,6 +81,12 @@ const categories: ArticleCategory[] = [
 ];
 
 const statuses = ["draft", "review", "published", "archived"] as const;
+const volunteerStatuses: VolunteerStatus[] = [
+  "new",
+  "contacted",
+  "approved",
+  "declined"
+];
 
 function slugify(value: string) {
   return value
@@ -427,6 +434,37 @@ export async function sendBroadcast(
     ok: true,
     message: `Sent ${channel} update to the configured webhook for ${recipients.length} recipients.`
   };
+}
+
+export async function updateVolunteerStatus(formData: FormData) {
+  if (!(await isAdminAuthenticated())) {
+    redirect("/admin?error=session");
+  }
+
+  const id = String(formData.get("id") ?? "");
+  const status = String(formData.get("status") ?? "");
+
+  if (!id || !volunteerStatuses.includes(status as VolunteerStatus)) {
+    redirect("/admin?volunteerError=1#volunteers");
+  }
+
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    redirect("/admin?volunteerError=1#volunteers");
+  }
+
+  const { error } = await supabase
+    .from("volunteer_applications")
+    .update({ status })
+    .eq("id", id);
+
+  if (error) {
+    redirect("/admin?volunteerError=1#volunteers");
+  }
+
+  revalidatePath("/admin");
+  redirect("/admin?volunteerUpdated=1#volunteers");
 }
 
 export async function submitVolunteerApplication(

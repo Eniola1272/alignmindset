@@ -28,7 +28,22 @@ export type AdminSubscriber = {
   source: string;
   newsletterOptIn: boolean;
   smsOptIn: boolean;
+  status: string;
   subscribedAt: string;
+};
+
+export type VolunteerStatus = "new" | "contacted" | "approved" | "declined";
+
+export type AdminVolunteerApplication = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  skills: string;
+  motivation: string;
+  valueAdd: string;
+  status: VolunteerStatus;
+  createdAt: string;
 };
 
 export type AdminCampaign = {
@@ -38,12 +53,14 @@ export type AdminCampaign = {
   message: string;
   recipientCount: number;
   status: string;
+  provider: string;
   createdAt: string;
 };
 
 export type AdminDashboardData = {
   posts: AdminPost[];
   subscribers: AdminSubscriber[];
+  volunteers: AdminVolunteerApplication[];
   campaigns: AdminCampaign[];
   stats: {
     totalPosts: number;
@@ -52,6 +69,8 @@ export type AdminDashboardData = {
     subscribers: number;
     smsSubscribers: number;
     newsletterSubscribers: number;
+    volunteerApplications: number;
+    newVolunteerApplications: number;
   };
   error?: string;
 };
@@ -81,7 +100,20 @@ type SubscriberRow = {
   source: string;
   newsletter_opt_in?: boolean | null;
   sms_opt_in?: boolean | null;
+  status?: string | null;
   subscribed_at: string;
+};
+
+type VolunteerRow = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  skills: string;
+  motivation: string;
+  value_add: string;
+  status: VolunteerStatus;
+  created_at: string;
 };
 
 type CampaignRow = {
@@ -91,12 +123,14 @@ type CampaignRow = {
   message: string;
   recipient_count: number;
   status: string;
+  provider: string;
   created_at: string;
 };
 
 const emptyData: AdminDashboardData = {
   posts: [],
   subscribers: [],
+  volunteers: [],
   campaigns: [],
   stats: {
     totalPosts: 0,
@@ -104,7 +138,9 @@ const emptyData: AdminDashboardData = {
     draftPosts: 0,
     subscribers: 0,
     smsSubscribers: 0,
-    newsletterSubscribers: 0
+    newsletterSubscribers: 0,
+    volunteerApplications: 0,
+    newVolunteerApplications: 0
   }
 };
 
@@ -118,25 +154,34 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     };
   }
 
-  const [postsResult, subscribersResult, campaignsResult] = await Promise.all([
-    supabase
-      .from("posts")
-      .select(
-        "id, slug, title, excerpt, category, status, author, body, featured, featured_image_url, read_minutes, published_at, created_at, updated_at"
-      )
-      .order("updated_at", { ascending: false }),
-    supabase
-      .from("subscribers")
-      .select(
-        "id, email, name, phone, source, newsletter_opt_in, sms_opt_in, subscribed_at"
-      )
-      .order("subscribed_at", { ascending: false }),
-    supabase
-      .from("broadcast_campaigns")
-      .select("id, channel, subject, message, recipient_count, status, created_at")
-      .order("created_at", { ascending: false })
-      .limit(8)
-  ]);
+  const [postsResult, subscribersResult, volunteersResult, campaignsResult] =
+    await Promise.all([
+      supabase
+        .from("posts")
+        .select(
+          "id, slug, title, excerpt, category, status, author, body, featured, featured_image_url, read_minutes, published_at, created_at, updated_at"
+        )
+        .order("updated_at", { ascending: false }),
+      supabase
+        .from("subscribers")
+        .select(
+          "id, email, name, phone, source, newsletter_opt_in, sms_opt_in, status, subscribed_at"
+        )
+        .order("subscribed_at", { ascending: false }),
+      supabase
+        .from("volunteer_applications")
+        .select(
+          "id, name, phone, email, skills, motivation, value_add, status, created_at"
+        )
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("broadcast_campaigns")
+        .select(
+          "id, channel, subject, message, recipient_count, status, provider, created_at"
+        )
+        .order("created_at", { ascending: false })
+        .limit(12)
+    ]);
 
   if (postsResult.error) {
     return {
@@ -172,7 +217,22 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
         source: subscriber.source,
         newsletterOptIn: subscriber.newsletter_opt_in ?? true,
         smsOptIn: subscriber.sms_opt_in ?? Boolean(subscriber.phone),
+        status: subscriber.status ?? "active",
         subscribedAt: subscriber.subscribed_at
+      }));
+
+  const volunteers = volunteersResult.error
+    ? []
+    : ((volunteersResult.data ?? []) as VolunteerRow[]).map((volunteer) => ({
+        id: volunteer.id,
+        name: volunteer.name,
+        phone: volunteer.phone,
+        email: volunteer.email,
+        skills: volunteer.skills,
+        motivation: volunteer.motivation,
+        valueAdd: volunteer.value_add,
+        status: volunteer.status,
+        createdAt: volunteer.created_at
       }));
 
   const campaigns = campaignsResult.error
@@ -184,12 +244,14 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
         message: campaign.message,
         recipientCount: campaign.recipient_count,
         status: campaign.status,
+        provider: campaign.provider,
         createdAt: campaign.created_at
       }));
 
   return {
     posts,
     subscribers,
+    volunteers,
     campaigns,
     stats: {
       totalPosts: posts.length,
@@ -200,9 +262,16 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
         .length,
       newsletterSubscribers: subscribers.filter(
         (subscriber) => subscriber.newsletterOptIn
+      ).length,
+      volunteerApplications: volunteers.length,
+      newVolunteerApplications: volunteers.filter(
+        (volunteer) => volunteer.status === "new"
       ).length
     },
     error:
-      subscribersResult.error?.message || campaignsResult.error?.message || ""
+      subscribersResult.error?.message ||
+      volunteersResult.error?.message ||
+      campaignsResult.error?.message ||
+      ""
   };
 }

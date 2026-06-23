@@ -1361,7 +1361,7 @@ nav a:hover,
 .adminStatsGrid {
   margin-top: 18px;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
   gap: 12px;
 }
 
@@ -1400,12 +1400,16 @@ nav a:hover,
   min-width: 760px;
 }
 
+.wideTable {
+  min-width: 1080px;
+}
+
 .adminTable th,
 .adminTable td {
   border-bottom: 1px solid var(--line);
   padding: 14px 10px;
   text-align: left;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .adminTable th {
@@ -1451,9 +1455,66 @@ nav a:hover,
   background: #e7f5fb;
 }
 
+.status-new {
+  background: #fff4c8;
+}
+
+.status-contacted {
+  background: #e7f5fb;
+}
+
+.status-approved {
+  background: #dff8e7;
+  color: var(--green-dark);
+}
+
+.status-declined {
+  background: #ffe1d8;
+  color: #9b321f;
+}
+
 .status-archived {
   background: #ece8df;
   color: var(--muted);
+}
+
+.adminFilters {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 240px) auto auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.adminFilters label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.adminFilters input,
+.adminFilters select,
+.statusForm select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--ink);
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.adminFilters button {
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.adminClearFilter {
+  align-self: center;
+  margin-top: 0;
+  white-space: nowrap;
 }
 
 .tableActions,
@@ -1477,6 +1538,43 @@ nav a:hover,
 
 .tableActions button:hover {
   color: #9b321f;
+}
+
+.statusForm {
+  display: grid;
+  gap: 8px;
+  min-width: 150px;
+}
+
+.statusForm button {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.tableDetails {
+  max-width: 420px;
+}
+
+.tableDetails summary {
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 850;
+  line-height: 1.5;
+}
+
+.tableDetails p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.tableEmpty {
+  margin: 16px 0 0;
 }
 
 .adminTwoColumn {
@@ -1554,6 +1652,74 @@ nav a:hover,
 .campaignList p {
   color: var(--muted);
   line-height: 1.6;
+}
+
+.campaignList a {
+  margin-top: 12px;
+  display: inline-flex;
+  width: fit-content;
+  color: var(--ink);
+  font-weight: 850;
+}
+
+.campaignDetail {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  padding: 18px;
+}
+
+.campaignDetail > span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.campaignDetail h3 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.campaignDetail dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 14px;
+}
+
+.campaignDetail dl div {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 12px;
+}
+
+.campaignDetail dt {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.campaignDetail dd {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-weight: 850;
+  text-transform: capitalize;
+}
+
+.campaignDetail p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
 }
 
 .editorPanel .adminComposer {
@@ -1768,6 +1934,7 @@ nav a:hover,
   .adminComposer,
   .adminStatsGrid,
   .adminTwoColumn,
+  .adminFilters,
   .volunteerGrid,
   .editorialGrid,
   .promptPanel div {

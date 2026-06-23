@@ -4,8 +4,10 @@ import {
   BarChart3,
   Edit3,
   FileText,
+  HandHeart,
   Inbox,
   LayoutDashboard,
+  ListFilter,
   LockKeyhole,
   LogOut,
   Mail,
@@ -19,7 +21,12 @@ import { BroadcastForm } from "@/components/broadcast-form";
 import { SectionHeading } from "@/components/section-heading";
 import { isAdminAuthenticated, isAdminEnabled } from "@/lib/admin";
 import { getAdminDashboardData } from "@/lib/admin-data";
-import { deletePost, loginToAdmin, logoutFromAdmin } from "@/lib/actions";
+import {
+  deletePost,
+  loginToAdmin,
+  logoutFromAdmin,
+  updateVolunteerStatus
+} from "@/lib/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +40,11 @@ type AdminPageProps = {
     error?: string;
     deleted?: string;
     edit?: string;
+    subscriberQuery?: string;
+    subscriberChannel?: string;
+    campaign?: string;
+    volunteerUpdated?: string;
+    volunteerError?: string;
   }>;
 };
 
@@ -40,9 +52,12 @@ const sidebarItems = [
   { href: "#overview", label: "Overview", icon: LayoutDashboard },
   { href: "#posts", label: "Posts", icon: FileText },
   { href: "#subscribers", label: "Subscribers", icon: UsersRound },
+  { href: "#volunteers", label: "Volunteers", icon: HandHeart },
   { href: "#broadcasts", label: "Broadcasts", icon: Mail },
   { href: "#editor", label: "Editor", icon: Edit3 }
 ];
+
+const volunteerStatuses = ["new", "contacted", "approved", "declined"] as const;
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
   const params = await searchParams;
@@ -98,6 +113,24 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     dashboard.posts.at(0);
   const selectedPost =
     dashboard.posts.find((post) => post.slug === params.edit) ?? undefined;
+  const subscriberQuery = (params.subscriberQuery ?? "").trim().toLowerCase();
+  const subscriberChannel = params.subscriberChannel ?? "all";
+  const filteredSubscribers = dashboard.subscribers.filter((subscriber) => {
+    const matchesQuery =
+      !subscriberQuery ||
+      subscriber.email.toLowerCase().includes(subscriberQuery) ||
+      subscriber.name.toLowerCase().includes(subscriberQuery) ||
+      subscriber.phone.toLowerCase().includes(subscriberQuery);
+    const matchesChannel =
+      subscriberChannel === "all" ||
+      (subscriberChannel === "newsletter" && subscriber.newsletterOptIn) ||
+      (subscriberChannel === "sms" && subscriber.smsOptIn);
+
+    return matchesQuery && matchesChannel;
+  });
+  const selectedCampaign =
+    dashboard.campaigns.find((campaign) => campaign.id === params.campaign) ??
+    dashboard.campaigns.at(0);
 
   return (
     <section className="adminDashboard">
@@ -145,6 +178,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         {params.deleted ? (
           <p className="adminNotice success">Post deleted.</p>
         ) : null}
+        {params.volunteerUpdated ? (
+          <p className="adminNotice success">Volunteer status updated.</p>
+        ) : null}
+        {params.volunteerError ? (
+          <p className="adminNotice">
+            Volunteer status could not be updated. Please try again.
+          </p>
+        ) : null}
 
         <section className="adminPanel" id="overview">
           <div className="panelHeader">
@@ -178,6 +219,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <div>
               <strong>{dashboard.stats.smsSubscribers}</strong>
               <span>SMS opt-ins</span>
+            </div>
+            <div>
+              <strong>{dashboard.stats.volunteerApplications}</strong>
+              <span>Volunteer applications</span>
+            </div>
+            <div>
+              <strong>{dashboard.stats.newVolunteerApplications}</strong>
+              <span>New volunteers</span>
             </div>
           </div>
         </section>
@@ -246,6 +295,31 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             </div>
             <Inbox size={24} aria-hidden="true" />
           </div>
+          <form className="adminFilters" method="get" action="/admin">
+            <label>
+              Search
+              <input
+                name="subscriberQuery"
+                placeholder="Name, email, or phone"
+                defaultValue={params.subscriberQuery ?? ""}
+              />
+            </label>
+            <label>
+              Channel
+              <select name="subscriberChannel" defaultValue={subscriberChannel}>
+                <option value="all">All subscribers</option>
+                <option value="newsletter">Newsletter</option>
+                <option value="sms">SMS</option>
+              </select>
+            </label>
+            <button className="secondaryButton" type="submit">
+              <ListFilter size={17} aria-hidden="true" />
+              Filter
+            </button>
+            <Link className="textLink adminClearFilter" href="/admin#subscribers">
+              Clear
+            </Link>
+          </form>
           <div className="adminTableWrap">
             <table className="adminTable">
               <thead>
@@ -258,7 +332,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 </tr>
               </thead>
               <tbody>
-                {dashboard.subscribers.map((subscriber) => (
+                {filteredSubscribers.map((subscriber) => (
                   <tr key={subscriber.id}>
                     <td>{subscriber.email}</td>
                     <td>{subscriber.name || "—"}</td>
@@ -276,6 +350,80 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 ))}
               </tbody>
             </table>
+            {!filteredSubscribers.length ? (
+              <p className="emptyState tableEmpty">
+                No subscribers match this filter.
+              </p>
+            ) : null}
+          </div>
+        </section>
+
+        <section className="adminPanel" id="volunteers">
+          <div className="panelHeader">
+            <div>
+              <span>Volunteers</span>
+              <h2>Applications and follow-up status</h2>
+            </div>
+            <HandHeart size={24} aria-hidden="true" />
+          </div>
+          <div className="adminTableWrap">
+            <table className="adminTable wideTable">
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Contact</th>
+                  <th>Skills and motivation</th>
+                  <th>Status</th>
+                  <th>Applied</th>
+                  <th>Update</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dashboard.volunteers.map((volunteer) => (
+                  <tr key={volunteer.id}>
+                    <td>
+                      <strong>{volunteer.name}</strong>
+                      <small>{volunteer.email}</small>
+                    </td>
+                    <td>
+                      <strong>{volunteer.phone}</strong>
+                      <small>{volunteer.email}</small>
+                    </td>
+                    <td>
+                      <details className="tableDetails">
+                        <summary>{volunteer.skills}</summary>
+                        <p>{volunteer.motivation}</p>
+                        <p>{volunteer.valueAdd}</p>
+                      </details>
+                    </td>
+                    <td>
+                      <span className={`statusPill status-${volunteer.status}`}>
+                        {volunteer.status}
+                      </span>
+                    </td>
+                    <td>{new Date(volunteer.createdAt).toLocaleDateString()}</td>
+                    <td>
+                      <form className="statusForm" action={updateVolunteerStatus}>
+                        <input name="id" type="hidden" value={volunteer.id} />
+                        <select name="status" defaultValue={volunteer.status}>
+                          {volunteerStatuses.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </select>
+                        <button type="submit">Save</button>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {!dashboard.volunteers.length ? (
+              <p className="emptyState tableEmpty">
+                No volunteer applications yet.
+              </p>
+            ) : null}
           </div>
         </section>
 
@@ -300,15 +448,44 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       </div>
                       <p>{campaign.message}</p>
                       <small>
+                        {campaign.channel} · {campaign.provider} ·{" "}
                         {campaign.recipientCount} recipients ·{" "}
                         {new Date(campaign.createdAt).toLocaleDateString()}
                       </small>
+                      <Link href={`/admin?campaign=${campaign.id}#broadcasts`}>
+                        View log
+                      </Link>
                     </article>
                   ))
                 ) : (
                   <p className="emptyState">No campaigns yet.</p>
                 )}
               </div>
+              {selectedCampaign ? (
+                <article className="campaignDetail">
+                  <span>Selected campaign</span>
+                  <h3>{selectedCampaign.subject || selectedCampaign.channel}</h3>
+                  <dl>
+                    <div>
+                      <dt>Channel</dt>
+                      <dd>{selectedCampaign.channel}</dd>
+                    </div>
+                    <div>
+                      <dt>Status</dt>
+                      <dd>{selectedCampaign.status}</dd>
+                    </div>
+                    <div>
+                      <dt>Provider</dt>
+                      <dd>{selectedCampaign.provider}</dd>
+                    </div>
+                    <div>
+                      <dt>Recipients</dt>
+                      <dd>{selectedCampaign.recipientCount}</dd>
+                    </div>
+                  </dl>
+                  <p>{selectedCampaign.message}</p>
+                </article>
+              ) : null}
             </div>
           </div>
         </section>
