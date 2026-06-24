@@ -37,12 +37,12 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
       <div className="shell articleShell">
         <div className="previewBanner">
           <span>Draft preview</span>
-          <Link href={`/admin?edit=${article.slug}#editor`}>
+          <Link href={`/admin/editor?edit=${article.slug}`}>
             <Edit3 size={16} aria-hidden="true" />
             Edit post
           </Link>
         </div>
-        <Link className="backLink" href="/admin#posts">
+        <Link className="backLink" href="/admin/posts">
           <ArrowLeft size={16} aria-hidden="true" />
           Back to admin
         </Link>

@@ -394,6 +394,8 @@ export async function savePost(
   revalidatePath("/blog");
   revalidatePath(`/blog/${slug}`);
   revalidatePath("/admin");
+  revalidatePath("/admin/posts");
+  revalidatePath("/admin/editor");
 
   return {
     ok: true,
@@ -416,7 +418,7 @@ export async function deletePost(formData: FormData) {
   const supabase = createSupabaseServerClient();
 
   if (!id || !supabase) {
-    redirect("/admin?error=delete");
+    redirect("/admin/posts?error=delete");
   }
 
   await supabase.from("posts").delete().eq("id", id);
@@ -427,7 +429,8 @@ export async function deletePost(formData: FormData) {
     revalidatePath(`/blog/${slug}`);
   }
   revalidatePath("/admin");
-  redirect("/admin?deleted=1");
+  revalidatePath("/admin/posts");
+  redirect("/admin/posts?deleted=1");
 }
 
 export async function sendBroadcast(
@@ -529,6 +532,7 @@ export async function sendBroadcast(
   }
 
   revalidatePath("/admin");
+  revalidatePath("/admin/broadcasts");
 
   if (!webhookUrl) {
     return {
@@ -559,13 +563,13 @@ export async function updateVolunteerStatus(formData: FormData) {
   const status = String(formData.get("status") ?? "");
 
   if (!id || !volunteerStatuses.includes(status as VolunteerStatus)) {
-    redirect("/admin?volunteerError=1#volunteers");
+    redirect("/admin/volunteers?volunteerError=1");
   }
 
   const supabase = createSupabaseServerClient();
 
   if (!supabase) {
-    redirect("/admin?volunteerError=1#volunteers");
+    redirect("/admin/volunteers?volunteerError=1");
   }
 
   const { error } = await supabase
@@ -574,11 +578,12 @@ export async function updateVolunteerStatus(formData: FormData) {
     .eq("id", id);
 
   if (error) {
-    redirect("/admin?volunteerError=1#volunteers");
+    redirect("/admin/volunteers?volunteerError=1");
   }
 
   revalidatePath("/admin");
-  redirect("/admin?volunteerUpdated=1#volunteers");
+  revalidatePath("/admin/volunteers");
+  redirect("/admin/volunteers?volunteerUpdated=1");
 }
 
 export async function submitVolunteerApplication(
