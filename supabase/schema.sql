@@ -30,6 +30,12 @@ create table if not exists public.posts (
   body jsonb not null default '[]'::jsonb,
   featured boolean not null default false,
   featured_image_url text,
+  category_label text,
+  tags text[] not null default '{}',
+  meta_title text,
+  meta_description text,
+  og_image_url text,
+  scheduled_for timestamptz,
   read_minutes integer not null default 4 check (read_minutes > 0),
   published_at timestamptz,
   created_at timestamptz not null default now(),
@@ -72,7 +78,27 @@ create table if not exists public.volunteer_applications (
 );
 
 alter table public.posts
-  add column if not exists featured_image_url text;
+  add column if not exists featured_image_url text,
+  add column if not exists category_label text,
+  add column if not exists tags text[] not null default '{}',
+  add column if not exists meta_title text,
+  add column if not exists meta_description text,
+  add column if not exists og_image_url text,
+  add column if not exists scheduled_for timestamptz;
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'post-images',
+  'post-images',
+  true,
+  10485760,
+  array['image/png', 'image/jpeg', 'image/webp', 'image/gif']
+)
+on conflict (id) do update
+set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 alter table public.subscribers
   add column if not exists name text,
@@ -105,6 +131,11 @@ alter table public.subscribers enable row level security;
 alter table public.article_ideas enable row level security;
 alter table public.broadcast_campaigns enable row level security;
 alter table public.volunteer_applications enable row level security;
+
+drop policy if exists "Post images are publicly readable" on storage.objects;
+create policy "Post images are publicly readable"
+  on storage.objects for select
+  using (bucket_id = 'post-images');
 
 drop policy if exists "Published posts are readable" on public.posts;
 create policy "Published posts are readable"

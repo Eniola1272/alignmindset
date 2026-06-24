@@ -1,4 +1,8 @@
-import { createSupabaseBrowserClient, hasSupabaseConfig } from "@/lib/supabase";
+import {
+  createSupabaseBrowserClient,
+  createSupabaseServerClient,
+  hasSupabaseConfig
+} from "@/lib/supabase";
 
 export type ArticleCategory =
   | "Identity"
@@ -14,11 +18,17 @@ export type Article = {
   title: string;
   excerpt: string;
   category: ArticleCategory;
+  categoryLabel: string;
+  tags: string[];
   publishedAt: string;
+  scheduledFor?: string | null;
   readMinutes: number;
   author: string;
   featured: boolean;
   featuredImageUrl?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImageUrl?: string;
   body: ArticleBlock[];
 };
 
@@ -50,8 +60,17 @@ type SupabasePost = {
   author: string;
   featured: boolean;
   featured_image_url?: string | null;
+  category_label?: string | null;
+  tags?: string[] | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  og_image_url?: string | null;
+  scheduled_for?: string | null;
   body: unknown;
 };
+
+const postSelect =
+  "id, slug, title, excerpt, category, category_label, tags, published_at, scheduled_for, read_minutes, author, featured, featured_image_url, meta_title, meta_description, og_image_url, body";
 
 export const categories: ArticleCategory[] = [
   "Identity",
@@ -62,7 +81,18 @@ export const categories: ArticleCategory[] = [
   "Community"
 ];
 
-const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
+const rawSeedArticles: Array<
+  Omit<
+    Article,
+    | "body"
+    | "categoryLabel"
+    | "tags"
+    | "metaTitle"
+    | "metaDescription"
+    | "ogImageUrl"
+    | "scheduledFor"
+  > & { body: string[] }
+> = [
   {
     id: "seed-1",
     slug: "align-your-identity-before-your-goals",
@@ -181,6 +211,11 @@ const rawSeedArticles: Array<Omit<Article, "body"> & { body: string[] }> = [
 
 export const seedArticles: Article[] = rawSeedArticles.map((article) => ({
   ...article,
+  categoryLabel: article.category,
+  tags: [],
+  metaTitle: article.title,
+  metaDescription: article.excerpt,
+  ogImageUrl: article.featuredImageUrl,
   body: normalizeBody(article.body)
 }));
 
@@ -265,11 +300,17 @@ function mapPost(post: SupabasePost): Article {
     title: post.title,
     excerpt: post.excerpt,
     category: post.category,
-    publishedAt: post.published_at,
+    categoryLabel: post.category_label ?? post.category,
+    tags: post.tags ?? [],
+    publishedAt: post.published_at ?? post.scheduled_for ?? new Date().toISOString(),
+    scheduledFor: post.scheduled_for ?? null,
     readMinutes: post.read_minutes,
     author: post.author,
     featured: post.featured,
     featuredImageUrl: post.featured_image_url ?? "",
+    metaTitle: post.meta_title ?? "",
+    metaDescription: post.meta_description ?? "",
+    ogImageUrl: post.og_image_url ?? "",
     body: normalizeBody(post.body)
   };
 }
@@ -287,9 +328,7 @@ export async function getArticles(): Promise<Article[]> {
 
   const { data, error } = await supabase
     .from("posts")
-    .select(
-      "id, slug, title, excerpt, category, published_at, read_minutes, author, featured, featured_image_url, body"
-    )
+    .select(postSelect)
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
@@ -297,7 +336,11 @@ export async function getArticles(): Promise<Article[]> {
     return seedArticles;
   }
 
-  return (data as SupabasePost[]).map(mapPost);
+  const now = Date.now();
+
+  return (data as SupabasePost[])
+    .filter((post) => !post.scheduled_for || new Date(post.scheduled_for).getTime() <= now)
+    .map(mapPost);
 }
 
 export async function getArticleBySlug(slug: string) {
@@ -308,4 +351,24 @@ export async function getArticleBySlug(slug: string) {
 export async function getFeaturedArticles() {
   const articles = await getArticles();
   return articles.filter((article) => article.featured).slice(0, 4);
+}
+
+export async function getArticlePreviewBySlug(slug: string) {
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    return seedArticles.find((article) => article.slug === slug) ?? null;
+  }
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select(postSelect)
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (error || !data) {
+    return null;
+  }
+
+  return mapPost(data as SupabasePost);
 }

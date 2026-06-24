@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArticleCard } from "@/components/article-card";
 import { SectionHeading } from "@/components/section-heading";
-import { categories, getArticles } from "@/lib/articles";
+import { getArticles } from "@/lib/articles";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   const articles = await getArticles();
+  const categories = Array.from(
+    new Set(
+      articles.flatMap((article) => [
+        article.categoryLabel || article.category,
+        ...article.tags
+      ])
+    )
+  ).slice(0, 12);
 
   return (
     <section className="pageHero">

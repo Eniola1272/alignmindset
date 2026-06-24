@@ -1,17 +1,25 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useEffect, useMemo, useState } from "react";
 import {
+  Eye,
   FileText,
   Heading2,
   Image,
   MessageSquareQuote,
   Plus,
   Save,
+  Search,
   Trash2,
+  Upload,
   Video
 } from "lucide-react";
-import { savePost, type FormState } from "@/lib/actions";
+import {
+  savePost,
+  uploadPostImage,
+  type FormState
+} from "@/lib/actions";
 import type { AdminPost } from "@/lib/admin-data";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
 import { useToast } from "@/components/toast-provider";
@@ -78,11 +86,57 @@ function makeSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function toDateTimeLocal(value?: string | null) {
+  if (!value) {
+    return "";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
+}
+
+function getVideoEmbedUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      return id ? `https://www.youtube.com/embed/${id}` : "";
+    }
+
+    if (parsed.hostname.includes("youtu.be")) {
+      const id = parsed.pathname.replace("/", "");
+      return id ? `https://www.youtube.com/embed/${id}` : "";
+    }
+
+    if (parsed.hostname.includes("vimeo.com")) {
+      const id = parsed.pathname.split("/").filter(Boolean).at(0);
+      return id ? `https://player.vimeo.com/video/${id}` : "";
+    }
+
+    return url;
+  } catch {
+    return "";
+  }
+}
+
 export function AdminEditor({ post }: { post?: AdminPost }) {
   const { showToast } = useToast();
   const [state, formAction, pending] = useActionState(savePost, initialState);
   const [title, setTitle] = useState(post?.title ?? "");
   const [slug, setSlug] = useState(post?.slug ?? "");
+  const [featuredImageUrl, setFeaturedImageUrl] = useState(
+    post?.featuredImageUrl ?? ""
+  );
+  const [ogImageUrl, setOgImageUrl] = useState(post?.ogImageUrl ?? "");
+  const [uploadingTarget, setUploadingTarget] = useState<string | null>(null);
   const [blocks, setBlocks] = useState<EditableBlock[]>([
     ...(post?.body?.length ? post.body.map(blockWithId) : [createBlock("paragraph")])
   ]);
@@ -159,6 +213,34 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
     setBlocks((current) =>
       current.length === 1 ? current : current.filter((block) => block.id !== id)
     );
+  }
+
+  async function handleImageUpload(
+    target: string,
+    file: File | undefined,
+    onUploaded: (url: string) => void
+  ) {
+    if (!file) {
+      return;
+    }
+
+    setUploadingTarget(target);
+
+    const formData = new FormData();
+    formData.append("image", file);
+    const result = await uploadPostImage(formData);
+
+    setUploadingTarget(null);
+
+    showToast({
+      title: result.ok ? "Image uploaded" : "Upload failed",
+      message: result.message,
+      tone: result.ok ? "success" : "error"
+    });
+
+    if (result.ok && result.url) {
+      onUploaded(result.url);
+    }
   }
 
   return (
@@ -268,6 +350,21 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
                       updateBlock(block.id, { url: event.target.value })
                     }
                   />
+                  <label className="uploadInline">
+                    <Upload size={16} aria-hidden="true" />
+                    {uploadingTarget === block.id ? "Uploading" : "Upload image"}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(event) =>
+                        handleImageUpload(
+                          block.id,
+                          event.target.files?.[0],
+                          (url) => updateBlock(block.id, { url })
+                        )
+                      }
+                    />
+                  </label>
                   <input
                     placeholder="Alt text"
                     value={block.alt}
@@ -282,6 +379,13 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
                       updateBlock(block.id, { caption: event.target.value })
                     }
                   />
+                  {block.url ? (
+                    <img
+                      className="editorImagePreview"
+                      src={block.url}
+                      alt={block.alt || ""}
+                    />
+                  ) : null}
                 </div>
               ) : null}
 
@@ -301,6 +405,16 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
                       updateBlock(block.id, { caption: event.target.value })
                     }
                   />
+                  {getVideoEmbedUrl(block.url) ? (
+                    <div className="editorVideoPreview">
+                      <iframe
+                        src={getVideoEmbedUrl(block.url)}
+                        title={block.caption || "Video preview"}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </div>
@@ -322,13 +436,25 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
           </label>
           <label>
             Category
-            <select name="category" defaultValue={post?.category ?? "Identity"}>
+            <input
+              name="categoryLabel"
+              list="article-categories"
+              defaultValue={post?.categoryLabel ?? post?.category ?? "Identity"}
+              placeholder="Mindset, Career, Faith, Skills..."
+            />
+            <datalist id="article-categories">
               {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
+                <option key={category} value={category} />
               ))}
-            </select>
+            </datalist>
+          </label>
+          <label>
+            Tags
+            <input
+              name="tags"
+              placeholder="discipline, confidence, career"
+              defaultValue={post?.tags.join(", ") ?? ""}
+            />
           </label>
           <label>
             Status
@@ -344,13 +470,46 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
             <input name="author" defaultValue={post?.author ?? "Align Mindset Team"} />
           </label>
           <label>
+            Schedule publish time
+            <input
+              name="scheduledFor"
+              type="datetime-local"
+              defaultValue={toDateTimeLocal(post?.scheduledFor)}
+            />
+          </label>
+          <label>
             Featured image URL
             <input
               name="featuredImageUrl"
               placeholder="https://..."
-              defaultValue={post?.featuredImageUrl ?? ""}
+              value={featuredImageUrl}
+              onChange={(event) => setFeaturedImageUrl(event.target.value)}
             />
           </label>
+          <label className="uploadInline uploadField">
+            <Upload size={16} aria-hidden="true" />
+            {uploadingTarget === "featured"
+              ? "Uploading"
+              : "Upload featured image"}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(event) =>
+                handleImageUpload(
+                  "featured",
+                  event.target.files?.[0],
+                  setFeaturedImageUrl
+                )
+              }
+            />
+          </label>
+          {featuredImageUrl ? (
+            <img
+              className="editorImagePreview sidebarImagePreview"
+              src={featuredImageUrl}
+              alt=""
+            />
+          ) : null}
           <label>
             Read minutes
             <input
@@ -360,10 +519,57 @@ export function AdminEditor({ post }: { post?: AdminPost }) {
               defaultValue={post?.readMinutes ?? 4}
             />
           </label>
+          <div className="sidebarDivider">
+            <Search size={16} aria-hidden="true" />
+            <span>SEO</span>
+          </div>
+          <label>
+            Meta title
+            <input
+              name="metaTitle"
+              placeholder="Defaults to article title"
+              defaultValue={post?.metaTitle ?? ""}
+            />
+          </label>
+          <label>
+            Meta description
+            <textarea
+              name="metaDescription"
+              rows={3}
+              placeholder="Defaults to article excerpt"
+              defaultValue={post?.metaDescription ?? ""}
+            />
+          </label>
+          <label>
+            OG image URL
+            <input
+              name="ogImageUrl"
+              placeholder="Defaults to featured image"
+              value={ogImageUrl}
+              onChange={(event) => setOgImageUrl(event.target.value)}
+            />
+          </label>
+          <label className="uploadInline uploadField">
+            <Upload size={16} aria-hidden="true" />
+            {uploadingTarget === "og" ? "Uploading" : "Upload OG image"}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(event) =>
+                handleImageUpload("og", event.target.files?.[0], setOgImageUrl)
+              }
+            />
+          </label>
           <label className="checkRow">
             <input name="featured" type="checkbox" defaultChecked={post?.featured} />
             Feature on homepage
           </label>
+          {slug ? (
+            <Link className="secondaryButton previewButton" href={`/blog/preview/${slug}`}>
+              <Eye size={17} aria-hidden="true" />
+              Preview draft
+            </Link>
+          ) : null}
           <button className="primaryButton adminSaveButton" disabled={pending}>
             {pending ? (
               <>

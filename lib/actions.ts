@@ -96,6 +96,39 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function parseCommaList(value: FormDataEntryValue | null) {
+  if (typeof value !== "string") {
+    return [];
+  }
+
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function getLegacyCategory(value: string): ArticleCategory {
+  const normalized = value.trim().toLowerCase();
+  return (
+    categories.find((category) => category.toLowerCase() === normalized) ??
+    "Identity"
+  );
+}
+
+function parseOptionalDateTime(value: FormDataEntryValue | null) {
+  if (typeof value !== "string" || !value.trim()) {
+    return null;
+  }
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return "invalid";
+  }
+
+  return parsed.toISOString();
+}
+
 function parseBlocks(value: FormDataEntryValue | null): ArticleBlock[] {
   if (typeof value !== "string") {
     return [];
@@ -193,6 +226,69 @@ export async function logoutFromAdmin() {
   redirect("/admin");
 }
 
+export type UploadState = FormState & {
+  url?: string;
+};
+
+export async function uploadPostImage(formData: FormData): Promise<UploadState> {
+  if (!(await isAdminAuthenticated())) {
+    return {
+      ok: false,
+      message: "Your admin session expired. Sign in again to upload images."
+    };
+  }
+
+  const image = formData.get("image");
+
+  if (!(image instanceof File) || !image.size) {
+    return {
+      ok: false,
+      message: "Choose an image to upload."
+    };
+  }
+
+  if (!image.type.startsWith("image/")) {
+    return {
+      ok: false,
+      message: "Only image files can be uploaded."
+    };
+  }
+
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    return {
+      ok: false,
+      message: "Supabase service role credentials are required to upload images."
+    };
+  }
+
+  const extension = image.name.split(".").pop()?.toLowerCase() || "jpg";
+  const path = `posts/${Date.now()}-${crypto.randomUUID()}.${extension}`;
+  const bytes = Buffer.from(await image.arrayBuffer());
+  const { error } = await supabase.storage
+    .from("post-images")
+    .upload(path, bytes, {
+      contentType: image.type,
+      upsert: false
+    });
+
+  if (error) {
+    return {
+      ok: false,
+      message: error.message
+    };
+  }
+
+  const { data } = supabase.storage.from("post-images").getPublicUrl(path);
+
+  return {
+    ok: true,
+    message: "Image uploaded.",
+    url: data.publicUrl
+  };
+}
+
 export async function savePost(
   _previousState: FormState,
   formData: FormData
@@ -209,11 +305,18 @@ export async function savePost(
   const slug = slugify(String(formData.get("slug") ?? title));
   const author =
     String(formData.get("author") ?? "").trim() || "Align Mindset Team";
-  const category = String(formData.get("category") ?? "Identity");
+  const categoryLabel =
+    String(formData.get("categoryLabel") ?? "").trim() || "Identity";
+  const category = getLegacyCategory(categoryLabel);
   const status = String(formData.get("status") ?? "draft");
   const readMinutes = Number(formData.get("readMinutes") ?? 4);
   const featured = formData.get("featured") === "on";
   const featuredImageUrl = String(formData.get("featuredImageUrl") ?? "").trim();
+  const tags = parseCommaList(formData.get("tags"));
+  const metaTitle = String(formData.get("metaTitle") ?? "").trim();
+  const metaDescription = String(formData.get("metaDescription") ?? "").trim();
+  const ogImageUrl = String(formData.get("ogImageUrl") ?? "").trim();
+  const scheduledFor = parseOptionalDateTime(formData.get("scheduledFor"));
   const body = parseBlocks(formData.get("body"));
 
   if (!title || !excerpt || !slug) {
@@ -223,10 +326,10 @@ export async function savePost(
     };
   }
 
-  if (!categories.includes(category as ArticleCategory)) {
+  if (scheduledFor === "invalid") {
     return {
       ok: false,
-      message: "Choose a valid category."
+      message: "Choose a valid scheduled publishing date."
     };
   }
 
@@ -260,13 +363,22 @@ export async function savePost(
       title,
       excerpt,
       category,
+      category_label: categoryLabel,
       status,
       author,
       body,
       featured,
       featured_image_url: featuredImageUrl || null,
+      tags,
+      meta_title: metaTitle || null,
+      meta_description: metaDescription || null,
+      og_image_url: ogImageUrl || null,
+      scheduled_for: scheduledFor,
       read_minutes: Number.isFinite(readMinutes) ? readMinutes : 4,
-      published_at: status === "published" ? new Date().toISOString() : null
+      published_at:
+        status === "published"
+          ? scheduledFor || new Date().toISOString()
+          : null
     },
     { onConflict: "slug" }
   );
@@ -287,7 +399,9 @@ export async function savePost(
     ok: true,
     message:
       status === "published"
-        ? `Published "${title}" at /blog/${slug}.`
+        ? scheduledFor && new Date(scheduledFor) > new Date()
+          ? `Scheduled "${title}" for ${new Date(scheduledFor).toLocaleString()}.`
+          : `Published "${title}" at /blog/${slug}.`
         : `Saved "${title}" as ${status}.`
   };
 }

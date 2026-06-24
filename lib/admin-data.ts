@@ -14,6 +14,12 @@ export type AdminPost = {
   body: ArticleBlock[];
   featured: boolean;
   featuredImageUrl: string;
+  categoryLabel: string;
+  tags: string[];
+  metaTitle: string;
+  metaDescription: string;
+  ogImageUrl: string;
+  scheduledFor: string | null;
   readMinutes: number;
   publishedAt: string | null;
   createdAt: string;
@@ -86,6 +92,12 @@ type PostRow = {
   body: ArticleBlock[];
   featured: boolean;
   featured_image_url: string | null;
+  category_label?: string | null;
+  tags?: string[] | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  og_image_url?: string | null;
+  scheduled_for?: string | null;
   read_minutes: number;
   published_at: string | null;
   created_at: string;
@@ -159,7 +171,7 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
       supabase
         .from("posts")
         .select(
-          "id, slug, title, excerpt, category, status, author, body, featured, featured_image_url, read_minutes, published_at, created_at, updated_at"
+          "id, slug, title, excerpt, category, status, author, body, featured, featured_image_url, category_label, tags, meta_title, meta_description, og_image_url, scheduled_for, read_minutes, published_at, created_at, updated_at"
         )
         .order("updated_at", { ascending: false }),
       supabase
@@ -201,6 +213,12 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     body: post.body ?? [],
     featured: post.featured,
     featuredImageUrl: post.featured_image_url ?? "",
+    categoryLabel: post.category_label ?? post.category,
+    tags: post.tags ?? [],
+    metaTitle: post.meta_title ?? "",
+    metaDescription: post.meta_description ?? "",
+    ogImageUrl: post.og_image_url ?? "",
+    scheduledFor: post.scheduled_for ?? null,
     readMinutes: post.read_minutes,
     publishedAt: post.published_at,
     createdAt: post.created_at,

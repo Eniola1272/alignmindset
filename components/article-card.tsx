@@ -13,11 +13,18 @@ export function ArticleCard({ article }: { article: Article }) {
         />
       ) : null}
       <div className="articleMeta">
-        <span>{article.category}</span>
+        <span>{article.categoryLabel || article.category}</span>
         <span>{article.readMinutes} min read</span>
       </div>
       <h2>{article.title}</h2>
       <p>{article.excerpt}</p>
+      {article.tags.length ? (
+        <div className="articleTags">
+          {article.tags.slice(0, 3).map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+      ) : null}
       <Link href={`/blog/${article.slug}`}>
         Continue reading
         <ArrowUpRight size={15} aria-hidden="true" />

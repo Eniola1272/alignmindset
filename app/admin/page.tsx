@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   BarChart3,
   Edit3,
+  Eye,
   FileText,
   HandHeart,
   Inbox,
@@ -269,6 +270,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                         <Link href={`/admin?edit=${post.slug}#editor`}>
                           <Edit3 size={16} aria-hidden="true" />
                           Edit
+                        </Link>
+                        <Link href={`/blog/preview/${post.slug}`}>
+                          <Eye size={16} aria-hidden="true" />
+                          Preview
                         </Link>
                         <form action={deletePost}>
                           <input name="id" type="hidden" value={post.id} />
