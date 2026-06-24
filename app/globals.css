@@ -1363,6 +1363,7 @@ nav a:hover,
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   background: #f7f4ed;
+  overflow-x: hidden;
 }
 
 .adminSidebar {
@@ -1432,6 +1433,7 @@ nav a:hover,
 
 .adminContent {
   min-width: 0;
+  max-width: 100%;
   padding: 28px;
   display: grid;
   gap: 22px;
@@ -1478,6 +1480,7 @@ nav a:hover,
 }
 
 .adminPanel {
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: #ffffff;
@@ -1534,7 +1537,10 @@ nav a:hover,
 
 .adminTableWrap {
   margin-top: 18px;
+  max-width: 100%;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .adminTable {
@@ -1544,7 +1550,45 @@ nav a:hover,
 }
 
 .wideTable {
-  min-width: 1080px;
+  min-width: 960px;
+}
+
+.containedTableWrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.containedTableWrap .adminTable {
+  margin: 0;
+}
+
+.volunteerAdminTable {
+  min-width: 880px;
+  table-layout: fixed;
+}
+
+.volunteerAdminTable th:nth-child(1),
+.volunteerAdminTable td:nth-child(1),
+.volunteerAdminTable th:nth-child(2),
+.volunteerAdminTable td:nth-child(2) {
+  width: 190px;
+}
+
+.volunteerAdminTable th:nth-child(3),
+.volunteerAdminTable td:nth-child(3) {
+  width: 280px;
+}
+
+.volunteerAdminTable th:nth-child(4),
+.volunteerAdminTable td:nth-child(4),
+.volunteerAdminTable th:nth-child(5),
+.volunteerAdminTable td:nth-child(5) {
+  width: 120px;
+}
+
+.volunteerAdminTable th:nth-child(6),
+.volunteerAdminTable td:nth-child(6) {
+  width: 150px;
 }
 
 .adminTable th,

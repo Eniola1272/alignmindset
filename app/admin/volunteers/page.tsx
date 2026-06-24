@@ -38,8 +38,8 @@ export default async function AdminVolunteersPage({
           </div>
           <HandHeart size={24} aria-hidden="true" />
         </div>
-        <div className="adminTableWrap">
-          <table className="adminTable wideTable">
+        <div className="adminTableWrap containedTableWrap">
+          <table className="adminTable volunteerAdminTable">
             <thead>
               <tr>
                 <th>Applicant</th>
