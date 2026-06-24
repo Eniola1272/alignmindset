@@ -122,6 +122,66 @@ nav a:hover,
   color: var(--green-dark);
 }
 
+.mobileMenuButton {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(33, 28, 44, 0.12);
+  border-radius: 999px;
+  background: #fffaf1;
+  color: var(--ink);
+  box-shadow: 0 10px 24px rgba(33, 28, 44, 0.08);
+  cursor: pointer;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+.mobileMenuBackdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: rgba(33, 28, 44, 0.18);
+  cursor: pointer;
+}
+
+.mobileMenuPanel {
+  position: fixed;
+  top: 76px;
+  right: 14px;
+  width: min(330px, calc(100vw - 28px));
+  border: 1px solid rgba(222, 216, 202, 0.95);
+  border-radius: 20px;
+  background: rgba(255, 253, 248, 0.98);
+  box-shadow: 0 24px 60px rgba(33, 28, 44, 0.16);
+  padding: 18px;
+}
+
+.mobileMenuPanel nav {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobileMenuPanel nav a {
+  border-radius: 14px;
+  padding: 13px 14px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.mobileMenuPanel nav a:hover {
+  background: #fff2d8;
+}
+
+.mobileMenuCta {
+  width: 100%;
+  margin-top: 14px;
+}
+
 .pillButton,
 .primaryButton,
 .secondaryButton,
@@ -2089,11 +2149,27 @@ nav a:hover,
   .headerInner {
     min-height: auto;
     padding: 14px 0;
-    align-items: flex-start;
+    align-items: center;
   }
 
   nav {
     display: none;
+  }
+
+  .desktopHeaderCta {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: grid;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+
+  .mobileMenuPanel nav {
+    display: flex;
   }
 
   .pillButton {
