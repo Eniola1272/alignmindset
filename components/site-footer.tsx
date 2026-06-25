@@ -15,15 +15,16 @@ export function SiteFooter() {
         </div>
         <div>
           <h2>Explore</h2>
-          <Link href="/#programs">Programs</Link>
-          <Link href="/#framework">Framework</Link>
+          <Link href="/start-here">Start Here</Link>
+          <Link href="/resources">Resources</Link>
+          <Link href="/workshops">Workshops</Link>
           <Link href="/blog">Blog</Link>
-          <Link href="/volunteer">Volunteer</Link>
-          <Link href="/editorial">Editorial</Link>
         </div>
         <div>
           <h2>Community</h2>
           <Link href="/#join">Join updates</Link>
+          <Link href="/volunteer">Volunteer</Link>
+          <Link href="/partners">Sponsor / Partner</Link>
           <Link href="/#rhythm">Weekly rhythm</Link>
           <Link href="/admin">Admin</Link>
           <a href={`mailto:${site.email}`}>Contact</a>

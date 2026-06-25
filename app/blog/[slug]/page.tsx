@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MailPlus } from "lucide-react";
 import { ArticleBody } from "@/components/article-body";
+import { NewsletterForm } from "@/components/newsletter-form";
 import { getArticleBySlug, getArticles } from "@/lib/articles";
 
 type ArticlePageProps = {
@@ -78,6 +79,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </figure>
         ) : null}
         <ArticleBody blocks={article.body} />
+        <section className="articleNewsletterCta">
+          <div>
+            <MailPlus size={24} aria-hidden="true" />
+            <h2>Join the Align Mindset newsletter.</h2>
+            <p>
+              Get practical notes on discipline, skills, business, money, and
+              value creation.
+            </p>
+          </div>
+          <NewsletterForm />
+        </section>
       </div>
     </article>
   );

@@ -6,11 +6,12 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   email: "hello@alignmindset.org",
   nav: [
-    { label: "Programs", href: "/#programs" },
-    { label: "Framework", href: "/#framework" },
+    { label: "Start Here", href: "/start-here" },
+    { label: "Resources", href: "/resources" },
+    { label: "Workshops", href: "/workshops" },
     { label: "Blog", href: "/blog" },
     { label: "Volunteer", href: "/volunteer" },
-    { label: "Editorial", href: "/editorial" }
+    { label: "Partners", href: "/partners" }
   ]
 };
 

@@ -280,7 +280,12 @@ nav a:hover,
 .pillarCard,
 .articleCard,
 .editorialCard,
-.promptPanel {
+.promptPanel,
+.resourceCard,
+.workshopCard,
+.partnerStats article,
+.partnerContact,
+.articleNewsletterCta {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: #ffffff;
@@ -1113,6 +1118,204 @@ nav a:hover,
   border-radius: var(--radius);
   background: #ffffff;
   padding: 16px;
+}
+
+.startIntroGrid,
+.resourceGrid,
+.partnerStats,
+.partnerGrid {
+  margin-top: 34px;
+  display: grid;
+  gap: 16px;
+}
+
+.startIntroGrid,
+.partnerGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.resourceGrid,
+.partnerStats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.actionGrid {
+  margin-top: 22px;
+}
+
+.resourceCard {
+  min-height: 270px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.resourceCard > div,
+.workshopDate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--green-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.resourceCard h2,
+.workshopCard h2,
+.partnerContact h2 {
+  margin: 18px 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.05;
+}
+
+.resourceCard h2 {
+  font-size: 1.65rem;
+}
+
+.resourceCard p,
+.workshopCard dd,
+.partnerStats p,
+.partnerContact p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.resourceCard p {
+  margin: 0 0 16px;
+}
+
+.resourceCard small {
+  width: fit-content;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ink);
+  padding: 7px 10px;
+  font-weight: 850;
+}
+
+.resourceCard a {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  font-weight: 850;
+}
+
+.workshopList {
+  margin-top: 34px;
+  display: grid;
+  gap: 16px;
+}
+
+.workshopCard {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+}
+
+.workshopDate {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.workshopCard h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.workshopCard dl {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.workshopCard dt {
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.workshopCard dd {
+  margin: 4px 0 0;
+}
+
+.partnerStats article {
+  padding: 22px;
+}
+
+.partnerStats svg {
+  color: var(--green-dark);
+}
+
+.partnerStats strong {
+  display: block;
+  margin-top: 18px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+}
+
+.partnerContact {
+  margin-top: 22px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.partnerContact span {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.partnerContact h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.partnerContact p {
+  max-width: 640px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.articleNewsletterCta {
+  margin-top: 42px;
+  padding: 26px;
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.articleNewsletterCta > div {
+  max-width: 640px;
+  margin-bottom: 18px;
+}
+
+.articleNewsletterCta svg {
+  color: var(--green);
+}
+
+.articleNewsletterCta h2 {
+  margin: 14px 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.articleNewsletterCta p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.65;
 }
 
 .adminLoginCard,
@@ -2231,8 +2434,21 @@ button:disabled,
   .adminFilters,
   .volunteerGrid,
   .editorialGrid,
+  .startIntroGrid,
+  .resourceGrid,
+  .partnerStats,
+  .partnerGrid,
   .promptPanel div {
     grid-template-columns: 1fr;
+  }
+
+  .workshopCard {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .workshopCard .primaryButton {
+    width: 100%;
   }
 
   .adminSidebar {
@@ -2294,6 +2510,10 @@ button:disabled,
     display: grid;
   }
 
+  .partnerContact {
+    display: grid;
+  }
+
   .formGridTwo {
     grid-template-columns: 1fr;
   }
@@ -2327,6 +2547,11 @@ button:disabled,
   .programCard,
   .pillarCard,
   .articleCard,
+  .resourceCard,
+  .workshopCard,
+  .partnerStats article,
+  .partnerContact,
+  .articleNewsletterCta,
   .promptPanel,
   .composerMain,
   .adminLoginCard,
