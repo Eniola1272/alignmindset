@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useId, useRef } from "react";
 import { Send } from "lucide-react";
 import { subscribeToNewsletter, type FormState } from "@/lib/actions";
 import { useToast } from "@/components/toast-provider";
@@ -10,8 +10,21 @@ const initialState: FormState = {
   message: ""
 };
 
-export function NewsletterForm() {
+type NewsletterFormProps = {
+  className?: string;
+  label?: string;
+  submitLabel?: string;
+  onSuccess?: () => void;
+};
+
+export function NewsletterForm({
+  className = "",
+  label = "Get practical growth notes",
+  submitLabel = "Join",
+  onSuccess
+}: NewsletterFormProps) {
   const { showToast } = useToast();
+  const emailId = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState(
     subscribeToNewsletter,
@@ -31,16 +44,21 @@ export function NewsletterForm() {
 
     if (state.ok) {
       formRef.current?.reset();
+      onSuccess?.();
     }
-  }, [showToast, state.message, state.ok]);
+  }, [onSuccess, showToast, state.message, state.ok]);
 
   return (
-    <form ref={formRef} className="newsletterForm" action={formAction}>
-      <label htmlFor="email">Get practical growth notes</label>
+    <form
+      ref={formRef}
+      className={`newsletterForm ${className}`.trim()}
+      action={formAction}
+    >
+      <label htmlFor={emailId}>{label}</label>
       <input name="name" type="text" placeholder="Your name" />
       <div>
         <input
-          id="email"
+          id={emailId}
           name="email"
           type="email"
           placeholder="you@example.com"
@@ -49,7 +67,7 @@ export function NewsletterForm() {
         <input name="phone" type="tel" placeholder="Phone for SMS updates" />
         <button type="submit" disabled={pending} aria-label="Subscribe">
           <Send size={18} aria-hidden="true" />
-          <span>{pending ? "Joining" : "Join"}</span>
+          <span>{pending ? "Joining" : submitLabel}</span>
         </button>
       </div>
     </form>
