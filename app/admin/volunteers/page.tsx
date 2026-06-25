@@ -1,4 +1,6 @@
-import { HandHeart } from "lucide-react";
+import Link from "next/link";
+import { Download, HandHeart } from "lucide-react";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 import { getAdminDashboardData } from "@/lib/admin-data";
 import { updateVolunteerStatus } from "@/lib/actions";
 
@@ -36,7 +38,13 @@ export default async function AdminVolunteersPage({
             <span>Volunteers</span>
             <h2>Applications and follow-up status</h2>
           </div>
-          <HandHeart size={24} aria-hidden="true" />
+          <div className="panelActions">
+            <Link className="secondaryButton" href="/admin/volunteers/export">
+              <Download size={17} aria-hidden="true" />
+              Export CSV
+            </Link>
+            <HandHeart size={24} aria-hidden="true" />
+          </div>
         </div>
         <div className="adminTableWrap containedTableWrap">
           <table className="adminTable volunteerAdminTable">
@@ -84,7 +92,9 @@ export default async function AdminVolunteersPage({
                           </option>
                         ))}
                       </select>
-                      <button type="submit">Save</button>
+                      <PendingSubmitButton icon="save" pendingLabel="Saving">
+                        Save
+                      </PendingSubmitButton>
                     </form>
                   </td>
                 </tr>

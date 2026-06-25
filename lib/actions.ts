@@ -14,6 +14,7 @@ import {
   createSupabaseServerClient
 } from "@/lib/supabase";
 import type { VolunteerStatus } from "@/lib/admin-data";
+import { sendVolunteerApplicationNotifications } from "@/lib/volunteer-notifications";
 
 export type FormState = {
   ok: boolean;
@@ -223,7 +224,7 @@ export async function loginToAdmin(formData: FormData) {
 
 export async function logoutFromAdmin() {
   await clearAdminCookie();
-  redirect("/admin");
+  redirect("/admin?loggedOut=1");
 }
 
 export type UploadState = FormState & {
@@ -638,6 +639,15 @@ export async function submitVolunteerApplication(
       message: error.message
     };
   }
+
+  await sendVolunteerApplicationNotifications({
+    name,
+    phone,
+    email,
+    skills,
+    motivation,
+    valueAdd
+  });
 
   return {
     ok: true,

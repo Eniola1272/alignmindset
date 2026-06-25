@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {
   LockKeyhole,
-  LogOut,
   Plus
 } from "lucide-react";
 import { AdminLoginError } from "@/components/admin-login-error";
 import { AdminNav, type AdminNavItem } from "@/components/admin-nav";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 import { SectionHeading } from "@/components/section-heading";
 import { isAdminAuthenticated, isAdminEnabled } from "@/lib/admin";
 import { loginToAdmin, logoutFromAdmin } from "@/lib/actions";
@@ -58,7 +58,13 @@ export default async function AdminLayout({
             <input id="email" name="email" type="email" required />
             <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" required />
-            <button className="primaryButton">Open dashboard</button>
+            <PendingSubmitButton
+              className="primaryButton"
+              icon="login"
+              pendingLabel="Opening"
+            >
+              Open dashboard
+            </PendingSubmitButton>
           </form>
           <AdminLoginError />
         </div>
@@ -74,10 +80,13 @@ export default async function AdminLayout({
         </Link>
         <AdminNav items={sidebarItems} />
         <form action={logoutFromAdmin}>
-          <button className="secondaryButton adminLogout">
-            <LogOut size={17} aria-hidden="true" />
+          <PendingSubmitButton
+            className="secondaryButton adminLogout"
+            icon="logout"
+            pendingLabel="Signing out"
+          >
             Sign out
-          </button>
+          </PendingSubmitButton>
         </form>
       </aside>
 

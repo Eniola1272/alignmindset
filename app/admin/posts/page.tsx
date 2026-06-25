@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Edit3, Eye, FileText, Trash2 } from "lucide-react";
+import { Edit3, Eye, FileText } from "lucide-react";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 import { getAdminDashboardData } from "@/lib/admin-data";
 import { deletePost } from "@/lib/actions";
 
@@ -67,10 +68,12 @@ export default async function AdminPostsPage({ searchParams }: PostsPageProps) {
                       <form action={deletePost}>
                         <input name="id" type="hidden" value={post.id} />
                         <input name="slug" type="hidden" value={post.slug} />
-                        <button>
-                          <Trash2 size={16} aria-hidden="true" />
+                        <PendingSubmitButton
+                          icon="delete"
+                          pendingLabel="Deleting"
+                        >
                           Delete
-                        </button>
+                        </PendingSubmitButton>
                       </form>
                     </div>
                   </td>

@@ -1486,6 +1486,23 @@ nav a:hover,
   color: #ffffff;
 }
 
+button:disabled,
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.spinIcon {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .adminLogout {
   width: 100%;
   margin-top: auto;
@@ -1506,6 +1523,12 @@ nav a:hover,
   align-items: center;
   justify-content: space-between;
   gap: 18px;
+}
+
+.panelActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .adminTopbar {
@@ -1803,6 +1826,10 @@ nav a:hover,
   font-weight: 850;
 }
 
+.statusForm button:disabled {
+  background: var(--muted);
+}
+
 .tableDetails {
   max-width: 420px;
 }
@@ -1978,6 +2005,10 @@ nav a:hover,
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+}
+
+.onboardingGrid {
+  margin-bottom: 22px;
 }
 
 .volunteerCta {
