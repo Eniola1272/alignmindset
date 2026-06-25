@@ -64,11 +64,19 @@ export default function ResourcesPage() {
   return (
     <section className="pageHero">
       <div className="shell">
-        <SectionHeading
-          eyebrow="Resources"
-          title="Tools for turning good intentions into visible progress."
-          copy="Use these downloads, workbooks, replays, templates, and recommendations to support discipline, skill growth, business thinking, money habits, and value creation."
-        />
+        <div className="visualHeader">
+          <SectionHeading
+            eyebrow="Resources"
+            title="Tools for turning good intentions into visible progress."
+            copy="Use these downloads, workbooks, replays, templates, and recommendations to support discipline, skill growth, business thinking, money habits, and value creation."
+          />
+          <figure className="imageFrame resourceHeaderImage">
+            <img
+              src="/images/starter-kit-planning.jpg"
+              alt="Planning resources, notebook, and practical growth worksheets"
+            />
+          </figure>
+        </div>
 
         <div className="resourceGrid">
           {resources.map((resource) => {

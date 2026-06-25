@@ -29,11 +29,19 @@ export default function PartnersPage() {
   return (
     <section className="pageHero">
       <div className="shell">
-        <SectionHeading
-          eyebrow="Sponsor / Partner"
-          title="Help more people build discipline, useful skills, and meaningful direction."
-          copy="Align Mindset Initiative is building a practical growth community for people who need structure, education, accountability, and a hopeful path toward value creation."
-        />
+        <div className="visualHeader">
+          <SectionHeading
+            eyebrow="Sponsor / Partner"
+            title="Help more people build discipline, useful skills, and meaningful direction."
+            copy="Align Mindset Initiative is building a practical growth community for people who need structure, education, accountability, and a hopeful path toward value creation."
+          />
+          <figure className="imageFrame partnerHeaderImage">
+            <img
+              src="/images/community-goals-session.jpg"
+              alt="A warm community learning session around a shared table"
+            />
+          </figure>
+        </div>
 
         <div className="partnerStats">
           <article>

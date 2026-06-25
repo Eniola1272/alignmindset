@@ -43,11 +43,19 @@ export default function WorkshopsPage() {
   return (
     <section className="pageHero">
       <div className="shell">
-        <SectionHeading
-          eyebrow="Workshops"
-          title="Wednesday live sessions for learning, reflection, and action."
-          copy="Every session is designed to help people leave with a clearer mindset, a practical tool, and a next step they can take that week."
-        />
+        <div className="visualHeader">
+          <SectionHeading
+            eyebrow="Workshops"
+            title="Wednesday live sessions for learning, reflection, and action."
+            copy="Every session is designed to help people leave with a clearer mindset, a practical tool, and a next step they can take that week."
+          />
+          <figure className="imageFrame workshopHeaderImage">
+            <img
+              src="/images/workshop-live-session.jpg"
+              alt="A facilitator leading a practical live learning session"
+            />
+          </figure>
+        </div>
 
         <div className="workshopList">
           {workshops.map((workshop) => (

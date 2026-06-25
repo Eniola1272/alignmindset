@@ -44,26 +44,39 @@ export default async function Home() {
     <>
       <section className="hero">
         <div className="shell heroInner">
-          <div className="heroBadge">
-            <Sparkles size={18} aria-hidden="true" />
-            Purposeful growth, made practical
-          </div>
-          <h1>
-            Helping you achieve your goals and dreams
-            
-          </h1>
-          <p>
-            Align Mindset Initiative is a community and learning platform for
-            identity, systems, skills, disciplined action, and long-term value.
-          </p>
-          <div className="heroActions">
-            <Link className="primaryButton" href="#join">
-              Join the movement
-              <ArrowRight size={17} aria-hidden="true" />
-            </Link>
-            <Link className="secondaryButton" href="/blog">
-              Read the blog
-            </Link>
+          <div className="heroLayout">
+            <div className="heroCopy">
+              <div className="heroBadge">
+                <Sparkles size={18} aria-hidden="true" />
+                Purposeful growth, made practical
+              </div>
+              <h1>Helping you achieve your goals and dreams</h1>
+              <p>
+                Align Mindset Initiative is a community and learning platform
+                for identity, systems, skills, disciplined action, and long-term
+                value.
+              </p>
+              <div className="heroActions">
+                <Link className="primaryButton" href="#join">
+                  Join the movement
+                  <ArrowRight size={17} aria-hidden="true" />
+                </Link>
+                <Link className="secondaryButton" href="/blog">
+                  Read the blog
+                </Link>
+              </div>
+            </div>
+            <div className="heroImageStack" aria-hidden="true">
+              <figure className="imageFrame heroImageFrame">
+                <img
+                  src="/images/community-goals-session.jpg"
+                  alt=""
+                />
+              </figure>
+              <figure className="imageFrame floatingImageFrame">
+                <img src="/images/starter-kit-planning.jpg" alt="" />
+              </figure>
+            </div>
           </div>
           <div className="heroBoard" aria-label="Align Mindset framework">
             <div>
@@ -131,12 +144,18 @@ export default async function Home() {
 
       <section className="sectionPad" id="rhythm">
         <div className="shell rhythmGrid">
-          <div>
+          <div className="rhythmCopy">
             <SectionHeading
               eyebrow="Community rhythm"
               title="A simple weekly structure that keeps the movement alive."
               copy="The goal is not noise. The goal is a consistent active core that learns, discusses, executes, and reports progress."
             />
+            <figure className="circleImageFrame rhythmImage">
+              <img
+                src="/images/workshop-live-session.jpg"
+                alt="A live learning session with a facilitator and attendees"
+              />
+            </figure>
           </div>
           <div className="rhythmList">
             {communityRhythm.map((item) => (
@@ -205,6 +224,12 @@ export default async function Home() {
               practical challenges, and new articles from Align Mindset
               Initiative.
             </p>
+            <figure className="joinMiniImage">
+              <img
+                src="/images/starter-kit-planning.jpg"
+                alt="Planning resources, notebook, and growth worksheets"
+              />
+            </figure>
           </div>
           <NewsletterForm />
         </div>

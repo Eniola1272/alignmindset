@@ -48,11 +48,19 @@ export default function StartHerePage() {
   return (
     <section className="pageHero">
       <div className="shell">
-        <SectionHeading
-          eyebrow="Start here"
-          title="Build the mindset, systems, and skills that help goals become real."
-          copy="Align Mindset Initiative helps people move from motivation to practical growth through identity, discipline, value creation, learning, and community accountability."
-        />
+        <div className="visualHeader">
+          <SectionHeading
+            eyebrow="Start here"
+            title="Build the mindset, systems, and skills that help goals become real."
+            copy="Align Mindset Initiative helps people move from motivation to practical growth through identity, discipline, value creation, learning, and community accountability."
+          />
+          <figure className="circleImageFrame startHeaderImage">
+            <img
+              src="/images/community-goals-session.jpg"
+              alt="Community members discussing goals and growth around a table"
+            />
+          </figure>
+        </div>
 
         <div className="startIntroGrid">
           <article className="editorialCard">

@@ -223,12 +223,23 @@ nav a:hover,
 }
 
 .heroInner {
-  text-align: center;
+  text-align: left;
+}
+
+.heroLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 42px;
+  align-items: center;
+}
+
+.heroCopy {
+  min-width: 0;
 }
 
 .heroBadge {
   width: fit-content;
-  margin: 0 auto 22px;
+  margin: 0 0 22px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -241,8 +252,8 @@ nav a:hover,
 }
 
 .hero h1 {
-  max-width: 920px;
-  margin: 0 auto;
+  max-width: 620px;
+  margin: 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.45rem, 6vw, 5.8rem);
   line-height: 0.96;
@@ -251,8 +262,8 @@ nav a:hover,
 }
 
 .hero p {
-  max-width: 690px;
-  margin: 24px auto 0;
+  max-width: 580px;
+  margin: 24px 0 0;
   color: var(--muted);
   font-size: 1.12rem;
   line-height: 1.7;
@@ -261,9 +272,59 @@ nav a:hover,
 .heroActions {
   margin-top: 30px;
   display: flex;
-  justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.imageFrame,
+.circleImageFrame {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.imageFrame img,
+.circleImageFrame img,
+.joinMiniImage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.imageFrame {
+  border-radius: var(--radius);
+}
+
+.circleImageFrame {
+  border-radius: 999px;
+}
+
+.heroImageStack {
+  position: relative;
+  min-height: 470px;
+}
+
+.heroImageFrame {
+  width: 100%;
+  height: 430px;
+  transform: rotate(1.5deg);
+}
+
+.heroImageFrame img {
+  object-position: center;
+}
+
+.floatingImageFrame {
+  position: absolute;
+  left: -32px;
+  bottom: 0;
+  width: 218px;
+  height: 154px;
+  border: 8px solid var(--paper);
+  transform: rotate(-4deg);
 }
 
 .heroBoard {
@@ -595,6 +656,16 @@ nav a:hover,
   align-items: center;
 }
 
+.rhythmCopy {
+  display: grid;
+  gap: 22px;
+}
+
+.rhythmImage {
+  width: min(320px, 70vw);
+  aspect-ratio: 1;
+}
+
 .rhythmList {
   display: grid;
   gap: 14px;
@@ -740,6 +811,16 @@ nav a:hover,
   max-width: 560px;
   color: rgba(255, 255, 255, 0.72);
   line-height: 1.7;
+}
+
+.joinMiniImage {
+  width: min(260px, 62vw);
+  aspect-ratio: 4 / 3;
+  margin: 24px 0 0;
+  overflow: hidden;
+  border: 8px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  transform: rotate(-2deg);
 }
 
 .newsletterForm {
@@ -1123,6 +1204,41 @@ nav a:hover,
   border-radius: var(--radius);
   background: #ffffff;
   padding: 16px;
+}
+
+.visualHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.75fr);
+  gap: 34px;
+  align-items: center;
+}
+
+.visualHeader .sectionHeading {
+  max-width: 700px;
+}
+
+.resourceHeaderImage,
+.workshopHeaderImage,
+.partnerHeaderImage {
+  height: 330px;
+}
+
+.resourceHeaderImage {
+  transform: rotate(1.2deg);
+}
+
+.workshopHeaderImage {
+  border-radius: 28px 8px 28px 8px;
+}
+
+.partnerHeaderImage {
+  transform: rotate(-1.2deg);
+}
+
+.startHeaderImage {
+  width: min(330px, 76vw);
+  aspect-ratio: 1;
+  justify-self: center;
 }
 
 .startIntroGrid,
@@ -2425,6 +2541,8 @@ button:disabled,
   }
 
   .heroBoard,
+  .heroLayout,
+  .visualHeader,
   .proofGrid,
   .programGrid,
   .pillarGrid,
@@ -2476,6 +2594,31 @@ button:disabled,
   .articleCard,
   .editorialCard {
     min-height: auto;
+  }
+
+  .heroImageStack {
+    min-height: auto;
+    padding-bottom: 88px;
+  }
+
+  .heroImageFrame {
+    height: clamp(280px, 58vw, 420px);
+  }
+
+  .floatingImageFrame {
+    left: 18px;
+    width: 190px;
+    height: 132px;
+  }
+
+  .resourceHeaderImage,
+  .workshopHeaderImage,
+  .partnerHeaderImage {
+    height: clamp(240px, 56vw, 330px);
+  }
+
+  .rhythmImage {
+    width: min(280px, 76vw);
   }
 
   .splitHeader,
@@ -2564,6 +2707,20 @@ button:disabled,
   .volunteerCta,
   .editorialCard {
     padding: 20px;
+  }
+
+  .heroImageFrame,
+  .floatingImageFrame,
+  .resourceHeaderImage,
+  .partnerHeaderImage,
+  .joinMiniImage {
+    transform: none;
+  }
+
+  .floatingImageFrame {
+    width: 158px;
+    height: 112px;
+    border-width: 6px;
   }
 
   .modalSubmit {
