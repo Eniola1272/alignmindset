@@ -894,6 +894,11 @@ nav a:hover,
   display: block;
   margin: 9px 0;
   color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .footerBottom {

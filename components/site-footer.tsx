@@ -30,8 +30,9 @@ export function SiteFooter() {
           <a href={`mailto:${site.email}`}>Contact</a>
         </div>
         <div>
-          <h2>Focus</h2>
-          <p>Identity → Systems → Skills → Action → Assets → Leverage</p>
+          <h2>Contact</h2>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href="tel:+2349038681717">+234 9038681717</a>
         </div>
       </div>
       <div className="shell footerBottom">

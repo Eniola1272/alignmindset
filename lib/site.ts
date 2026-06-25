@@ -4,7 +4,7 @@ export const site = {
   description:
     "Helping people align identity, systems, skills, and daily action toward purposeful growth.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  email: "hello@alignmindset.org",
+  email: "alignmindsetinitiative@gmail.com",
   nav: [
     { label: "Start Here", href: "/start-here" },
     { label: "Resources", href: "/resources" },
