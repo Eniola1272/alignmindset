@@ -2701,6 +2701,17 @@ button:disabled,
     width: min(280px, 76vw);
   }
 
+  .programCard {
+    padding-top: 88px;
+  }
+
+  .programCard::before {
+    top: 22px;
+    left: 22px;
+    width: 46px;
+    height: 46px;
+  }
+
   .splitHeader,
   .footerBottom {
     display: block;
@@ -2792,6 +2803,17 @@ button:disabled,
   .volunteerCta,
   .editorialCard {
     padding: 20px;
+  }
+
+  .programCard {
+    padding: 78px 20px 20px;
+  }
+
+  .programCard::before {
+    top: 20px;
+    left: 20px;
+    width: 42px;
+    height: 42px;
   }
 
   .heroImageFrame,
