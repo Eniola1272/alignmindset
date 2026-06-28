@@ -1182,6 +1182,7 @@ nav a:hover,
   color: #35313f;
   font-size: 1.08rem;
   line-height: 1.86;
+  white-space: pre-line;
 }
 
 .articleBody h2 {

@@ -1,4 +1,13 @@
+import { Fragment } from "react";
 import type { ArticleBlock } from "@/lib/articles";
+
+function getParagraphs(content: string) {
+  return content
+    .replace(/\r\n?/g, "\n")
+    .split(/\n\s*\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
 
 function getVideoEmbedUrl(url: string) {
   try {
@@ -64,7 +73,17 @@ export function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
           );
         }
 
-        return <p key={`${block.type}-${index}`}>{block.content}</p>;
+        const paragraphs = getParagraphs(block.content);
+
+        return (
+          <Fragment key={`${block.type}-${index}`}>
+            {paragraphs.map((paragraph, paragraphIndex) => (
+              <p key={`${block.type}-${index}-${paragraphIndex}`}>
+                {paragraph}
+              </p>
+            ))}
+          </Fragment>
+        );
       })}
     </div>
   );
