@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
+import { Source_Serif_4 } from "next/font/google";
 import { AppChrome } from "@/components/app-chrome";
 import { ToastProvider } from "@/components/toast-provider";
 import { site } from "@/lib/site";
 import "./globals.css";
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-source-serif",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={sourceSerif.variable}>
         <ToastProvider>
           <AppChrome>{children}</AppChrome>
         </ToastProvider>

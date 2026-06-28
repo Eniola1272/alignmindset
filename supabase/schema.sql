@@ -77,6 +77,25 @@ create table if not exists public.volunteer_applications (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.post_upvotes (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid not null references public.posts(id) on delete cascade,
+  voter_key text not null check (char_length(voter_key) between 16 and 100),
+  created_at timestamptz not null default now(),
+  unique (post_id, voter_key)
+);
+
+create table if not exists public.post_comments (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid not null references public.posts(id) on delete cascade,
+  name text not null check (char_length(name) between 2 and 80),
+  email text not null check (char_length(email) between 3 and 254),
+  content text not null check (char_length(content) between 2 and 2000),
+  status text not null default 'approved'
+    check (status in ('pending', 'approved', 'hidden')),
+  created_at timestamptz not null default now()
+);
+
 alter table public.posts
   add column if not exists featured_image_url text,
   add column if not exists category_label text,
@@ -126,11 +145,20 @@ create index if not exists posts_category_idx
 create index if not exists volunteer_applications_created_at_idx
   on public.volunteer_applications (created_at desc);
 
+create index if not exists post_upvotes_post_id_idx
+  on public.post_upvotes (post_id);
+
+create index if not exists post_comments_post_id_created_at_idx
+  on public.post_comments (post_id, created_at desc)
+  where status = 'approved';
+
 alter table public.posts enable row level security;
 alter table public.subscribers enable row level security;
 alter table public.article_ideas enable row level security;
 alter table public.broadcast_campaigns enable row level security;
 alter table public.volunteer_applications enable row level security;
+alter table public.post_upvotes enable row level security;
+alter table public.post_comments enable row level security;
 
 drop policy if exists "Post images are publicly readable" on storage.objects;
 create policy "Post images are publicly readable"
@@ -212,3 +240,9 @@ comment on table public.broadcast_campaigns is
 
 comment on table public.volunteer_applications is
   'Volunteer application submissions from the public volunteer page.';
+
+comment on table public.post_upvotes is
+  'Anonymous article upvotes, limited to one vote per browser-generated voter key.';
+
+comment on table public.post_comments is
+  'Public article comments. Email addresses are private and are never selected for public display.';

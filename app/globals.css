@@ -1142,7 +1142,7 @@ nav a:hover,
 
 .articleHeader h1 {
   margin: 18px 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
   font-size: clamp(2.4rem, 5vw, 4.8rem);
   line-height: 0.98;
 }
@@ -1180,14 +1180,15 @@ nav a:hover,
 .articleBody p {
   margin: 0 0 22px;
   color: #35313f;
-  font-size: 1.08rem;
-  line-height: 1.86;
   white-space: pre-line;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.17rem;
+  line-height: 1.82;
 }
 
 .articleBody h2 {
   margin: 38px 0 14px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   line-height: 1.08;
 }
@@ -1197,7 +1198,7 @@ nav a:hover,
   border-left: 5px solid var(--green);
   padding: 8px 0 8px 22px;
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
   font-size: clamp(1.45rem, 3vw, 2.2rem);
   line-height: 1.24;
 }
@@ -1237,6 +1238,218 @@ nav a:hover,
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.articleEngagement {
+  margin-top: 48px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.articleActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.articleActionsTop {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.articleActions button,
+.articleActions a {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.articleActions button:hover,
+.articleActions a:hover,
+.articleActions .isUpvoted {
+  border-color: var(--green-dark);
+  color: var(--green-dark);
+  background: #effaf2;
+}
+
+.articleActions button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.articleActions strong {
+  min-width: 20px;
+  border-radius: 999px;
+  padding: 2px 6px;
+  background: var(--soft);
+  color: var(--ink);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.commentsSection {
+  margin-top: 38px;
+}
+
+.commentsHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.commentsHeading span {
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.commentsHeading h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.commentsHeading > strong {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.commentForm {
+  position: relative;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  background: #ffffff;
+}
+
+.commentIdentityFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.commentForm label {
+  display: grid;
+  gap: 7px;
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.commentForm label > span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.commentForm > label {
+  margin-top: 14px;
+}
+
+.commentForm input,
+.commentForm textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 13px;
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+}
+
+.commentForm input:focus,
+.commentForm textarea:focus {
+  border-color: var(--green-dark);
+  box-shadow: 0 0 0 3px rgba(23, 123, 66, 0.1);
+}
+
+.commentForm textarea {
+  min-height: 126px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.commentSubmit {
+  margin-top: 14px;
+}
+
+.commentForm .commentWebsiteField {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.commentList {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.commentItem {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 13px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.commentAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e9f8ee;
+  color: var(--green-dark);
+  font-weight: 850;
+}
+
+.commentItem header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.commentItem time {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.commentItem p {
+  margin: 7px 0 0;
+  color: #35313f;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.commentEmptyState {
+  padding: 30px 20px;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.commentEmptyState p {
+  margin: 0;
 }
 
 .editorialGrid {
@@ -2785,6 +2998,39 @@ button:disabled,
 
   .primaryButton,
   .secondaryButton {
+    width: 100%;
+  }
+
+  .articleBody p {
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+
+  .articleActions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .articleActions button,
+  .articleActions a {
+    min-width: 0;
+    padding: 0 9px;
+    font-size: 0.82rem;
+  }
+
+  .articleActions strong {
+    display: none;
+  }
+
+  .commentIdentityFields {
+    grid-template-columns: 1fr;
+  }
+
+  .commentForm {
+    padding: 18px;
+  }
+
+  .commentSubmit {
     width: 100%;
   }
 

@@ -21,6 +21,15 @@ export type FormState = {
   message: string;
 };
 
+export type CommentFormState = FormState & {
+  submissionId?: string;
+};
+
+export type UpvoteState = FormState & {
+  count: number;
+  upvoted: boolean;
+};
+
 export async function subscribeToNewsletter(
   _previousState: FormState,
   formData: FormData
@@ -652,5 +661,178 @@ export async function submitVolunteerApplication(
   return {
     ok: true,
     message: "Thank you. Your volunteer application has been received."
+  };
+}
+
+export async function toggleArticleUpvote(
+  postId: string,
+  slug: string,
+  voterKey: string
+): Promise<UpvoteState> {
+  const supabase = createSupabaseServerClient();
+
+  if (
+    !supabase ||
+    !postId ||
+    !/^[a-z0-9-]+$/.test(slug) ||
+    voterKey.length < 16 ||
+    voterKey.length > 100
+  ) {
+    return {
+      ok: false,
+      message: "The upvote could not be saved. Please try again.",
+      count: 0,
+      upvoted: false
+    };
+  }
+
+  const { data: existing, error: lookupError } = await supabase
+    .from("post_upvotes")
+    .select("id")
+    .eq("post_id", postId)
+    .eq("voter_key", voterKey)
+    .maybeSingle();
+
+  if (lookupError) {
+    return {
+      ok: false,
+      message: "Upvotes are not available yet. Please try again shortly.",
+      count: 0,
+      upvoted: false
+    };
+  }
+
+  const upvoted = !existing;
+  const mutation = existing
+    ? supabase.from("post_upvotes").delete().eq("id", existing.id)
+    : supabase.from("post_upvotes").insert({
+        post_id: postId,
+        voter_key: voterKey
+      });
+  const { error: mutationError } = await mutation;
+
+  if (mutationError) {
+    return {
+      ok: false,
+      message: "The upvote could not be saved. Please try again.",
+      count: 0,
+      upvoted: Boolean(existing)
+    };
+  }
+
+  const { count } = await supabase
+    .from("post_upvotes")
+    .select("id", { count: "exact", head: true })
+    .eq("post_id", postId);
+
+  revalidatePath(`/blog/${slug}`);
+
+  return {
+    ok: true,
+    message: upvoted ? "Upvoted." : "Upvote removed.",
+    count: count ?? 0,
+    upvoted
+  };
+}
+
+export async function submitArticleComment(
+  _previousState: CommentFormState,
+  formData: FormData
+): Promise<CommentFormState> {
+  const postId = String(formData.get("postId") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  const name = String(formData.get("name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const content = String(formData.get("comment") ?? "").trim();
+  const website = String(formData.get("website") ?? "").trim();
+  const submissionId = crypto.randomUUID();
+
+  if (website) {
+    return {
+      ok: true,
+      message: "Your comment has been added.",
+      submissionId
+    };
+  }
+
+  if (name.length < 2 || name.length > 80) {
+    return {
+      ok: false,
+      message: "Add your name so readers know who is speaking.",
+      submissionId
+    };
+  }
+
+  if (!email.includes("@") || email.length > 254) {
+    return {
+      ok: false,
+      message: "Add a valid email address. It will not be displayed.",
+      submissionId
+    };
+  }
+
+  if (content.length < 2 || content.length > 2000) {
+    return {
+      ok: false,
+      message: "Comments should be between 2 and 2,000 characters.",
+      submissionId
+    };
+  }
+
+  if (!postId || !/^[a-z0-9-]+$/.test(slug)) {
+    return {
+      ok: false,
+      message: "This article could not be identified. Refresh and try again.",
+      submissionId
+    };
+  }
+
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    return {
+      ok: false,
+      message: "Comments are not available right now.",
+      submissionId
+    };
+  }
+
+  const { data: post } = await supabase
+    .from("posts")
+    .select("id")
+    .eq("id", postId)
+    .eq("status", "published")
+    .maybeSingle();
+
+  if (!post) {
+    return {
+      ok: false,
+      message: "Comments are only available on published articles.",
+      submissionId
+    };
+  }
+
+  const { error } = await supabase.from("post_comments").insert({
+    post_id: postId,
+    name,
+    email,
+    content,
+    status: "approved"
+  });
+
+  if (error) {
+    return {
+      ok: false,
+      message: "Your comment could not be added. Please try again.",
+      submissionId
+    };
+  }
+
+  revalidatePath(`/blog/${slug}`);
+
+  return {
+    ok: true,
+    message: "Your comment has been added.",
+    submissionId
   };
 }

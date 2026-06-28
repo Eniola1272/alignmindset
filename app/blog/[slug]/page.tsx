@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, MailPlus } from "lucide-react";
 import { ArticleBody } from "@/components/article-body";
+import {
+  ArticleActionBar,
+  ArticleEngagement
+} from "@/components/article-engagement";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { getArticleEngagement } from "@/lib/article-engagement";
 import { getArticleBySlug, getArticles } from "@/lib/articles";
 
 type ArticlePageProps = {
@@ -50,6 +55,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
+  const engagement = await getArticleEngagement(article.id);
+
   return (
     <article className="articlePage">
       <div className="shell articleShell">
@@ -73,12 +80,28 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </div>
           ) : null}
         </div>
+        <ArticleActionBar
+          articleId={article.id}
+          slug={article.slug}
+          title={article.title}
+          initialUpvoteCount={engagement.upvoteCount}
+          commentCount={engagement.commentCount}
+          className="articleActionsTop"
+        />
         {article.featuredImageUrl ? (
           <figure className="articleHeroImage">
             <img src={article.featuredImageUrl} alt="" />
           </figure>
         ) : null}
         <ArticleBody blocks={article.body} />
+        <ArticleEngagement
+          articleId={article.id}
+          slug={article.slug}
+          title={article.title}
+          initialUpvoteCount={engagement.upvoteCount}
+          commentCount={engagement.commentCount}
+          comments={engagement.comments}
+        />
         <section className="articleNewsletterCta">
           <div>
             <MailPlus size={24} aria-hidden="true" />
