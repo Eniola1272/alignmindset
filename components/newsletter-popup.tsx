@@ -4,15 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import { BookOpenCheck, X } from "lucide-react";
 import { NewsletterForm } from "@/components/newsletter-form";
 
-const storageKey = "align-newsletter-popup-dismissed";
-
-export function NewsletterPopup() {
+export function NewsletterPopup({ revision }: { revision: number }) {
   const [open, setOpen] = useState(false);
+  const storageKey = `align-newsletter-popup-dismissed:${revision}`;
 
   const closePopup = useCallback(() => {
     window.localStorage.setItem(storageKey, "true");
     setOpen(false);
-  }, []);
+  }, [storageKey]);
 
   useEffect(() => {
     if (window.localStorage.getItem(storageKey)) {
@@ -24,7 +23,7 @@ export function NewsletterPopup() {
     }, 10000);
 
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [storageKey]);
 
   if (!open) {
     return null;

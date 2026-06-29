@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   clearAdminCookie,
@@ -28,6 +28,11 @@ export type CommentFormState = FormState & {
 export type UpvoteState = FormState & {
   count: number;
   upvoted: boolean;
+};
+
+export type PopupSettingState = FormState & {
+  enabled: boolean;
+  revision: number;
 };
 
 export async function subscribeToNewsletter(
@@ -834,5 +839,78 @@ export async function submitArticleComment(
     ok: true,
     message: "Your comment has been added.",
     submissionId
+  };
+}
+
+export async function updateNewsletterPopupSetting(
+  enabled: boolean
+): Promise<PopupSettingState> {
+  if (!(await isAdminAuthenticated())) {
+    return {
+      ok: false,
+      message: "Your admin session expired. Sign in again to change settings.",
+      enabled: !enabled,
+      revision: 1
+    };
+  }
+
+  const supabase = createSupabaseServerClient();
+
+  if (!supabase) {
+    return {
+      ok: false,
+      message: "Supabase service role credentials are required.",
+      enabled: !enabled,
+      revision: 1
+    };
+  }
+
+  const { data: current, error: readError } = await supabase
+    .from("site_settings")
+    .select("newsletter_popup_enabled, newsletter_popup_revision")
+    .eq("id", "global")
+    .maybeSingle();
+
+  if (readError) {
+    return {
+      ok: false,
+      message: "Run the latest schema in Supabase before changing this setting.",
+      enabled: !enabled,
+      revision: 1
+    };
+  }
+
+  const currentRevision = current?.newsletter_popup_revision ?? 1;
+  const nextRevision =
+    enabled && current?.newsletter_popup_enabled === false
+      ? currentRevision + 1
+      : currentRevision;
+
+  const { error } = await supabase.from("site_settings").upsert({
+    id: "global",
+    newsletter_popup_enabled: enabled,
+    newsletter_popup_revision: nextRevision
+  });
+
+  if (error) {
+    return {
+      ok: false,
+      message: "The popup setting could not be updated. Please try again.",
+      enabled: current?.newsletter_popup_enabled ?? !enabled,
+      revision: currentRevision
+    };
+  }
+
+  revalidateTag("site-settings");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin");
+
+  return {
+    ok: true,
+    message: enabled
+      ? "The newsletter popup is active again."
+      : "The newsletter popup is now paused.",
+    enabled,
+    revision: nextRevision
   };
 }

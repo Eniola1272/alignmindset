@@ -2236,6 +2236,86 @@ button:disabled,
   color: var(--muted);
 }
 
+.popupSettingRow {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--paper);
+}
+
+.popupSettingRow strong {
+  display: block;
+  color: var(--ink);
+}
+
+.popupSettingRow p {
+  max-width: 620px;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.popupSettingControl {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex: 0 0 auto;
+}
+
+.popupSettingControl > span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.popupSettingControl > .isActive {
+  color: var(--green-dark);
+}
+
+.adminSwitch {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  background: #aaa5b0;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.adminSwitch > span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(23, 20, 33, 0.24);
+  transition: transform 160ms ease;
+}
+
+.adminSwitch.isOn {
+  background: var(--green-dark);
+}
+
+.adminSwitch.isOn > span {
+  transform: translateX(20px);
+}
+
+.adminSwitch:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  justify-content: center;
+  color: #ffffff;
+}
+
 .adminTableWrap {
   margin-top: 18px;
   max-width: 100%;
@@ -3032,6 +3112,16 @@ button:disabled,
 
   .commentSubmit {
     width: 100%;
+  }
+
+  .popupSettingRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .popupSettingControl {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .programCard,

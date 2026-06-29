@@ -96,6 +96,21 @@ create table if not exists public.post_comments (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.site_settings (
+  id text primary key default 'global' check (id = 'global'),
+  newsletter_popup_enabled boolean not null default true,
+  newsletter_popup_revision integer not null default 1
+    check (newsletter_popup_revision > 0),
+  updated_at timestamptz not null default now()
+);
+
+insert into public.site_settings (
+  id,
+  newsletter_popup_enabled,
+  newsletter_popup_revision
+) values ('global', true, 1)
+on conflict (id) do nothing;
+
 alter table public.posts
   add column if not exists featured_image_url text,
   add column if not exists category_label text,
@@ -159,6 +174,7 @@ alter table public.broadcast_campaigns enable row level security;
 alter table public.volunteer_applications enable row level security;
 alter table public.post_upvotes enable row level security;
 alter table public.post_comments enable row level security;
+alter table public.site_settings enable row level security;
 
 drop policy if exists "Post images are publicly readable" on storage.objects;
 create policy "Post images are publicly readable"
@@ -196,6 +212,12 @@ $$ language plpgsql;
 drop trigger if exists posts_set_updated_at on public.posts;
 create trigger posts_set_updated_at
   before update on public.posts
+  for each row
+  execute function public.set_updated_at();
+
+drop trigger if exists site_settings_set_updated_at on public.site_settings;
+create trigger site_settings_set_updated_at
+  before update on public.site_settings
   for each row
   execute function public.set_updated_at();
 
@@ -246,3 +268,6 @@ comment on table public.post_upvotes is
 
 comment on table public.post_comments is
   'Public article comments. Email addresses are private and are never selected for public display.';
+
+comment on table public.site_settings is
+  'Admin-managed settings that control public website features.';

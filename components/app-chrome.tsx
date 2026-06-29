@@ -5,7 +5,17 @@ import { NewsletterPopup } from "@/components/newsletter-popup";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
-export function AppChrome({ children }: { children: React.ReactNode }) {
+type AppChromeProps = {
+  children: React.ReactNode;
+  newsletterPopupEnabled: boolean;
+  newsletterPopupRevision: number;
+};
+
+export function AppChrome({
+  children,
+  newsletterPopupEnabled,
+  newsletterPopupRevision
+}: AppChromeProps) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
@@ -14,7 +24,9 @@ export function AppChrome({ children }: { children: React.ReactNode }) {
       <SiteHeader />
       <main>{children}</main>
       {isAdmin ? null : <SiteFooter />}
-      {isAdmin ? null : <NewsletterPopup />}
+      {!isAdmin && newsletterPopupEnabled ? (
+        <NewsletterPopup revision={newsletterPopupRevision} />
+      ) : null}
     </>
   );
 }

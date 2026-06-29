@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { BarChart3 } from "lucide-react";
+import { BarChart3, SlidersHorizontal } from "lucide-react";
+import { PopupSettingControl } from "@/components/popup-setting-control";
 import { getAdminDashboardData } from "@/lib/admin-data";
+import { getSiteSettings } from "@/lib/site-settings";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminOverviewPage() {
-  const dashboard = await getAdminDashboardData();
+  const [dashboard, siteSettings] = await Promise.all([
+    getAdminDashboardData(),
+    getSiteSettings()
+  ]);
 
   return (
     <>
@@ -63,6 +68,17 @@ export default async function AdminOverviewPage() {
             <span>New volunteers</span>
           </div>
         </div>
+      </section>
+
+      <section className="adminPanel">
+        <div className="panelHeader">
+          <div>
+            <span>Site settings</span>
+            <h2>Public website controls</h2>
+          </div>
+          <SlidersHorizontal size={24} aria-hidden="true" />
+        </div>
+        <PopupSettingControl enabled={siteSettings.newsletterPopupEnabled} />
       </section>
     </>
   );
