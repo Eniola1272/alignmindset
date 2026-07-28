@@ -5,6 +5,7 @@ export const site = {
     "Helping people align identity, systems, skills, and daily action toward purposeful growth.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   email: "alignmindsetinitiative@gmail.com",
+  communityUrl: "https://chat.whatsapp.com/KHapwMF9i8G7Xsaj1TD3GC?mode=gi_t",
   nav: [
     { label: "Start Here", href: "/start-here" },
     { label: "Books", href: "/books" },

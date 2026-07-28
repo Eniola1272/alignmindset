@@ -9,6 +9,7 @@ import {
   PlayCircle
 } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -22,10 +23,11 @@ const resources = [
     title: "Align Mindset Starter Kit",
     copy: "A simple worksheet for clarifying goals, identity, weekly systems, and the next useful skill to practice.",
     meta: "Free",
-    href: "/#join",
+    href: site.communityUrl,
     icon: Download,
     id: "starter-kit",
-    image: "/images/starter-kit-planning.jpg"
+    image: "/images/starter-kit-planning.jpg",
+    external: true
   },
   {
     category: "Workbooks",
@@ -50,18 +52,20 @@ const resources = [
     title: "Wednesday Session Replays",
     copy: "Catch up on selected teaching sessions, community reflections, and practical Q&A clips.",
     meta: "Member access",
-    href: "/#join",
+    href: site.communityUrl,
     icon: PlayCircle,
-    image: "/images/workshop-live-session.jpg"
+    image: "/images/workshop-live-session.jpg",
+    external: true
   },
   {
     category: "Templates",
     title: "Weekly Execution Planner",
     copy: "A lightweight template for planning the week, tracking habits, and reviewing what actually moved.",
     meta: "Free",
-    href: "/#join",
+    href: site.communityUrl,
     icon: LayoutTemplate,
-    image: "/images/starter-kit-planning.jpg"
+    image: "/images/starter-kit-planning.jpg",
+    external: true
   }
 ];
 
@@ -101,7 +105,11 @@ export default function ResourcesPage() {
                 <h2>{resource.title}</h2>
                 <p>{resource.copy}</p>
                 <small>{resource.meta}</small>
-                <Link href={resource.href}>
+                <Link
+                  href={resource.href}
+                  target={resource.external ? "_blank" : undefined}
+                  rel={resource.external ? "noreferrer" : undefined}
+                >
                   Open resource
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>

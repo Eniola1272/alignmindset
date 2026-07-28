@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CalendarCheck2, HeartHandshake, Sparkles } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Volunteer Onboarding",
@@ -76,7 +77,12 @@ export default function VolunteerOnboardingPage() {
               opportunities to help members turn intention into action.
             </p>
           </div>
-          <Link className="primaryButton" href="/#join">
+          <Link
+            className="primaryButton"
+            href={site.communityUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             Join the movement
             <ArrowRight size={17} aria-hidden="true" />
           </Link>

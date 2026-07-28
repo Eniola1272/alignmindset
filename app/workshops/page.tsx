@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Workshops",
@@ -85,7 +86,12 @@ export default function WorkshopsPage() {
                   </div>
                 </dl>
               </div>
-              <Link className="primaryButton" href="/#join">
+              <Link
+                className="primaryButton"
+                href={site.communityUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Register
                 <ArrowRight size={17} aria-hidden="true" />
               </Link>

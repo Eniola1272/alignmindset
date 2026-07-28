@@ -64,7 +64,7 @@ export function NewsletterForm({
           placeholder="you@example.com"
           required
         />
-        <input name="phone" type="tel" placeholder="Phone for SMS updates" />
+        <input name="phone" type="tel" placeholder="Phone" />
         <button type="submit" disabled={pending} aria-label="Subscribe">
           <Send size={18} aria-hidden="true" />
           <span>{pending ? "Joining" : submitLabel}</span>

@@ -26,7 +26,12 @@ export function SiteHeader() {
           <Link className="headerLoginLink" href="/admin">
             Admin
           </Link>
-          <Link className="pillButton desktopHeaderCta" href="/#join">
+          <Link
+            className="pillButton desktopHeaderCta"
+            href={site.communityUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             Join
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
@@ -65,7 +70,13 @@ export function SiteHeader() {
             >
               Admin
             </Link>
-            <Link className="pillButton mobileMenuCta" href="/#join" onClick={closeMenu}>
+            <Link
+              className="pillButton mobileMenuCta"
+              href={site.communityUrl}
+              target="_blank"
+              rel="noreferrer"
+              onClick={closeMenu}
+            >
               Join the movement
               <ArrowRight size={16} aria-hidden="true" />
             </Link>

@@ -1,10 +1,26 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { NewsletterForm } from "@/components/newsletter-form";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
     <footer className="siteFooter">
+      <div className="shell footerSubscribe">
+        <div>
+          <span>Newsletter</span>
+          <h3>Keep up with Align Mindset</h3>
+          <p>
+            Get practical notes on discipline, skills, business, money, and
+            value creation.
+          </p>
+        </div>
+        <NewsletterForm
+          className="footerNewsletterForm"
+          label="Subscribe"
+          submitLabel="Join"
+        />
+      </div>
       <div className="shell footerGrid">
         <div>
           <Logo />
@@ -23,7 +39,9 @@ export function SiteFooter() {
         </div>
         <div>
           <h2>Community</h2>
-          <Link href="/#join">Join updates</Link>
+          <a href={site.communityUrl} target="_blank" rel="noreferrer">
+            Join WhatsApp group
+          </a>
           <Link href="/volunteer">Volunteer</Link>
           <Link href="/partners">Sponsor / Partner</Link>
           <Link href="/#rhythm">Weekly rhythm</Link>

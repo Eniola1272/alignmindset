@@ -9,6 +9,7 @@ import {
   UsersRound
 } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Start Here",
@@ -27,9 +28,10 @@ const firstSteps = [
   {
     title: "Join the community",
     copy: "Get practical reminders, session updates, and weekly prompts that help you move.",
-    href: "/#join",
+    href: site.communityUrl,
     icon: UsersRound,
-    image: "/images/community-goals-session.jpg"
+    image: "/images/community-goals-session.jpg",
+    external: true
   },
   {
     title: "Download the starter kit",
@@ -113,7 +115,11 @@ export default function StartHerePage() {
                 <Icon size={22} aria-hidden="true" />
                 <h2>{step.title}</h2>
                 <p>{step.copy}</p>
-                <Link href={step.href}>
+                <Link
+                  href={step.href}
+                  target={step.external ? "_blank" : undefined}
+                  rel={step.external ? "noreferrer" : undefined}
+                >
                   Start now
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>

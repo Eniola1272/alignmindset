@@ -15,7 +15,7 @@ import { ArticleCard } from "@/components/article-card";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { SectionHeading } from "@/components/section-heading";
 import { getFeaturedArticles } from "@/lib/articles";
-import { communityRhythm, pillars, programs } from "@/lib/site";
+import { communityRhythm, pillars, programs, site } from "@/lib/site";
 
 const journeyCards = [
   {
@@ -124,7 +124,12 @@ export default async function Home() {
               skills, purpose, and the courage to create value before capital.
             </p>
             <div className="heroActions">
-              <Link className="primaryButton" href="#join">
+              <Link
+                className="primaryButton"
+                href={site.communityUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Join the movement
                 <ArrowRight size={17} aria-hidden="true" />
               </Link>
