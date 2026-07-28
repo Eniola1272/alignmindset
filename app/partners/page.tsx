@@ -45,6 +45,11 @@ export default function PartnersPage() {
 
         <div className="partnerStats">
           <article>
+            <img
+              className="cardThumb"
+              src="/images/community-goals-session.jpg"
+              alt=""
+            />
             <UsersRound size={23} aria-hidden="true" />
             <strong>Growing community</strong>
             <p>
@@ -53,6 +58,11 @@ export default function PartnersPage() {
             </p>
           </article>
           <article>
+            <img
+              className="cardThumb"
+              src="/images/workshop-live-session.jpg"
+              alt=""
+            />
             <Megaphone size={23} aria-hidden="true" />
             <strong>Weekly rhythm</strong>
             <p>
@@ -61,6 +71,11 @@ export default function PartnersPage() {
             </p>
           </article>
           <article>
+            <img
+              className="cardThumb"
+              src="/images/starter-kit-planning.jpg"
+              alt=""
+            />
             <HandHeart size={23} aria-hidden="true" />
             <strong>Foundation mindset</strong>
             <p>

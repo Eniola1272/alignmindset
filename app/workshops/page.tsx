@@ -17,7 +17,8 @@ const workshops = [
       "Clarify who you are becoming, why your goals matter, and what daily choices support that identity.",
     audience:
       "People who feel scattered, inconsistent, or unsure where to begin.",
-    price: "Free community session"
+    price: "Free community session",
+    image: "/images/community-goals-session.jpg"
   },
   {
     title: "Systems, Not Motivation",
@@ -26,7 +27,8 @@ const workshops = [
       "Build a weekly rhythm for planning, accountability, habit tracking, and low-friction execution.",
     audience:
       "Members who start with energy but struggle to stay consistent.",
-    price: "Free community session"
+    price: "Free community session",
+    image: "/images/starter-kit-planning.jpg"
   },
   {
     title: "Skills That Increase Value",
@@ -35,7 +37,8 @@ const workshops = [
       "Choose one useful skill, practice deliberately, and create proof that can open opportunities.",
     audience:
       "Students, early professionals, creators, and builders who want to become more valuable.",
-    price: "Free community session"
+    price: "Free community session",
+    image: "/images/workshop-live-session.jpg"
   }
 ];
 
@@ -60,6 +63,7 @@ export default function WorkshopsPage() {
         <div className="workshopList">
           {workshops.map((workshop) => (
             <article className="workshopCard" key={workshop.title}>
+              <img className="workshopCardImage" src={workshop.image} alt="" />
               <div className="workshopDate">
                 <CalendarDays size={22} aria-hidden="true" />
                 <span>{workshop.date}</span>

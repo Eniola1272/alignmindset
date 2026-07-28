@@ -20,32 +20,38 @@ const roles = [
   {
     icon: ShieldCheck,
     title: "Community Moderator",
-    copy: "Welcome members, guide conversations, remove spam, and keep the WhatsApp group focused."
+    copy: "Welcome members, guide conversations, remove spam, and keep the WhatsApp group focused.",
+    image: "/images/community-goals-session.jpg"
   },
   {
     icon: FileText,
     title: "Content Coordinator",
-    copy: "Prepare prompts, summaries, recaps, and article ideas from community questions and live sessions."
+    copy: "Prepare prompts, summaries, recaps, and article ideas from community questions and live sessions.",
+    image: "/images/starter-kit-planning.jpg"
   },
   {
     icon: CalendarDays,
     title: "Programs Coordinator",
-    copy: "Plan Wednesday live sessions, reminders, speaker coordination, attendance, and feedback."
+    copy: "Plan Wednesday live sessions, reminders, speaker coordination, attendance, and feedback.",
+    image: "/images/workshop-live-session.jpg"
   },
   {
     icon: Paintbrush,
     title: "Design / Media Volunteer",
-    copy: "Create flyers, quote graphics, short clips, carousels, and simple branded materials."
+    copy: "Create flyers, quote graphics, short clips, carousels, and simple branded materials.",
+    image: "/images/starter-kit-planning.jpg"
   },
   {
     icon: UsersRound,
     title: "Skills Facilitator",
-    copy: "Teach practical topics like writing, career growth, public speaking, tech, money, and leadership."
+    copy: "Teach practical topics like writing, career growth, public speaking, tech, money, and leadership.",
+    image: "/images/workshop-live-session.jpg"
   },
   {
     icon: Megaphone,
     title: "Outreach Support",
-    copy: "Help invite partners, speakers, mentors, and members who can benefit from the initiative."
+    copy: "Help invite partners, speakers, mentors, and members who can benefit from the initiative.",
+    image: "/images/community-goals-session.jpg"
   }
 ];
 
@@ -53,16 +59,25 @@ export default function VolunteerPage() {
   return (
     <section className="pageHero volunteerPage">
       <div className="shell">
-        <SectionHeading
-          eyebrow="Volunteer"
-          title="Help people move from motivation to meaningful progress."
-          copy="Align Mindset needs a small reliable team before it needs a big organization. Start with one useful role and help the community become consistent."
-        />
+        <div className="visualHeader">
+          <SectionHeading
+            eyebrow="Volunteer"
+            title="Help people move from motivation to meaningful progress."
+            copy="Align Mindset needs a small reliable team before it needs a big organization. Start with one useful role and help the community become consistent."
+          />
+          <figure className="imageFrame volunteerHeaderImage">
+            <img
+              src="/images/community-goals-session.jpg"
+              alt="Community members planning together"
+            />
+          </figure>
+        </div>
         <div className="volunteerGrid">
           {roles.map((role) => {
             const Icon = role.icon;
             return (
               <article key={role.title} className="editorialCard">
+                <img className="cardThumb" src={role.image} alt="" />
                 <Icon size={23} aria-hidden="true" />
                 <h2>{role.title}</h2>
                 <p>{role.copy}</p>

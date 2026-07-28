@@ -14,19 +14,22 @@ const steps = [
     title: "Know the mission",
     copy:
       "Align Mindset helps people align identity, systems, skills, and daily action toward goals that matter.",
-    icon: Sparkles
+    icon: Sparkles,
+    image: "/images/community-goals-session.jpg"
   },
   {
     title: "Choose your lane",
     copy:
       "Volunteers can support writing, design, live sessions, moderation, outreach, operations, research, and community care.",
-    icon: HeartHandshake
+    icon: HeartHandshake,
+    image: "/images/starter-kit-planning.jpg"
   },
   {
     title: "Prepare for follow-up",
     copy:
       "The team reviews applications and reaches out with the best next step, especially around Wednesday live sessions.",
-    icon: CalendarCheck2
+    icon: CalendarCheck2,
+    image: "/images/workshop-live-session.jpg"
   }
 ];
 
@@ -34,11 +37,19 @@ export default function VolunteerOnboardingPage() {
   return (
     <section className="pageHero">
       <div className="shell">
-        <SectionHeading
-          eyebrow="Volunteer onboarding"
-          title="Thank you for choosing to build with Align Mindset."
-          copy="This page gives you a simple orientation while the team reviews your application."
-        />
+        <div className="visualHeader">
+          <SectionHeading
+            eyebrow="Volunteer onboarding"
+            title="Thank you for choosing to build with Align Mindset."
+            copy="This page gives you a simple orientation while the team reviews your application."
+          />
+          <figure className="imageFrame volunteerHeaderImage">
+            <img
+              src="/images/workshop-live-session.jpg"
+              alt="A live learning session with a facilitator and attendees"
+            />
+          </figure>
+        </div>
 
         <div className="volunteerGrid onboardingGrid">
           {steps.map((step) => {
@@ -46,6 +57,7 @@ export default function VolunteerOnboardingPage() {
 
             return (
               <article className="programCard" key={step.title}>
+                <img className="cardThumb" src={step.image} alt="" />
                 <div className="featureIcon green">
                   <Icon size={23} aria-hidden="true" />
                 </div>

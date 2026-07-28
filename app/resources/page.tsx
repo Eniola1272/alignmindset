@@ -24,7 +24,8 @@ const resources = [
     meta: "Free",
     href: "/#join",
     icon: Download,
-    id: "starter-kit"
+    id: "starter-kit",
+    image: "/images/starter-kit-planning.jpg"
   },
   {
     category: "Workbooks",
@@ -32,7 +33,8 @@ const resources = [
     copy: "Prompts and exercises for turning vague ambition into a clearer direction and weekly action plan.",
     meta: "Coming soon",
     href: `mailto:hello@alignmindset.org?subject=Identity%20Before%20Goals%20Workbook`,
-    icon: FileText
+    icon: FileText,
+    image: "/images/community-goals-session.jpg"
   },
   {
     category: "Book recommendations",
@@ -40,7 +42,8 @@ const resources = [
     copy: "A curated reading list for members who want practical mental models and better decision-making.",
     meta: "Free",
     href: "/blog",
-    icon: BookOpen
+    icon: BookOpen,
+    image: "/images/workshop-live-session.jpg"
   },
   {
     category: "Replays",
@@ -48,7 +51,8 @@ const resources = [
     copy: "Catch up on selected teaching sessions, community reflections, and practical Q&A clips.",
     meta: "Member access",
     href: "/#join",
-    icon: PlayCircle
+    icon: PlayCircle,
+    image: "/images/workshop-live-session.jpg"
   },
   {
     category: "Templates",
@@ -56,7 +60,8 @@ const resources = [
     copy: "A lightweight template for planning the week, tracking habits, and reviewing what actually moved.",
     meta: "Free",
     href: "/#join",
-    icon: LayoutTemplate
+    icon: LayoutTemplate,
+    image: "/images/starter-kit-planning.jpg"
   }
 ];
 
@@ -88,6 +93,7 @@ export default function ResourcesPage() {
                 id={resource.id}
                 key={resource.title}
               >
+                <img className="cardThumb" src={resource.image} alt="" />
                 <div>
                   <Icon size={23} aria-hidden="true" />
                   <span>{resource.category}</span>

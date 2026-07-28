@@ -5102,6 +5102,257 @@ button:disabled,
   }
 }
 
+/* Public inner page visual consistency */
+.visualHeader {
+  gap: clamp(28px, 5vw, 58px);
+}
+
+.resourceHeaderImage,
+.workshopHeaderImage,
+.partnerHeaderImage,
+.volunteerHeaderImage {
+  height: clamp(300px, 34vw, 430px);
+  border-radius: 24px;
+  transform: none;
+  box-shadow: 0 22px 54px rgba(20, 20, 20, 0.12);
+}
+
+.startHeaderImage {
+  border: 10px solid #ffffff;
+  box-shadow: 0 22px 54px rgba(20, 20, 20, 0.12);
+}
+
+.editorialCard,
+.resourceCard,
+.partnerStats article,
+.programCard {
+  overflow: hidden;
+  border-color: rgba(20, 20, 20, 0.08);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(20, 20, 20, 0.06);
+}
+
+.cardThumb {
+  width: calc(100% + 44px);
+  height: 150px;
+  display: block;
+  object-fit: cover;
+  margin: -22px -22px 20px;
+  filter: saturate(0.78) contrast(1.03);
+}
+
+.resourceCard .cardThumb {
+  width: calc(100% + 48px);
+  height: 160px;
+  margin: -24px -24px 20px;
+}
+
+.partnerStats .cardThumb {
+  width: calc(100% + 44px);
+  height: 140px;
+}
+
+.programCard .cardThumb {
+  width: calc(100% + 48px);
+  height: 150px;
+  margin: -24px -24px 20px;
+}
+
+.onboardingGrid .programCard {
+  display: block;
+  min-height: auto;
+}
+
+.onboardingGrid .programCard::before {
+  display: none;
+}
+
+.editorialCard svg,
+.resourceCard svg,
+.partnerStats svg,
+.programCard svg {
+  color: #171717;
+}
+
+.editorialCard h2,
+.resourceCard h2,
+.partnerStats strong,
+.promptPanel h2,
+.workshopCard h2,
+.volunteerCta h2 {
+  font-family: inherit;
+  font-weight: 900;
+}
+
+.resourceCard small {
+  background: #eeeeea;
+}
+
+.resourceCard a {
+  color: #171717;
+}
+
+.workshopCard {
+  grid-template-columns: 230px minmax(140px, 190px) minmax(0, 1fr) auto;
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 18px;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(20, 20, 20, 0.06);
+}
+
+.workshopCardImage {
+  width: 100%;
+  height: 190px;
+  border-radius: 18px;
+  display: block;
+  object-fit: cover;
+  filter: saturate(0.78) contrast(1.03);
+}
+
+.workshopDate {
+  color: #171717;
+}
+
+.partnerContact,
+.volunteerCta {
+  border-radius: 24px;
+  background: #171717;
+  box-shadow: 0 22px 54px rgba(20, 20, 20, 0.12);
+}
+
+.promptPanel {
+  border-radius: 24px;
+  background: #eeeeea;
+}
+
+.promptPanel p {
+  border-color: rgba(20, 20, 20, 0.08);
+  border-radius: 16px;
+}
+
+@media (max-width: 980px) {
+  .visualHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .visualHeader .sectionHeading {
+    max-width: 760px;
+  }
+
+  .resourceHeaderImage,
+  .workshopHeaderImage,
+  .partnerHeaderImage,
+  .volunteerHeaderImage {
+    height: clamp(300px, 48vw, 390px);
+  }
+
+  .resourceGrid,
+  .partnerStats,
+  .volunteerGrid,
+  .editorialGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workshopCard {
+    grid-template-columns: 210px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .workshopCardImage {
+    height: 220px;
+  }
+
+  .workshopDate,
+  .workshopCard > div:nth-of-type(2),
+  .workshopCard .primaryButton {
+    grid-column: 2;
+  }
+
+  .workshopCardImage {
+    grid-row: 1 / span 3;
+  }
+
+  .workshopCard .primaryButton {
+    width: fit-content;
+  }
+
+  .partnerContact,
+  .volunteerCta {
+    display: grid;
+  }
+}
+
+@media (max-width: 640px) {
+  .resourceHeaderImage,
+  .workshopHeaderImage,
+  .partnerHeaderImage,
+  .volunteerHeaderImage {
+    height: 280px;
+    border-radius: 20px;
+  }
+
+  .startHeaderImage {
+    width: min(260px, 72vw);
+  }
+
+  .startIntroGrid,
+  .resourceGrid,
+  .partnerStats,
+  .volunteerGrid,
+  .editorialGrid,
+  .partnerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardThumb,
+  .resourceCard .cardThumb,
+  .partnerStats .cardThumb,
+  .programCard .cardThumb {
+    height: 145px;
+    margin-bottom: 18px;
+  }
+
+  .workshopCard {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .workshopCardImage,
+  .workshopDate,
+  .workshopCard > div:nth-of-type(2),
+  .workshopCard .primaryButton {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .workshopCardImage {
+    height: 220px;
+  }
+
+  .workshopDate {
+    gap: 8px;
+  }
+
+  .workshopCard .primaryButton,
+  .partnerContact .primaryButton,
+  .volunteerCta .primaryButton {
+    width: 100%;
+  }
+
+  .promptPanel div {
+    grid-template-columns: 1fr;
+  }
+
+  .partnerContact,
+  .volunteerCta,
+  .promptPanel {
+    padding: 22px;
+    border-radius: 20px;
+  }
+}
+
 .wednesdaylive {
  color: #f7f4ed !important;
 }

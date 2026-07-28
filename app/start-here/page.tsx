@@ -28,19 +28,22 @@ const firstSteps = [
     title: "Join the community",
     copy: "Get practical reminders, session updates, and weekly prompts that help you move.",
     href: "/#join",
-    icon: UsersRound
+    icon: UsersRound,
+    image: "/images/community-goals-session.jpg"
   },
   {
     title: "Download the starter kit",
     copy: "Begin with a simple worksheet for goals, identity, habits, skills, and weekly action.",
     href: "/resources#starter-kit",
-    icon: Download
+    icon: Download,
+    image: "/images/starter-kit-planning.jpg"
   },
   {
     title: "Attend the next session",
     copy: "Wednesday live sessions are where we learn, reflect, ask questions, and plan action.",
     href: "/workshops",
-    icon: CalendarDays
+    icon: CalendarDays,
+    image: "/images/workshop-live-session.jpg"
   }
 ];
 
@@ -64,6 +67,11 @@ export default function StartHerePage() {
 
         <div className="startIntroGrid">
           <article className="editorialCard">
+            <img
+              className="cardThumb"
+              src="/images/community-goals-session.jpg"
+              alt=""
+            />
             <BookOpenCheck size={24} aria-hidden="true" />
             <h2>What is Align Mindset?</h2>
             <p>
@@ -72,6 +80,11 @@ export default function StartHerePage() {
             </p>
           </article>
           <article className="editorialCard">
+            <img
+              className="cardThumb"
+              src="/images/starter-kit-planning.jpg"
+              alt=""
+            />
             <Goal size={24} aria-hidden="true" />
             <h2>What should I do first?</h2>
             <p>
@@ -96,6 +109,7 @@ export default function StartHerePage() {
 
             return (
               <article className="resourceCard" key={step.title}>
+                <img className="cardThumb" src={step.image} alt="" />
                 <Icon size={22} aria-hidden="true" />
                 <h2>{step.title}</h2>
                 <p>{step.copy}</p>
