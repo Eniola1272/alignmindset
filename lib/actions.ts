@@ -9,6 +9,9 @@ import {
   setAdminSession
 } from "@/lib/admin";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
+import { bookBundle } from "@/lib/book-bundle";
+import { initializeFlutterwavePayment } from "@/lib/flutterwave";
+import { site } from "@/lib/site";
 import {
   createSupabaseAuthClient,
   createSupabaseServerClient
@@ -34,6 +37,8 @@ export type PopupSettingState = FormState & {
   enabled: boolean;
   revision: number;
 };
+
+export type CheckoutState = FormState;
 
 export async function subscribeToNewsletter(
   _previousState: FormState,
@@ -913,4 +918,83 @@ export async function updateNewsletterPopupSetting(
     enabled,
     revision: nextRevision
   };
+}
+
+export async function initiateBookBundleCheckout(
+  _previousState: CheckoutState,
+  formData: FormData
+): Promise<CheckoutState> {
+  const name = String(formData.get("name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const phone = String(formData.get("phone") ?? "").trim();
+
+  if (name.length < 2) {
+    return {
+      ok: false,
+      message: "Add your name so we can identify your order."
+    };
+  }
+
+  if (!email.includes("@")) {
+    return {
+      ok: false,
+      message: "Add a valid email address for delivery and receipt."
+    };
+  }
+
+  const txRef = `AMI-BOOKS-${Date.now()}-${crypto
+    .randomUUID()
+    .slice(0, 8)
+    .toUpperCase()}`;
+  const supabase = createSupabaseServerClient();
+  const redirectUrl = `${site.url.replace(/\/$/, "")}/books/thank-you`;
+
+  if (supabase) {
+    await supabase.from("book_orders").insert({
+      tx_ref: txRef,
+      customer_name: name,
+      customer_email: email,
+      customer_phone: phone || null,
+      product_slug: bookBundle.slug,
+      amount: bookBundle.bundlePrice,
+      currency: bookBundle.currency,
+      status: "pending"
+    });
+  }
+
+  const checkout = await initializeFlutterwavePayment({
+    txRef,
+    amount: bookBundle.bundlePrice,
+    currency: bookBundle.currency,
+    redirectUrl,
+    customer: {
+      name,
+      email,
+      phonenumber: phone || undefined
+    },
+    title: bookBundle.title,
+    description: `4-book Align Mindset bundle for ${bookBundle.currency} ${bookBundle.bundlePrice}.`,
+    meta: {
+      product_slug: bookBundle.slug,
+      book_count: bookBundle.books.length
+    }
+  });
+
+  if (!checkout.ok || !checkout.link) {
+    return {
+      ok: false,
+      message: checkout.message
+    };
+  }
+
+  if (supabase) {
+    await supabase
+      .from("book_orders")
+      .update({
+        payment_link: checkout.link
+      })
+      .eq("tx_ref", txRef);
+  }
+
+  redirect(checkout.link);
 }

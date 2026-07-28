@@ -16,6 +16,7 @@ export function SiteFooter() {
         <div>
           <h2>Explore</h2>
           <Link href="/start-here">Start Here</Link>
+          <Link href="/books">Books</Link>
           <Link href="/resources">Resources</Link>
           <Link href="/workshops">Workshops</Link>
           <Link href="/blog">Blog</Link>

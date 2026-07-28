@@ -19,11 +19,12 @@ export function AppChrome({
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
   const isHome = pathname === "/";
+  const isLandingPage = isHome || pathname === "/books";
 
   return (
     <>
       {isAdmin ? null : <SiteHeader />}
-      <main className={!isAdmin && !isHome ? "publicMain" : undefined}>
+      <main className={!isAdmin && !isLandingPage ? "publicMain" : undefined}>
         {children}
       </main>
       {isAdmin ? null : <SiteFooter />}

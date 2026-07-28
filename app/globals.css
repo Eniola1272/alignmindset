@@ -4009,6 +4009,841 @@ button:disabled,
   }
 }
 
+/* Books landing page */
+.booksHero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  padding: 122px 0 72px;
+  background:
+    radial-gradient(circle at 76% 32%, rgba(255, 255, 255, 0.12), transparent 30%),
+    linear-gradient(135deg, #080b11 0%, #141820 56%, #090b0f 100%);
+  color: #ffffff;
+}
+
+.booksHeroShade {
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 84px;
+  background: #f7f7f3;
+  clip-path: ellipse(76% 100% at 50% 100%);
+}
+
+.booksHeroGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: clamp(34px, 6vw, 86px);
+  align-items: center;
+}
+
+.booksEyebrow,
+.booksSectionLabel {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.booksHero h1,
+.booksStory h2,
+.booksCenteredHeader h2,
+.booksValue h2,
+.booksOutcomes h2,
+.bundleOffer h2,
+.booksFaq h2,
+.booksFinalCta h2,
+.thankYouCard h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5.8vw, 5.8rem);
+  line-height: 0.98;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.booksHero p {
+  max-width: 650px;
+  margin: 22px 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.booksHeroActions {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.booksTrustRow {
+  margin-top: 22px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.booksTrustRow span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.booksTrustRow span::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.booksHeroVisual {
+  position: relative;
+  min-height: 520px;
+}
+
+.bookCoverMock {
+  position: absolute;
+  width: 210px;
+  min-height: 292px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 22px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 36%),
+    #11151c;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.32);
+  color: #ffffff;
+}
+
+.bookCoverMock::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+.bookCoverMock span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bookCoverMock h2,
+.bookCoverMock h3 {
+  max-width: 170px;
+  margin: auto 0;
+  font-size: 2rem;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.bookCoverMock p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.bookCoverMock-1 {
+  z-index: 4;
+  right: 26%;
+  bottom: 48px;
+  width: 240px;
+  min-height: 334px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 36%),
+    #0f131a;
+}
+
+.bookCoverMock-2 {
+  z-index: 3;
+  right: 3%;
+  bottom: 88px;
+  transform: rotate(6deg);
+  background: #20242c;
+}
+
+.bookCoverMock-3 {
+  z-index: 2;
+  left: 8%;
+  bottom: 86px;
+  transform: rotate(-7deg);
+  background: #263027;
+}
+
+.bookCoverMock-4 {
+  z-index: 1;
+  right: 42%;
+  top: 18px;
+  transform: rotate(-3deg);
+  background: #27221d;
+}
+
+.bundlePriceBadge {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  top: 62px;
+  width: 172px;
+  border-radius: 18px;
+  padding: 16px;
+  background: #ffffff;
+  color: #171717;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.bundlePriceBadge small,
+.bundlePriceBadge span {
+  display: block;
+}
+
+.bundlePriceBadge small {
+  color: #696969;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bundlePriceBadge strong {
+  display: block;
+  margin: 8px 0 2px;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.bundlePriceBadge span {
+  color: #696969;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.booksSection {
+  padding: clamp(70px, 9vw, 118px) 0;
+  background: #f7f7f3;
+}
+
+.booksNarrow {
+  max-width: 900px;
+}
+
+.booksSection .booksSectionLabel,
+.booksPain .booksSectionLabel,
+.booksStory .booksSectionLabel,
+.booksShowcase .booksSectionLabel,
+.booksValue .booksSectionLabel,
+.booksOutcomes .booksSectionLabel,
+.booksProof .booksSectionLabel,
+.booksFaq .booksSectionLabel {
+  border-color: rgba(23, 23, 23, 0.1);
+  background: #ffffff;
+  color: #171717;
+}
+
+.booksPain h2,
+.booksStory h2,
+.booksCenteredHeader h2,
+.booksValue h2,
+.booksOutcomes h2,
+.bundleOffer h2,
+.booksFaq h2 {
+  font-size: clamp(2rem, 4vw, 3.9rem);
+}
+
+.booksPain {
+  text-align: center;
+}
+
+.booksPainGrid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+
+.booksPainGrid article,
+.outcomesList article,
+.booksFaqList details,
+.booksProofGrid article,
+.booksProductCard,
+.valueStackCard,
+.offerCard,
+.thankYouCard {
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(20, 20, 20, 0.06);
+}
+
+.booksPainGrid article {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+}
+
+.booksPainGrid svg {
+  flex: 0 0 auto;
+  color: #171717;
+}
+
+.booksPainGrid p {
+  margin: 0;
+  color: #555555;
+  line-height: 1.55;
+}
+
+.booksStory {
+  background: #10141b;
+  color: #ffffff;
+}
+
+.booksStoryGrid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(30px, 6vw, 76px);
+  align-items: center;
+}
+
+.authorPhotoPlaceholder {
+  min-height: 440px;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 36%),
+    #1b2029;
+}
+
+.authorPhotoPlaceholder div {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 850;
+}
+
+.booksStory p {
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+
+.booksCenteredHeader {
+  max-width: 780px;
+  margin: 0 auto 34px;
+  text-align: center;
+}
+
+.booksCenteredHeader p,
+.booksValue p,
+.bundleOffer p {
+  color: #676767;
+  line-height: 1.7;
+}
+
+.booksProductGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.booksProductCard {
+  overflow: hidden;
+}
+
+.miniCover {
+  position: relative;
+  width: 100%;
+  min-height: 255px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.miniCover h3 {
+  font-size: 1.55rem;
+}
+
+.miniCover-2 {
+  background: #263027;
+}
+
+.miniCover-3 {
+  background: #20242c;
+}
+
+.miniCover-4 {
+  background: #27221d;
+}
+
+.booksProductCard > div:last-child {
+  padding: 20px;
+}
+
+.booksProductCard small {
+  color: #676767;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.booksProductCard h3 {
+  margin: 8px 0 8px;
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+
+.booksProductCard p {
+  margin: 0;
+  color: #676767;
+  line-height: 1.55;
+}
+
+.booksValue {
+  background: #eeeeea;
+}
+
+.booksValueGrid,
+.booksOutcomeGrid,
+.offerGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+
+.valueStackCard {
+  padding: 20px;
+}
+
+.valueStackCard div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.08);
+  padding: 13px 0;
+}
+
+.valueStackCard div:first-child {
+  padding-top: 0;
+}
+
+.valueStackCard span {
+  color: #555555;
+}
+
+.valueStackTotal {
+  margin-top: 8px;
+  border-bottom: 0 !important;
+  border-radius: 14px;
+  background: #171717;
+  color: #ffffff;
+  padding: 16px !important;
+}
+
+.valueStackTotal span {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.booksOutcomes {
+  background: #ffffff;
+}
+
+.outcomesList {
+  display: grid;
+  gap: 12px;
+}
+
+.outcomesList article {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  font-weight: 850;
+}
+
+.outcomesList svg {
+  color: #171717;
+  flex: 0 0 auto;
+}
+
+.bundleOffer {
+  background: #10141b;
+  color: #ffffff;
+}
+
+.bundleOffer .booksSectionLabel {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.bundleOffer p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.offerMiniTrust {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.offerMiniTrust span {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.offerCard {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  backdrop-filter: blur(18px);
+}
+
+.offerCardHeader {
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 18px;
+}
+
+.offerCardHeader small,
+.offerCardHeader span {
+  display: block;
+  color: rgba(255, 255, 255, 0.64);
+  font-weight: 850;
+}
+
+.offerCardHeader strong {
+  display: block;
+  margin: 8px 0 2px;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.bookCheckoutForm {
+  display: grid;
+  gap: 12px;
+}
+
+.bookCheckoutForm label {
+  display: grid;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.85rem;
+  font-weight: 850;
+}
+
+.bookCheckoutForm input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  padding: 0 16px;
+  outline: none;
+}
+
+.bookCheckoutForm input::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.bookCheckoutForm input:focus {
+  border-color: rgba(255, 255, 255, 0.46);
+}
+
+.bookCheckoutForm button {
+  margin-top: 6px;
+  background: #ffffff;
+  color: #171717;
+}
+
+.booksProofGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.booksProofGrid article {
+  padding: 22px;
+}
+
+.booksProofGrid svg {
+  color: #171717;
+}
+
+.booksProofGrid p {
+  color: #555555;
+  line-height: 1.65;
+}
+
+.booksProofGrid strong,
+.booksProofGrid span {
+  display: block;
+}
+
+.booksProofGrid span {
+  margin-top: 3px;
+  color: #777777;
+  font-size: 0.9rem;
+}
+
+.booksFaq {
+  background: #eeeeea;
+}
+
+.booksFaqList {
+  margin-top: 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.booksFaqList details {
+  padding: 0 18px;
+}
+
+.booksFaqList summary {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 900;
+  list-style: none;
+}
+
+.booksFaqList summary::-webkit-details-marker {
+  display: none;
+}
+
+.booksFaqList p {
+  margin: -4px 0 18px;
+  color: #676767;
+  line-height: 1.65;
+}
+
+.booksFinalCta {
+  padding: clamp(72px, 10vw, 130px) 0;
+  background:
+    linear-gradient(90deg, rgba(10, 12, 16, 0.88), rgba(10, 12, 16, 0.7)),
+    url("/images/community-goals-session.jpg") center / cover;
+  color: #ffffff;
+  text-align: center;
+}
+
+.booksFinalCta .shell {
+  display: grid;
+  justify-items: center;
+}
+
+.booksFinalCta h2 {
+  max-width: 780px;
+  margin-bottom: 24px;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+}
+
+.booksThankYou {
+  background: #eeeeea;
+}
+
+.thankYouCard {
+  padding: 34px;
+  text-align: center;
+}
+
+.thankYouCard > svg {
+  color: #171717;
+}
+
+.thankYouCard > span {
+  display: block;
+  margin-top: 12px;
+  color: #676767;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.thankYouCard h1 {
+  margin-top: 12px;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+}
+
+.thankYouCard p {
+  max-width: 620px;
+  margin: 16px auto 0;
+  color: #676767;
+  line-height: 1.7;
+}
+
+.thankYouMeta {
+  margin: 24px 0;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.thankYouMeta div {
+  border-radius: 14px;
+  background: #eeeeea;
+  padding: 14px;
+}
+
+.thankYouMeta span,
+.thankYouMeta strong {
+  display: block;
+}
+
+.thankYouMeta span {
+  color: #676767;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 980px) {
+  .booksHeroGrid,
+  .booksStoryGrid,
+  .booksValueGrid,
+  .booksOutcomeGrid,
+  .offerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .booksHero {
+    align-items: center;
+    padding-bottom: 90px;
+  }
+
+  .booksHeroVisual {
+    min-height: 480px;
+    max-width: 620px;
+  }
+
+  .booksProductGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .booksProofGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .booksHero {
+    padding: 104px 0 78px;
+  }
+
+  .booksHero h1 {
+    font-size: clamp(2.7rem, 12vw, 4rem);
+  }
+
+  .booksHeroActions,
+  .booksPainGrid,
+  .booksProductGrid {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .booksHeroActions .primaryButton,
+  .booksHeroActions .secondaryButton {
+    width: 100%;
+  }
+
+  .booksTrustRow {
+    display: grid;
+  }
+
+  .booksHeroVisual {
+    min-height: 420px;
+  }
+
+  .bookCoverMock {
+    width: 172px;
+    min-height: 242px;
+    padding: 17px;
+  }
+
+  .bookCoverMock h2,
+  .bookCoverMock h3 {
+    font-size: 1.45rem;
+  }
+
+  .bookCoverMock-1 {
+    right: 18%;
+    width: 188px;
+    min-height: 262px;
+  }
+
+  .bookCoverMock-2 {
+    right: 0;
+  }
+
+  .bookCoverMock-3 {
+    left: 0;
+  }
+
+  .bookCoverMock-4 {
+    right: 35%;
+  }
+
+  .bundlePriceBadge {
+    right: 0;
+    top: 12px;
+    width: 148px;
+  }
+
+  .authorPhotoPlaceholder {
+    min-height: 320px;
+  }
+
+  .miniCover {
+    min-height: 230px;
+  }
+
+  .offerCard,
+  .thankYouCard {
+    padding: 22px;
+  }
+}
+
 /* Premium homepage direction */
 :root {
   --ink: #171717;

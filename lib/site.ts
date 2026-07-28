@@ -7,6 +7,7 @@ export const site = {
   email: "alignmindsetinitiative@gmail.com",
   nav: [
     { label: "Start Here", href: "/start-here" },
+    { label: "Books", href: "/books" },
     { label: "Resources", href: "/resources" },
     { label: "Workshops", href: "/workshops" },
     { label: "Blog", href: "/blog" },

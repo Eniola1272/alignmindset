@@ -104,6 +104,25 @@ create table if not exists public.site_settings (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.book_orders (
+  id uuid primary key default gen_random_uuid(),
+  tx_ref text not null unique,
+  flutterwave_transaction_id text,
+  customer_name text not null,
+  customer_email text not null,
+  customer_phone text,
+  product_slug text not null default 'align-mindset-comeback-bundle',
+  amount integer not null,
+  currency text not null default 'NGN',
+  status text not null default 'pending'
+    check (status in ('pending', 'paid', 'failed', 'cancelled')),
+  payment_link text,
+  raw_response jsonb,
+  verified_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 insert into public.site_settings (
   id,
   newsletter_popup_enabled,
@@ -167,6 +186,12 @@ create index if not exists post_comments_post_id_created_at_idx
   on public.post_comments (post_id, created_at desc)
   where status = 'approved';
 
+create index if not exists book_orders_created_at_idx
+  on public.book_orders (created_at desc);
+
+create index if not exists book_orders_customer_email_idx
+  on public.book_orders (customer_email);
+
 alter table public.posts enable row level security;
 alter table public.subscribers enable row level security;
 alter table public.article_ideas enable row level security;
@@ -175,6 +200,7 @@ alter table public.volunteer_applications enable row level security;
 alter table public.post_upvotes enable row level security;
 alter table public.post_comments enable row level security;
 alter table public.site_settings enable row level security;
+alter table public.book_orders enable row level security;
 
 drop policy if exists "Post images are publicly readable" on storage.objects;
 create policy "Post images are publicly readable"
@@ -218,6 +244,12 @@ create trigger posts_set_updated_at
 drop trigger if exists site_settings_set_updated_at on public.site_settings;
 create trigger site_settings_set_updated_at
   before update on public.site_settings
+  for each row
+  execute function public.set_updated_at();
+
+drop trigger if exists book_orders_set_updated_at on public.book_orders;
+create trigger book_orders_set_updated_at
+  before update on public.book_orders
   for each row
   execute function public.set_updated_at();
 
@@ -271,3 +303,6 @@ comment on table public.post_comments is
 
 comment on table public.site_settings is
   'Admin-managed settings that control public website features.';
+
+comment on table public.book_orders is
+  'Server-created Flutterwave checkout orders for Align Mindset book bundles.';
