@@ -1,20 +1,87 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  BookOpen,
-  CalendarDays,
   CheckCircle2,
+  ChevronDown,
+  Download,
+  Flame,
+  Handshake,
   MessageCircle,
-  Sparkles,
-  Target,
-  UsersRound
+  PenLine,
+  PlayCircle,
+  Target
 } from "lucide-react";
 import { ArticleCard } from "@/components/article-card";
 import { NewsletterForm } from "@/components/newsletter-form";
-import { ProgramCard } from "@/components/program-card";
 import { SectionHeading } from "@/components/section-heading";
 import { getFeaturedArticles } from "@/lib/articles";
 import { communityRhythm, pillars, programs } from "@/lib/site";
+
+const journeyCards = [
+  {
+    title: "Find your direction",
+    copy: "Start with identity, values, and the kind of future you are building.",
+    image: "/images/community-goals-session.jpg"
+  },
+  {
+    title: "Build your system",
+    copy: "Use simple rhythms for discipline, learning, planning, and execution.",
+    image: "/images/starter-kit-planning.jpg"
+  },
+  {
+    title: "Join live sessions",
+    copy: "Wednesday sessions help you turn ideas into action with other builders.",
+    image: "/images/workshop-live-session.jpg"
+  }
+];
+
+const valueHighlights = [
+  {
+    icon: Target,
+    title: "Clear direction",
+    copy: "We help you name the goal, the identity behind it, and the next useful move."
+  },
+  {
+    icon: Flame,
+    title: "Practical discipline",
+    copy: "You get weekly structure that turns motivation into repeatable behavior."
+  },
+  {
+    icon: Handshake,
+    title: "Community support",
+    copy: "You do not have to build alone. Learn, report progress, and get encouraged."
+  }
+];
+
+const questions = [
+  {
+    question: "What is Align Mindset?",
+    answer:
+      "A learning community that helps people build discipline, skills, purpose, and value through practical content, workshops, and accountability."
+  },
+  {
+    question: "Who is it for?",
+    answer:
+      "Students, early career builders, creators, volunteers, and anyone who wants to stop drifting and start building a more useful life."
+  },
+  {
+    question: "When are the live sessions?",
+    answer:
+      "Live community sessions happen every Wednesday, with practical prompts and follow-up actions."
+  },
+  {
+    question: "What should I do first?",
+    answer:
+      "Start with the newsletter, read the starter essays, then join a Wednesday session when you are ready."
+  }
+];
+
+const programImages = [
+  "/images/starter-kit-planning.jpg",
+  "/images/community-goals-session.jpg",
+  "/images/workshop-live-session.jpg",
+  "/images/starter-kit-planning.jpg"
+];
 
 const testimonials = [
   {
@@ -43,82 +110,138 @@ export default async function Home() {
   return (
     <>
       <section className="hero">
+        <img
+          className="heroBackdrop"
+          src="/images/community-goals-session.jpg"
+          alt=""
+        />
+        <div className="heroShade" aria-hidden="true" />
         <div className="shell heroInner">
-          <div className="heroLayout">
-            <div className="heroCopy">
-              <div className="heroBadge">
-                <Sparkles size={18} aria-hidden="true" />
-                Purposeful growth, made practical
-              </div>
-              <h1>Helping you achieve your goals and dreams</h1>
-              <p>
-                Align Mindset Initiative is a community and learning platform
-                for identity, systems, skills, disciplined action, and long-term
-                value.
-              </p>
-              <div className="heroActions">
-                <Link className="primaryButton" href="#join">
-                  Join the movement
-                  <ArrowRight size={17} aria-hidden="true" />
-                </Link>
-                <Link className="secondaryButton" href="/blog">
-                  Read the blog
-                </Link>
-              </div>
-            </div>
-            <div className="heroImageStack" aria-hidden="true">
-              <figure className="imageFrame heroImageFrame">
-                <img
-                  src="/images/community-goals-session.jpg"
-                  alt=""
-                />
-              </figure>
-              <figure className="imageFrame floatingImageFrame">
-                <img src="/images/starter-kit-planning.jpg" alt="" />
-              </figure>
-            </div>
-          </div>
-          <div className="heroBoard" aria-label="Align Mindset framework">
-            <div>
-              <Target size={22} aria-hidden="true" />
-              <strong>Identity</strong>
-              <span>Know who you are becoming</span>
-            </div>
-            <div>
-              <CalendarDays size={22} aria-hidden="true" />
-              <strong>Systems</strong>
-              <span>Build repeatable rhythms</span>
-            </div>
-            <div>
-              <BookOpen size={22} aria-hidden="true" />
-              <strong>Skills</strong>
-              <span>Create useful proof</span>
-            </div>
-            <div>
-              <UsersRound size={22} aria-hidden="true" />
-              <strong>Community</strong>
-              <span>Grow with accountability</span>
+          <div className="heroCopy">
+            <h1>Align your mindset. Build your future.</h1>
+            <p>
+              A clean, practical community for people who want discipline,
+              skills, purpose, and the courage to create value before capital.
+            </p>
+            <div className="heroActions">
+              <Link className="primaryButton" href="#join">
+                Join the movement
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <Link className="secondaryButton glassButton" href="/start-here">
+                Start here
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="sectionPad" id="programs">
-        <div className="shell splitHeader">
+      <section className="sectionPad journeySection" id="start">
+        <div className="shell">
           <SectionHeading
-            eyebrow="Featured programs"
-            title="Practical growth spaces for people ready to execute."
-            copy="Start with identity, build systems, learn useful skills, and turn learning into assets that create value."
+            align="center"
+            eyebrow="Start your journey"
+            title="Choose the next move that fits where you are."
+            copy="No pressure to have everything figured out. Start with one useful step, then keep moving with the community."
           />
-          <Link className="textLink" href="#join">
-            Request a program
-            <ArrowRight size={16} aria-hidden="true" />
-          </Link>
+          <div className="journeyGrid">
+            {journeyCards.map((card) => (
+              <article className="journeyCard" key={card.title}>
+                <img src={card.image} alt="" />
+                <div>
+                  <h3>{card.title}</h3>
+                  <p>{card.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-        <div className="shell programGrid">
-          {programs.map((program) => (
-            <ProgramCard key={program.title} {...program} />
+      </section>
+
+      <section className="sectionPad valueSection">
+        <div className="shell valueGrid">
+          <div>
+            <SectionHeading
+              eyebrow="For disciplined dreamers"
+              title="Your life needs more than motivation."
+              copy="Align Mindset helps you move from wishful thinking to structured growth. We teach identity, systems, skill-building, execution, and value creation in a way that feels human."
+            />
+            <div className="valueList">
+              {valueHighlights.map(({ icon: Icon, title, copy }) => (
+                <article key={title}>
+                  <span>
+                    <Icon size={18} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{copy}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+          <figure className="valueImage">
+            <img
+              src="/images/starter-kit-planning.jpg"
+              alt="Planning worksheets for goals and personal growth"
+            />
+            <figcaption>
+              <PenLine size={16} aria-hidden="true" />
+              Turn goals into weekly proof
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="wideImageBand">
+        <img src="/images/workshop-live-session.jpg" alt="" />
+        <div className="wideImageShade" aria-hidden="true" />
+        <div className="shell wideImageContent">
+          <div>
+            <span className="wednesdaylive">Wednesday live sessions</span>
+            <h2>Where direction meets accountability.</h2>
+            <Link className="primaryButton lightButton" href="/workshops">
+              See workshops
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+          <aside className="sessionGlassCard">
+            <PlayCircle size={34} aria-hidden="true" />
+            <div>
+              <strong>Attend the next session</strong>
+              <p>Learn, reflect, ask better questions, and leave with action.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section className="sectionPad programBentoSection" id="programs">
+        <div className="shell programBentoGrid">
+          <div className="programBentoIntro">
+            <span>Featured programs</span>
+            <h2>Practical growth spaces for people ready to execute.</h2>
+            <p>
+              Start with identity, build systems, learn useful skills, and turn
+              learning into assets that create value.
+            </p>
+          </div>
+          {programs.map((program, index) => (
+            <article
+              key={program.title}
+              className={`programBentoCard programBentoCard-${index + 1}`}
+            >
+              <img src={programImages[index]} alt="" />
+              <div>
+                <span>{program.eyebrow}</span>
+                <h3>{program.title}</h3>
+                <p>{program.description}</p>
+              </div>
+            </article>
           ))}
+          <Link className="programBentoCta" href="/workshops">
+            Explore all programs
+            <ArrowRight size={17} aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
@@ -127,7 +250,7 @@ export default async function Home() {
           <SectionHeading
             align="center"
             eyebrow="The framework"
-            title="Identity → Systems → Skills → Action → Assets → Leverage"
+            title="Identity, systems, skills, action, assets, leverage."
             copy="This is the backbone for the community, articles, workshops, volunteer training, and future courses."
           />
           <div className="pillarGrid">
@@ -163,6 +286,32 @@ export default async function Home() {
                 <CheckCircle2 size={20} aria-hidden="true" />
                 <span>{item}</span>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sectionPad faqSection">
+        <div className="shell faqGrid">
+          <article className="faqHelpCard">
+            <img src="/images/community-goals-session.jpg" alt="" />
+            <div>
+              <h2>Need clarity? Start with one small step.</h2>
+              <Link className="secondaryButton glassButton" href="/start-here">
+                Start here
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+          </article>
+          <div className="faqList">
+            {questions.map((item, index) => (
+              <details key={item.question} open={index === 0}>
+                <summary>
+                  {item.question}
+                  <ChevronDown size={18} aria-hidden="true" />
+                </summary>
+                <p>{item.answer}</p>
+              </details>
             ))}
           </div>
         </div>
@@ -213,6 +362,8 @@ export default async function Home() {
       </section>
 
       <section className="joinSection" id="join">
+        <img src="/images/community-goals-session.jpg" alt="" />
+        <div className="joinShade" aria-hidden="true" />
         <div className="shell joinGrid">
           <div>
             <div className="joinIcon">
@@ -224,12 +375,10 @@ export default async function Home() {
               practical challenges, and new articles from Align Mindset
               Initiative.
             </p>
-            <figure className="joinMiniImage">
-              <img
-                src="/images/starter-kit-planning.jpg"
-                alt="Planning resources, notebook, and growth worksheets"
-              />
-            </figure>
+            <Link className="downloadLink" href="/resources">
+              <Download size={16} aria-hidden="true" />
+              Get the free starter resources
+            </Link>
           </div>
           <NewsletterForm />
         </div>

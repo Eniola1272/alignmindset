@@ -22,10 +22,15 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link className="pillButton desktopHeaderCta" href="/#join">
-          Join the movement
-          <ArrowRight size={16} aria-hidden="true" />
-        </Link>
+        <div className="headerActions">
+          <Link className="headerLoginLink" href="/admin">
+            Admin
+          </Link>
+          <Link className="pillButton desktopHeaderCta" href="/#join">
+            Join
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
         <button
           className="mobileMenuButton"
           type="button"
@@ -53,6 +58,13 @@ export function SiteHeader() {
                 </Link>
               ))}
             </nav>
+            <Link
+              className="mobileMenuAdmin"
+              href="/admin"
+              onClick={closeMenu}
+            >
+              Admin
+            </Link>
             <Link className="pillButton mobileMenuCta" href="/#join" onClick={closeMenu}>
               Join the movement
               <ArrowRight size={16} aria-hidden="true" />

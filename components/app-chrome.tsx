@@ -18,11 +18,14 @@ export function AppChrome({
 }: AppChromeProps) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
+  const isHome = pathname === "/";
 
   return (
     <>
-      <SiteHeader />
-      <main>{children}</main>
+      {isAdmin ? null : <SiteHeader />}
+      <main className={!isAdmin && !isHome ? "publicMain" : undefined}>
+        {children}
+      </main>
       {isAdmin ? null : <SiteFooter />}
       {!isAdmin && newsletterPopupEnabled ? (
         <NewsletterPopup revision={newsletterPopupRevision} />
