@@ -46,7 +46,6 @@ export function SiteFooter() {
           <Link href="/partners">Sponsor / Partner</Link>
           <Link href="/#rhythm">Weekly rhythm</Link>
           <Link href="/admin">Admin</Link>
-          <a href={`mailto:${site.email}`}>Contact</a>
         </div>
         <div>
           <h2>Contact</h2>

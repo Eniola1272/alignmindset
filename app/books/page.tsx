@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -7,10 +8,10 @@ import {
   ShieldCheck,
   Star,
   Target,
-  UsersRound,
   X
 } from "lucide-react";
 import { BookCheckoutForm } from "@/components/book-checkout-form";
+import { InteractiveBookStack } from "@/components/interactive-book-stack";
 import { bookBundle, formatNaira } from "@/lib/book-bundle";
 
 export const metadata: Metadata = {
@@ -64,7 +65,7 @@ const faqs = [
   {
     question: "Can I buy one book only?",
     answer:
-      "The current offer is built around the bundle. Each book is worth N2,000, but the complete 4-book bundle is N5,000."
+      "The current offer is built around the bundle. Each book is worth N3,500, but the complete 4-book bundle is N4,900."
   },
   {
     question: "Are these physical books?",
@@ -109,23 +110,11 @@ export default function BooksPage() {
               <span>Read on any device</span>
             </div>
           </div>
-          <div className="booksHeroVisual" aria-label="Book bundle preview">
-            <div className="bundlePriceBadge">
-              <small>Bundle offer</small>
-              <strong>{formatNaira(bookBundle.bundlePrice)}</strong>
-              <span>{formatNaira(totalValue)} total value</span>
-            </div>
-            {bookBundle.books.map((book, index) => (
-              <article
-                className={`bookCoverMock bookCoverMock-${index + 1}`}
-                key={book.title}
-              >
-                <span>{book.tag}</span>
-                <h2>{book.title}</h2>
-                <p>Align Mindset</p>
-              </article>
-            ))}
-          </div>
+          <InteractiveBookStack
+            books={bookBundle.books}
+            bundlePrice={formatNaira(bookBundle.bundlePrice)}
+            totalValue={formatNaira(totalValue)}
+          />
         </div>
       </section>
 
@@ -147,10 +136,13 @@ export default function BooksPage() {
       <section className="booksSection booksStory" id="story">
         <div className="shell booksStoryGrid">
           <figure className="authorPhotoPlaceholder">
-            <div>
-              <UsersRound size={30} aria-hidden="true" />
-              <span>Your photo goes here</span>
-            </div>
+            <Image
+              src="/images/founder/eniola-aderounmu-align-founder.png"
+              alt="Eniola Aderounmu, founder and CEO of Align Mindset"
+              width={1123}
+              height={1401}
+              sizes="(max-width: 980px) 100vw, 38vw"
+            />
           </figure>
           <div>
             <span className="booksSectionLabel">The story</span>
@@ -182,10 +174,20 @@ export default function BooksPage() {
           <div className="booksProductGrid">
             {bookBundle.books.map((book, index) => (
               <article className="booksProductCard" key={book.title}>
-                <div className={`bookCoverMock miniCover miniCover-${index + 1}`}>
-                  <span>{book.tag}</span>
-                  <h3>{book.title}</h3>
-                  <p>Align Mindset</p>
+                <div
+                  className={`bookCoverMock miniCover miniCover-${index + 1} ${
+                    book.coverImage ? "hasCoverImage" : ""
+                  }`}
+                >
+                  {book.coverImage ? (
+                    <img src={book.coverImage} alt={`${book.title} book cover`} />
+                  ) : (
+                    <>
+                      <span>{book.tag}</span>
+                      <h3>{book.title}</h3>
+                      <p>Align Mindset</p>
+                    </>
+                  )}
                 </div>
                 <div>
                   <small>{book.tag}</small>
@@ -218,7 +220,9 @@ export default function BooksPage() {
             ))}
             <div>
               <span>Total value</span>
-              <strong>{formatNaira(totalValue)}</strong>
+              <strong>
+                <s>{formatNaira(totalValue)}</s>
+              </strong>
             </div>
             <div className="valueStackTotal">
               <span>Today bundle price</span>

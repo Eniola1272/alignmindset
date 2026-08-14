@@ -2,33 +2,34 @@ export const bookBundle = {
   slug: "align-mindset-comeback-bundle",
   title: "The Align Mindset Comeback Bundle",
   shortTitle: "Comeback Bundle",
-  individualBookPrice: 2000,
-  bundlePrice: 5000,
+  individualBookPrice: 3500,
+  bundlePrice: 4900,
   currency: "NGN",
   books: [
     {
-      title: "Get Good at Hard Things",
+      title: "Ask for Help",
       tag: "Book 1",
+      coverImage: "/images/books/ask-for-help-book-cover.png",
       promise:
-        "Build the identity and mental toughness needed to keep showing up when the work is difficult."
+        "Learn how to stop struggling in silence, ask better questions, and use people, feedback, and community as leverage."
     },
     {
-      title: "How to Create Value Without Capital",
+      title: "Pick Your Skill",
       tag: "Book 2",
       promise:
-        "Learn how to start with observation, skill, service, and proof before money enters the picture."
+        "Choose one useful skill with intention instead of jumping between trends, pressure, and random advice."
     },
     {
-      title: "Systems, Not Motivation",
+      title: "Turn Your Skill Into an Offer",
       tag: "Book 3",
       promise:
-        "Turn inconsistent ambition into weekly rhythms, practical routines, and trackable progress."
+        "Package what you can do into a clear promise people understand, trust, and can say yes to."
     },
     {
-      title: "The Discipline Reset",
+      title: "Love Your Work",
       tag: "Book 4",
       promise:
-        "Rebuild focus, habits, and personal standards without shame or empty motivation."
+        "Build a healthier relationship with effort, mastery, service, and the daily practice that makes your work meaningful."
     }
   ]
 };

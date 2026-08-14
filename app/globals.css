@@ -255,7 +255,7 @@ nav a:hover,
   max-width: 620px;
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.45rem, 6vw, 5.8rem);
+  font-size: clamp(2.45rem, 6vw, 4rem);
   line-height: 0.96;
   font-weight: 700;
   letter-spacing: 0;
@@ -1143,7 +1143,7 @@ nav a:hover,
 .articleHeader h1 {
   margin: 18px 0;
   font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
-  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 0.98;
 }
 
@@ -2911,7 +2911,7 @@ button:disabled,
   }
 
   .hero h1 {
-    font-size: clamp(2.4rem, 13vw, 4.6rem);
+    font-size: clamp(2.4rem, 13vw, 4rem);
   }
 
   .heroBoard,
@@ -3229,7 +3229,7 @@ button:disabled,
   margin: 0;
   color: #ffffff;
   font-family: inherit;
-  font-size: clamp(3rem, 7vw, 6.2rem);
+  font-size: clamp(3rem, 7vw, 4rem);
   line-height: 0.96;
   font-weight: 900;
   letter-spacing: 0;
@@ -3308,7 +3308,7 @@ button:disabled,
 
 .heroGlassCard strong {
   display: inline-block;
-  font-size: clamp(3rem, 6vw, 4.6rem);
+  font-size: clamp(3rem, 6vw, 4rem);
   line-height: 0.9;
 }
 
@@ -3584,7 +3584,7 @@ button:disabled,
 .wideImageContent h2 {
   max-width: 620px;
   margin: 0 0 22px;
-  font-size: clamp(2.3rem, 5vw, 4.7rem);
+  font-size: clamp(2.3rem, 5vw, 4rem);
   line-height: 1;
 }
 
@@ -3947,7 +3947,7 @@ button:disabled,
   }
 
   .hero h1 {
-    font-size: clamp(2.75rem, 15vw, 4.25rem);
+    font-size: clamp(2.75rem, 15vw, 4rem);
   }
 
   .heroGlassCard {
@@ -4013,7 +4013,6 @@ button:disabled,
 .siteFooter {
   overflow: hidden;
   border-top: 0;
-  border-radius: 28px 28px 0 0;
   background:
     radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.08), transparent 28%),
     #08090b;
@@ -4031,7 +4030,6 @@ button:disabled,
 
 .footerSubscribe span {
   display: inline-block;
-  margin-bottom: 16px;
   color: rgba(255, 255, 255, 0.58);
   font-size: 0.84rem;
   font-weight: 900;
@@ -4042,7 +4040,7 @@ button:disabled,
 .footerSubscribe h2 {
   max-width: 760px;
   margin: 0;
-  font-size: clamp(2.6rem, 6vw, 5.8rem);
+  font-size: clamp(2.6rem, 6vw, 4rem);
   line-height: 0.98;
   font-weight: 900;
   letter-spacing: 0;
@@ -4218,7 +4216,7 @@ button:disabled,
 .booksFinalCta h2,
 .thankYouCard h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 5.8vw, 5.8rem);
+  font-size: clamp(2.4rem, 5.8vw, 4rem);
   line-height: 0.98;
   font-weight: 900;
   letter-spacing: 0;
@@ -4283,6 +4281,25 @@ button:disabled,
     #11151c;
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.32);
   color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    transform 0.7s cubic-bezier(0.18, 0.86, 0.24, 1),
+    box-shadow 0.52s ease,
+    filter 0.52s ease;
+}
+
+.booksHeroVisual > .bookCoverMock {
+  left: 50%;
+  top: 50%;
+  width: 220px;
+  min-height: 310px;
+  transform: translate3d(var(--book-x), var(--book-y), 0)
+    rotate(var(--book-r))
+    scale(var(--book-s));
+  transform-origin: 50% 84%;
+  will-change: transform;
 }
 
 .bookCoverMock::after {
@@ -4318,39 +4335,112 @@ button:disabled,
   font-weight: 850;
 }
 
+.bookCoverMock.hasCoverImage {
+  aspect-ratio: 2 / 3;
+  min-height: auto;
+  overflow: hidden;
+  padding: 0;
+  background: #ffffff;
+}
+
+.bookCoverMock.hasCoverImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bookCoverMock.hasCoverImage::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 14%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.22),
+    rgba(255, 255, 255, 0.16) 42%,
+    transparent
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.bookCoverMock:focus-visible {
+  outline: 3px solid var(--gold-primary-light);
+  outline-offset: 5px;
+}
+
+.bookCoverMock:hover,
+.bookCoverMock.isActive {
+  filter: saturate(1.04);
+  box-shadow: 0 36px 82px rgba(0, 0, 0, 0.38);
+}
+
 .bookCoverMock-1 {
+  z-index: 6;
+  --book-x: calc(-50% - 24px);
+  --book-y: calc(-50% + 8px);
+  --book-r: -1deg;
+  --book-s: 1.08;
+}
+
+.bookCoverMock-2 {
   z-index: 4;
-  right: 26%;
-  bottom: 48px;
-  width: 240px;
-  min-height: 334px;
+  --book-x: calc(-50% + 120px);
+  --book-y: calc(-50% + 2px);
+  --book-r: 8deg;
+  --book-s: 0.9;
+}
+
+.bookCoverMock-3 {
+  z-index: 3;
+  --book-x: calc(-50% - 158px);
+  --book-y: calc(-50% + 18px);
+  --book-r: -8deg;
+  --book-s: 0.88;
+}
+
+.bookCoverMock-4 {
+  z-index: 2;
+  --book-x: calc(-50% - 36px);
+  --book-y: calc(-50% - 96px);
+  --book-r: -2deg;
+  --book-s: 0.82;
+}
+
+.bookCoverMock.bookTheme-1 {
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 36%),
     #0f131a;
 }
 
-.bookCoverMock-2 {
-  z-index: 3;
-  right: 3%;
-  bottom: 88px;
-  transform: rotate(6deg);
-  background: #20242c;
+.bookCoverMock.bookTheme-2 {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 36%),
+    #263027;
 }
 
-.bookCoverMock-3 {
-  z-index: 2;
-  left: 8%;
-  bottom: 86px;
-  transform: rotate(-7deg);
-  background: #263027;
+.bookCoverMock.bookTheme-3 {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 36%),
+    #20242c;
 }
 
-.bookCoverMock-4 {
-  z-index: 1;
-  right: 42%;
-  top: 18px;
-  transform: rotate(-3deg);
-  background: #27221d;
+.bookCoverMock.bookTheme-4 {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 36%),
+    #27221d;
+}
+
+.bookStackHint {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.82rem;
+  font-weight: 850;
 }
 
 .bundlePriceBadge {
@@ -4480,23 +4570,25 @@ button:disabled,
 }
 
 .authorPhotoPlaceholder {
+  position: relative;
+  overflow: hidden;
   min-height: 440px;
   margin: 0;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
-  display: grid;
-  place-items: center;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 36%),
     #1b2029;
+  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.28);
 }
 
-.authorPhotoPlaceholder div {
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  color: rgba(255, 255, 255, 0.68);
-  font-weight: 850;
+.authorPhotoPlaceholder img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .booksStory p {
@@ -4532,14 +4624,21 @@ button:disabled,
 .miniCover {
   position: relative;
   width: 100%;
+  aspect-ratio: 2 / 3;
   min-height: 255px;
   border: 0;
   border-radius: 0;
   box-shadow: none;
+  cursor: default;
 }
 
 .miniCover h3 {
   font-size: 1.55rem;
+}
+
+.miniCover:hover {
+  filter: none;
+  box-shadow: none;
 }
 
 .miniCover-2 {
@@ -4828,7 +4927,7 @@ button:disabled,
 .booksFinalCta h2 {
   max-width: 780px;
   margin-bottom: 24px;
-  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
 }
 
 .booksThankYou {
@@ -4948,7 +5047,7 @@ button:disabled,
     min-height: 420px;
   }
 
-  .bookCoverMock {
+  .booksHeroVisual > .bookCoverMock {
     width: 172px;
     min-height: 242px;
     padding: 17px;
@@ -4960,27 +5059,42 @@ button:disabled,
   }
 
   .bookCoverMock-1 {
-    right: 18%;
-    width: 188px;
-    min-height: 262px;
+    --book-x: calc(-50% - 8px);
+    --book-y: calc(-50% + 10px);
+    --book-r: -1deg;
+    --book-s: 1.05;
   }
 
   .bookCoverMock-2 {
-    right: 0;
+    --book-x: calc(-50% + 84px);
+    --book-y: calc(-50% + 2px);
+    --book-r: 8deg;
+    --book-s: 0.88;
   }
 
   .bookCoverMock-3 {
-    left: 0;
+    --book-x: calc(-50% - 96px);
+    --book-y: calc(-50% + 18px);
+    --book-r: -8deg;
+    --book-s: 0.86;
   }
 
   .bookCoverMock-4 {
-    right: 35%;
+    --book-x: calc(-50% - 14px);
+    --book-y: calc(-50% - 82px);
+    --book-r: -2deg;
+    --book-s: 0.78;
   }
 
   .bundlePriceBadge {
     right: 0;
     top: 12px;
     width: 148px;
+  }
+
+  .bookStackHint {
+    bottom: -4px;
+    font-size: 0.78rem;
   }
 
   .authorPhotoPlaceholder {
@@ -5303,7 +5417,7 @@ button:disabled,
 .siteFooter {
   padding: 68px 0 24px;
   border-top: 0;
-  background: #22252b;
+  background: #171717;
   color: #ffffff;
 }
 
@@ -5394,7 +5508,7 @@ button:disabled,
 @media (max-width: 1180px) {
   .hero h1 {
     max-width: 680px;
-    font-size: clamp(3rem, 7.2vw, 5.4rem);
+    font-size: clamp(3rem, 7.2vw, 4rem);
   }
 
   .heroGlassCard {
@@ -5459,7 +5573,7 @@ button:disabled,
   }
 
   .hero h1 {
-    font-size: clamp(3.2rem, 11vw, 5.4rem);
+    font-size: clamp(3.2rem, 11vw, 4rem);
   }
 
   .hero p {
@@ -5522,7 +5636,7 @@ button:disabled,
 
   .wideImageContent h2 {
     max-width: 620px;
-    font-size: clamp(2.45rem, 8vw, 4.2rem);
+    font-size: clamp(2.45rem, 8vw, 4rem);
   }
 
   .sessionGlassCard {
@@ -6348,4 +6462,154 @@ button:disabled,
 .siteFooter a,
 .siteFooter a:hover {
   text-decoration: none;
+}
+
+/* Gold primary brand system */
+:root {
+  --gold-primary: #d4a62f;
+  --gold-primary-light: #f6d777;
+  --gold-primary-dark: #9c6b12;
+  --gold-gradient: linear-gradient(135deg, #f8dc82 0%, #d4a62f 42%, #9c6b12 100%);
+}
+
+.pillButton,
+.primaryButton,
+.newsletterForm button,
+.roundIconLink,
+.desktopHeaderCta,
+.mobileMenuCta,
+.programBentoCta,
+.bookCheckoutForm button,
+.booksFinalCta .primaryButton,
+.footerNewsletterForm button {
+  border-color: rgba(212, 166, 47, 0.72);
+  background: var(--gold-gradient);
+  color: #171717;
+  box-shadow: 0 14px 32px rgba(156, 107, 18, 0.22);
+}
+
+.pillButton:hover,
+.primaryButton:hover,
+.newsletterForm button:hover,
+.roundIconLink:hover,
+.desktopHeaderCta:hover,
+.mobileMenuCta:hover,
+.programBentoCta:hover,
+.bookCheckoutForm button:hover,
+.booksFinalCta .primaryButton:hover,
+.footerNewsletterForm button:hover {
+  background: linear-gradient(135deg, #ffe79b 0%, #ddb13d 46%, #a87516 100%);
+}
+
+.primaryButton svg,
+.pillButton svg,
+.newsletterForm button svg,
+.roundIconLink svg,
+.desktopHeaderCta svg,
+.mobileMenuCta svg,
+.programBentoCta svg,
+.bookCheckoutForm button svg {
+  color: currentColor;
+}
+
+.lightButton {
+  border-color: rgba(212, 166, 47, 0.72);
+  background: var(--gold-gradient);
+  color: #171717;
+}
+
+.secondaryButton {
+  border-color: rgba(212, 166, 47, 0.72);
+  color: var(--gold-primary-light);
+}
+
+.glassButton {
+  border-color: rgba(246, 215, 119, 0.4);
+  background: rgba(212, 166, 47, 0.14);
+  color: #ffffff;
+}
+
+.sectionHeading > span,
+.programBentoIntro > span,
+.wideImageContent span,
+.proofBand::before,
+.booksSectionLabel,
+.booksSection .booksSectionLabel,
+.booksPain .booksSectionLabel,
+.booksStory .booksSectionLabel,
+.booksShowcase .booksSectionLabel,
+.booksValue .booksSectionLabel,
+.booksOutcomes .booksSectionLabel,
+.booksProof .booksSectionLabel,
+.booksFaq .booksSectionLabel {
+  color: var(--gold-primary-dark);
+}
+
+.hero .primaryButton,
+.bundleOffer .primaryButton,
+.joinSection .newsletterForm button,
+.offerCard .primaryButton,
+.bookCheckoutForm button {
+  border-color: rgba(246, 215, 119, 0.72);
+  background: var(--gold-gradient);
+  color: #171717;
+}
+
+.heroTags a,
+.heroBadge,
+.sessionGlassCard,
+.valueImage figcaption,
+.joinSection .newsletterForm,
+.offerMiniTrust span {
+  border-color: rgba(246, 215, 119, 0.22);
+}
+
+.joinIcon,
+.pillarCard span,
+.pillarCard:nth-child(2n) span,
+.pillarCard:nth-child(3n) span,
+.testimonialCard > div > span,
+.valueStackTotal {
+  background: var(--gold-gradient);
+  color: #171717;
+}
+
+.valueStackTotal span {
+  color: rgba(23, 23, 23, 0.68);
+}
+
+.valueList span,
+.valueList article:nth-child(2) span,
+.valueList article:nth-child(3) span {
+  background: rgba(212, 166, 47, 0.14);
+  color: var(--gold-primary-dark);
+}
+
+.rhythmList svg,
+.booksPainGrid svg,
+.outcomesList svg,
+.booksProofGrid svg,
+.thankYouCard > svg,
+.editorialCard svg,
+.resourceCard svg,
+.partnerStats svg,
+.programCard svg {
+  color: var(--gold-primary-dark);
+}
+
+.footerNewsletterForm button {
+  color: #171717;
+}
+
+.bundlePriceBadge s,
+.valueStackCard s,
+.offerCardHeader s {
+  color: #d73535;
+  text-decoration-line: line-through;
+  text-decoration-color: #d73535;
+  text-decoration-thickness: 3px;
+}
+
+.bundlePriceBadge span s {
+  margin-right: 4px;
 }

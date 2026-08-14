@@ -61,12 +61,11 @@ export function NewsletterForm({
           id={emailId}
           name="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder="Email Address"
           required
         />
-        <input name="phone" type="tel" placeholder="Phone" />
-        <button type="submit" disabled={pending} aria-label="Subscribe">
-          <Send size={18} aria-hidden="true" />
+        <input name="phone" type="tel" placeholder="Phone Number" />
+        <button className="flex items-center gap-2" type="submit" disabled={pending} aria-label="Subscribe">
           <span>{pending ? "Joining" : submitLabel}</span>
         </button>
       </div>
