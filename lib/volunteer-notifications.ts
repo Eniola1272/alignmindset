@@ -1,5 +1,6 @@
 import "server-only";
 
+import { escapeHtml, isResendConfigured, sendResendEmail } from "@/lib/resend";
 import { site } from "@/lib/site";
 
 type VolunteerNotificationInput = {
@@ -42,6 +43,61 @@ async function postNotification(url: string, payload: Record<string, unknown>) {
   }
 }
 
+function renderAdminNotificationHtml(
+  applicant: VolunteerNotificationInput,
+  adminUrl: string
+) {
+  const rows = [
+    ["Name", applicant.name],
+    ["Email", applicant.email],
+    ["Phone", applicant.phone],
+    ["Skills", applicant.skills],
+    ["Why they want to volunteer", applicant.motivation],
+    ["How they hope to add value", applicant.valueAdd]
+  ];
+
+  return `
+    <div style="font-family:Arial,sans-serif;line-height:1.6;color:#171717">
+      <h1 style="font-size:24px;margin:0 0 12px">New volunteer application</h1>
+      <p>${escapeHtml(applicant.name)} just applied to volunteer with Align Mindset.</p>
+      <table style="width:100%;border-collapse:collapse;margin:20px 0">
+        ${rows
+          .map(
+            ([label, value]) => `
+              <tr>
+                <td style="border:1px solid #eee;padding:10px;font-weight:700;vertical-align:top">${escapeHtml(label)}</td>
+                <td style="border:1px solid #eee;padding:10px;vertical-align:top">${escapeHtml(value)}</td>
+              </tr>
+            `
+          )
+          .join("")}
+      </table>
+      <p>
+        <a href="${escapeHtml(adminUrl)}" style="display:inline-block;background:#d4a62f;color:#171717;text-decoration:none;padding:12px 18px;border-radius:999px;font-weight:700">
+          Review in admin
+        </a>
+      </p>
+    </div>
+  `;
+}
+
+function renderApplicantConfirmationHtml(name: string, onboardingUrl: string) {
+  return `
+    <div style="font-family:Arial,sans-serif;line-height:1.7;color:#171717">
+      <h1 style="font-size:24px;margin:0 0 12px">We received your volunteer application.</h1>
+      <p>Hi ${escapeHtml(name)},</p>
+      <p>Thank you for raising your hand to support Align Mindset. We have received your application and will review it carefully.</p>
+      <p>While you wait, you can read the volunteer onboarding page so you understand how we think about service, value, and community.</p>
+      <p>
+        <a href="${escapeHtml(onboardingUrl)}" style="display:inline-block;background:#d4a62f;color:#171717;text-decoration:none;padding:12px 18px;border-radius:999px;font-weight:700">
+          View onboarding page
+        </a>
+      </p>
+      <p style="color:#666">Align Mindset Initiative</p>
+    </div>
+  `;
+}
+
 export async function sendVolunteerApplicationNotifications(
   applicant: VolunteerNotificationInput
 ) {
@@ -51,22 +107,44 @@ export async function sendVolunteerApplicationNotifications(
   const applicantWebhookUrl =
     process.env.VOLUNTEER_CONFIRMATION_WEBHOOK_URL || emailWebhookUrl;
   const onboardingUrl = new URL("/volunteer/onboarding", getSiteUrl()).toString();
+  const adminUrl = new URL("/admin/volunteers", getSiteUrl()).toString();
   const adminEmails = getAdminEmails();
   const jobs: Promise<void>[] = [];
 
-  if (adminWebhookUrl) {
+  if (isResendConfigured()) {
+    if (adminEmails.length) {
+      jobs.push(
+        sendResendEmail({
+          to: adminEmails,
+          subject: `New volunteer application from ${applicant.name}`,
+          html: renderAdminNotificationHtml(applicant, adminUrl),
+          text: `${applicant.name} applied to volunteer.\n\nEmail: ${applicant.email}\nPhone: ${applicant.phone}\nSkills: ${applicant.skills}\n\nMotivation: ${applicant.motivation}\n\nValue add: ${applicant.valueAdd}\n\nReview: ${adminUrl}`,
+          replyTo: applicant.email
+        }).then(() => undefined)
+      );
+    }
+
+    jobs.push(
+      sendResendEmail({
+        to: [applicant.email],
+        subject: "We received your Align Mindset volunteer application",
+        html: renderApplicantConfirmationHtml(applicant.name, onboardingUrl),
+        text: `Hi ${applicant.name},\n\nThank you for applying to volunteer with Align Mindset. We have received your application and will review it carefully.\n\nVolunteer onboarding: ${onboardingUrl}\n\nAlign Mindset Initiative`
+      }).then(() => undefined)
+    );
+  } else if (adminWebhookUrl) {
     jobs.push(
       postNotification(adminWebhookUrl, {
         type: "volunteer_application_admin_notification",
         to: adminEmails,
         subject: `New volunteer application from ${applicant.name}`,
         applicant,
-        adminUrl: new URL("/admin/volunteers", getSiteUrl()).toString()
+        adminUrl
       })
     );
   }
 
-  if (applicantWebhookUrl) {
+  if (!isResendConfigured() && applicantWebhookUrl) {
     jobs.push(
       postNotification(applicantWebhookUrl, {
         type: "volunteer_application_confirmation",

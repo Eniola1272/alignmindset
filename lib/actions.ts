@@ -11,6 +11,12 @@ import {
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
 import { bookBundle } from "@/lib/book-bundle";
 import { initializeFlutterwavePayment } from "@/lib/flutterwave";
+import {
+  escapeHtml,
+  isResendConfigured,
+  renderMessageHtml,
+  sendResendBatch
+} from "@/lib/resend";
 import { site } from "@/lib/site";
 import {
   createSupabaseAuthClient,
@@ -147,6 +153,18 @@ function parseOptionalDateTime(value: FormDataEntryValue | null) {
   }
 
   return parsed.toISOString();
+}
+
+function renderBroadcastEmailHtml(name: string | null, message: string) {
+  const greeting = name?.trim() ? `Hi ${escapeHtml(name.trim())},` : "Hi,";
+
+  return `
+    <div style="font-family:Arial,sans-serif;line-height:1.7;color:#171717">
+      <p>${greeting}</p>
+      ${renderMessageHtml(message)}
+      <p style="margin-top:28px;color:#666">Align Mindset Initiative</p>
+    </div>
+  `;
 }
 
 function parseBlocks(value: FormDataEntryValue | null): ArticleBlock[] {
@@ -507,9 +525,35 @@ export async function sendBroadcast(
     channel === "newsletter" ? subscriber.email : subscriber.phone
   );
   const webhookUrl = process.env.BROADCAST_WEBHOOK_URL;
-  let status = webhookUrl ? "sent_to_webhook" : "saved_no_provider";
+  const canSendNewsletterWithResend =
+    channel === "newsletter" && isResendConfigured();
+  const canSendWithWebhook = Boolean(webhookUrl);
+  let status =
+    canSendNewsletterWithResend || canSendWithWebhook
+      ? "queued_for_send"
+      : "saved_no_provider";
+  let provider = canSendNewsletterWithResend
+    ? "resend"
+    : canSendWithWebhook
+      ? "webhook"
+      : "none";
 
-  if (webhookUrl && recipients.length) {
+  if (canSendNewsletterWithResend && recipients.length) {
+    try {
+      await sendResendBatch(
+        recipients.map((recipient) => ({
+          to: [recipient.email as string],
+          subject,
+          html: renderBroadcastEmailHtml(recipient.name ?? null, message),
+          text: message
+        }))
+      );
+      status = "sent_to_resend";
+    } catch (error) {
+      console.error("Resend broadcast failure", error);
+      status = "resend_failed";
+    }
+  } else if (webhookUrl && recipients.length) {
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: {
@@ -530,6 +574,8 @@ export async function sendBroadcast(
 
     if (!response.ok) {
       status = "webhook_failed";
+    } else {
+      status = "sent_to_webhook";
     }
   }
 
@@ -541,7 +587,7 @@ export async function sendBroadcast(
       message,
       recipient_count: recipients.length,
       status,
-      provider: webhookUrl ? "webhook" : "none"
+      provider
     });
 
   if (campaignError) {
@@ -554,23 +600,29 @@ export async function sendBroadcast(
   revalidatePath("/admin");
   revalidatePath("/admin/broadcasts");
 
-  if (!webhookUrl) {
+  if (provider === "none") {
     return {
       ok: true,
-      message: `Saved ${channel} update for ${recipients.length} recipients. Add BROADCAST_WEBHOOK_URL to actually send.`
+      message:
+        channel === "newsletter"
+          ? `Saved newsletter update for ${recipients.length} recipients. Add RESEND_API_KEY and RESEND_FROM_EMAIL to actually send.`
+          : `Saved SMS update for ${recipients.length} recipients. Add BROADCAST_WEBHOOK_URL to actually send SMS.`
     };
   }
 
-  if (status === "webhook_failed") {
+  if (status === "resend_failed" || status === "webhook_failed") {
     return {
       ok: false,
-      message: `The campaign was logged, but the webhook returned an error for ${recipients.length} recipients.`
+      message: `The campaign was logged, but ${provider} returned an error for ${recipients.length} recipients.`
     };
   }
 
   return {
     ok: true,
-    message: `Sent ${channel} update to the configured webhook for ${recipients.length} recipients.`
+    message:
+      provider === "resend"
+        ? `Sent newsletter update through Resend for ${recipients.length} recipients.`
+        : `Sent ${channel} update to the configured webhook for ${recipients.length} recipients.`
   };
 }
 
