@@ -538,7 +538,9 @@ export async function sendBroadcast(
       ? "webhook"
       : "none";
 
-  if (canSendNewsletterWithResend && recipients.length) {
+  if (!recipients.length) {
+    status = "no_recipients";
+  } else if (canSendNewsletterWithResend) {
     try {
       await sendResendBatch(
         recipients.map((recipient) => ({
@@ -553,7 +555,7 @@ export async function sendBroadcast(
       console.error("Resend broadcast failure", error);
       status = "resend_failed";
     }
-  } else if (webhookUrl && recipients.length) {
+  } else if (webhookUrl) {
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: {
@@ -599,6 +601,13 @@ export async function sendBroadcast(
 
   revalidatePath("/admin");
   revalidatePath("/admin/broadcasts");
+
+  if (status === "no_recipients") {
+    return {
+      ok: true,
+      message: `Logged the ${channel} update, but there are no opted-in recipients for this channel yet.`
+    };
+  }
 
   if (provider === "none") {
     return {
