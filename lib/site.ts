@@ -13,7 +13,8 @@ export const site = {
     { label: "Workshops", href: "/workshops" },
     { label: "Blog", href: "/blog" },
     { label: "Volunteer", href: "/volunteer" },
-    { label: "Partners", href: "/partners" }
+    { label: "Partners", href: "/partners" },
+    { label: "About", href: "/#about" }
   ]
 };
 

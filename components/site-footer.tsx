@@ -8,8 +8,8 @@ export function SiteFooter() {
     <footer className="siteFooter">
       <div className="shell footerSubscribe">
         <div>
-          <span>Newsletter</span>
-          <h3>Keep up with Align Mindset</h3>
+          <span>Stay in the movement</span>
+          <h2>Useful ideas for a more purposeful life.</h2>
           <p>
             Get practical notes on discipline, skills, business, money, and
             value creation.
@@ -32,30 +32,37 @@ export function SiteFooter() {
         <div>
           <h2>Explore</h2>
           <Link href="/start-here">Start Here</Link>
-          <Link href="/books">Books</Link>
           <Link href="/resources">Resources</Link>
           <Link href="/workshops">Workshops</Link>
-          <Link href="/blog">Blog</Link>
+          <Link href="/#programs">Programs</Link>
+          <Link href="/blog">Articles</Link>
+          <Link href="/#about">About</Link>
         </div>
         <div>
           <h2>Community</h2>
           <a href={site.communityUrl} target="_blank" rel="noreferrer">
-            Join WhatsApp group
+            Join
           </a>
           <Link href="/volunteer">Volunteer</Link>
           <Link href="/partners">Sponsor / Partner</Link>
-          <Link href="/#rhythm">Weekly rhythm</Link>
-          <Link href="/admin">Admin</Link>
+          <Link href="/books">Books</Link>
         </div>
         <div>
-          <h2>Contact</h2>
+          <h2>Connect</h2>
+          <a href={site.communityUrl} target="_blank" rel="noreferrer">
+            WhatsApp
+          </a>
           <a href={`mailto:${site.email}`}>{site.email}</a>
           <a href="tel:+2349038681717">+234 9038681717</a>
         </div>
       </div>
       <div className="shell footerBottom">
         <span>© {new Date().getFullYear()} Align Mindset Initiative.</span>
-        <span>Built for people who are ready to move beyond survival mode.</span>
+        <div>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/admin">Admin</Link>
+        </div>
       </div>
     </footer>
   );

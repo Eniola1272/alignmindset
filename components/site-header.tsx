@@ -1,18 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { site } from "@/lib/site";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const overlaysDarkHero = pathname === "/" || pathname === "/books";
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  useEffect(() => {
+    const updateHeader = () => setIsScrolled(window.scrollY > 28);
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+
   return (
-    <header className="siteHeader">
+    <header
+      className={`siteHeader ${overlaysDarkHero ? "isOverlay" : "isLight"} ${isScrolled ? "isScrolled" : ""}`}
+    >
       <div className="shell headerInner">
         <Logo />
         <nav className="headerNav" aria-label="Primary navigation">
@@ -23,9 +37,6 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="headerActions">
-          <Link className="headerLoginLink" href="/admin">
-            Admin
-          </Link>
           <Link
             className="pillButton desktopHeaderCta"
             href={site.communityUrl}
@@ -63,13 +74,6 @@ export function SiteHeader() {
                 </Link>
               ))}
             </nav>
-            <Link
-              className="mobileMenuAdmin"
-              href="/admin"
-              onClick={closeMenu}
-            >
-              Admin
-            </Link>
             <Link
               className="pillButton mobileMenuCta"
               href={site.communityUrl}
