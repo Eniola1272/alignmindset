@@ -11,7 +11,9 @@ import {
   saveOrUpdatePlan,
   submitAssessment
 } from "@/lib/progress-builder/db";
-import { generateSecureToken, hashToken } from "@/lib/progress-builder/session";
+import { generateSecureToken, hashToken, SESSION_TOKEN_COOKIE } from "@/lib/progress-builder/session";
+import { middleware } from "@/middleware";
+import { NextRequest } from "next/server";
 
 test("Session & Token: generates secure tokens and deterministic SHA-256 hashes", () => {
   const token = generateSecureToken();
@@ -22,6 +24,28 @@ test("Session & Token: generates secure tokens and deterministic SHA-256 hashes"
   const hash2 = hashToken(token);
   assert.equal(hash1, hash2);
   assert.equal(hash1.length, 64);
+});
+
+test("Middleware: creates anonymous session cookie if missing and preserves existing cookie", () => {
+  // 1. Request without cookie receives a new session cookie
+  const reqWithoutCookie = new NextRequest("http://localhost:3000/progress-builder");
+  const res1 = middleware(reqWithoutCookie);
+  const setCookie = res1.cookies.get(SESSION_TOKEN_COOKIE);
+  assert.ok(setCookie, "Cookie should be set on response");
+  assert.equal(typeof setCookie.value, "string");
+  assert.equal(setCookie.value.length, 64);
+
+  // 2. Request with valid cookie retains it
+  const existingVal = "a".repeat(64);
+  const reqWithCookie = new NextRequest("http://localhost:3000/progress-builder", {
+    headers: {
+      cookie: `${SESSION_TOKEN_COOKIE}=${existingVal}`
+    }
+  });
+  const res2 = middleware(reqWithCookie);
+  const retainedCookie = res2.cookies.get(SESSION_TOKEN_COOKIE);
+  // In Next.js, NextResponse.next() without modification won't reset the cookie
+  assert.equal(retainedCookie?.value ?? existingVal, existingVal);
 });
 
 test("Database & Workflow: creates draft, autosaves progress, and prevents duplicate submissions", async () => {

@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { ProgressWizard } from "@/components/progress-builder/progress-wizard";
 import { getOrCreateAssessment } from "@/lib/progress-builder/db";
-import { getOrCreateAnonymousToken } from "@/lib/progress-builder/session";
+import { getExistingTokenHash, getOrCreateAnonymousToken } from "@/lib/progress-builder/session";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -31,12 +31,29 @@ type PageProps = {
 
 export default async function ProgressBuilderPage({ searchParams }: PageProps) {
   const { start, resume } = await searchParams;
-  const { tokenHash } = await getOrCreateAnonymousToken();
-  const { assessment, answers } = await getOrCreateAssessment(tokenHash);
+  const existingTokenHash = await getExistingTokenHash();
 
-  const isStarted = Boolean(start === "true" || resume === "true" || (assessment.completion_percentage > 0 && assessment.status === "draft"));
+  let assessment = null;
+  let answers: Record<string, any> = {};
 
-  if (isStarted && assessment.status === "draft") {
+  if (existingTokenHash) {
+    const data = await getOrCreateAssessment(existingTokenHash);
+    assessment = data.assessment;
+    answers = data.answers;
+  } else if (start === "true" || resume === "true") {
+    const { tokenHash } = await getOrCreateAnonymousToken();
+    const data = await getOrCreateAssessment(tokenHash);
+    assessment = data.assessment;
+    answers = data.answers;
+  }
+
+  const isStarted = Boolean(
+    start === "true" ||
+    resume === "true" ||
+    (assessment && assessment.completion_percentage > 0 && assessment.status === "draft")
+  );
+
+  if (isStarted && assessment && assessment.status === "draft") {
     return <ProgressWizard initialAssessment={assessment} initialAnswers={answers} />;
   }
 
@@ -70,7 +87,7 @@ export default async function ProgressBuilderPage({ searchParams }: PageProps) {
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
 
-            {assessment.completion_percentage > 0 && assessment.status === "draft" ? (
+            {assessment && assessment.completion_percentage > 0 && assessment.status === "draft" ? (
               <Link
                 href="/progress-builder?resume=true"
                 className="secondaryButton pbResumeCta"

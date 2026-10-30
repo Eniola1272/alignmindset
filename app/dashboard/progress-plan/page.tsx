@@ -21,7 +21,7 @@ import {
   Target
 } from "lucide-react";
 import { getAssessmentWithPlan, getOrCreateAssessment } from "@/lib/progress-builder/db";
-import { getExistingTokenHash, getOrCreateAnonymousToken } from "@/lib/progress-builder/session";
+import { getExistingTokenHash } from "@/lib/progress-builder/session";
 
 export const metadata: Metadata = {
   title: "My 90-Day Progress Plan | Align Mindset Initiative",

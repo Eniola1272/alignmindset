@@ -5,6 +5,13 @@ export const SESSION_TOKEN_COOKIE = "align_pb_token";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
 export function generateSecureToken(): string {
+  if (typeof globalThis.crypto?.getRandomValues === "function") {
+    const bytes = new Uint8Array(32);
+    globalThis.crypto.getRandomValues(bytes);
+    return Array.from(bytes)
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
   return crypto.randomBytes(32).toString("hex");
 }
 
@@ -31,13 +38,18 @@ export async function getOrCreateAnonymousToken(): Promise<{
   const newToken = generateSecureToken();
   const tokenHash = hashToken(newToken);
 
-  cookieStore.set(SESSION_TOKEN_COOKIE, newToken, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: COOKIE_MAX_AGE
-  });
+  try {
+    cookieStore.set(SESSION_TOKEN_COOKIE, newToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: COOKIE_MAX_AGE
+    });
+  } catch {
+    // In Next.js Server Components, cookies cannot be modified directly via cookies().set().
+    // Middleware or Route Handlers handle persisting the session cookie.
+  }
 
   return {
     token: newToken,
