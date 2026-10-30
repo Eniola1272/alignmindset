@@ -12,6 +12,7 @@ import { loginToAdmin, logoutFromAdmin } from "@/lib/actions";
 
 const sidebarItems: AdminNavItem[] = [
   { href: "/admin", label: "Overview", icon: "dashboard" },
+  { href: "/admin/progress-assessments", label: "Progress Plans", icon: "progress" },
   { href: "/admin/posts", label: "Posts", icon: "posts" },
   { href: "/admin/subscribers", label: "Subscribers", icon: "subscribers" },
   { href: "/admin/volunteers", label: "Volunteers", icon: "volunteers" },

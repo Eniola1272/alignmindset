@@ -8,6 +8,7 @@ export const site = {
   communityUrl: "https://chat.whatsapp.com/KHapwMF9i8G7Xsaj1TD3GC?mode=gi_t",
   nav: [
     { label: "Start Here", href: "/start-here" },
+    { label: "90-Day Plan", href: "/progress-builder" },
     { label: "Books", href: "/books" },
     { label: "Resources", href: "/resources" },
     { label: "Workshops", href: "/workshops" },

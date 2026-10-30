@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  Compass,
   Edit3,
   FileText,
   HandHeart,
@@ -19,6 +20,7 @@ export type AdminNavItem = {
 
 const icons = {
   dashboard: LayoutDashboard,
+  progress: Compass,
   posts: FileText,
   subscribers: UsersRound,
   volunteers: HandHeart,
