@@ -914,6 +914,14 @@ nav a:hover,
   padding: 0 16px;
   background: #ffffff;
   color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.newsletterForm input:focus,
+.newsletterForm input:focus-visible {
+  outline: none;
+  border-color: #c99824;
+  box-shadow: 0 0 0 3px rgba(201, 152, 36, 0.16);
 }
 
 .newsletterForm > input {
@@ -1015,6 +1023,18 @@ nav a:hover,
 .newsletterPopupForm input {
   border-color: var(--line);
   background: var(--paper);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.newsletterPopupForm > input {
+  margin-bottom: 12px;
+}
+
+.newsletterPopupForm input:focus,
+.newsletterPopupForm input:focus-visible {
+  outline: none;
+  border-color: #c99824;
+  box-shadow: 0 0 0 3px rgba(201, 152, 36, 0.16);
 }
 
 .newsletterPopupForm div {
