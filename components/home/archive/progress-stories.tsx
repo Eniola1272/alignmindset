@@ -1,6 +1,5 @@
-import { Sparkles, User } from "lucide-react";
-
 type Story = {
+  id: string;
   name: string;
   role: string;
   context: string;
@@ -10,6 +9,7 @@ type Story = {
 
 const STORIES: Story[] = [
   {
+    id: "01",
     name: "Daniel O.",
     role: "Early-Career Developer",
     context:
@@ -20,6 +20,7 @@ const STORIES: Story[] = [
       "Shipped two full-stack applications with authenticated databases and published documented case studies on GitHub."
   },
   {
+    id: "02",
     name: "Aisha M.",
     role: "University Student",
     context:
@@ -30,6 +31,7 @@ const STORIES: Story[] = [
       "Maintained a 42-day unbroken study habit and finished her foundational data analysis curriculum with completed project files."
   },
   {
+    id: "03",
     name: "Mariam T.",
     role: "Community Member",
     context:
@@ -40,6 +42,7 @@ const STORIES: Story[] = [
       "Synthesized her scattered notes into a published resource guide and received her first paid client inquiry."
   },
   {
+    id: "04",
     name: "Fisayo L.",
     role: "Product Designer",
     context:
@@ -53,51 +56,54 @@ const STORIES: Story[] = [
 
 export function ProgressStories() {
   return (
-    <section className="sectionPad storiesSection" id="stories" aria-labelledby="stories-heading">
+    <section className="edSection edStoriesSection" id="stories" aria-labelledby="stories-heading">
       <div className="shell">
-        <div className="storiesHeaderCenter">
-          <span className="editorialEyebrow">Progress Stories</span>
-          <h2 id="stories-heading" className="storiesMainHeading">
+        {/* Section Header */}
+        <div className="edSectionHeader">
+          <div className="edSectionMeta">
+            <span>Documented Field Notes</span>
+            <span className="edDot" aria-hidden="true">•</span>
+            <span>Section 06</span>
+          </div>
+          <h2 id="stories-heading" className="edSectionHeading">
             Not overnight miracles. The quiet dignity of daily execution.
           </h2>
-          <p className="storiesSubtitle">
-            We do not celebrate sudden overnight transformations or exaggerated claims. We celebrate
-            people who recognized where their routines were failing, took responsibility for their
-            calendar, and built tangible proof of progress:
+          <p className="edSectionLead">
+            We do not celebrate sudden overnight transformations or inflated claims. We document
+            real participants who recognized where their routines were failing, took responsibility for
+            their calendar, and built tangible proof of progress:
           </p>
         </div>
 
-        <div className="storiesGrid">
+        {/* Field Notes Editorial Ledger Grid */}
+        <div className="edDispatchesGrid">
           {STORIES.map((story) => (
-            <div key={story.name} className="storyCard">
-              <div className="storyCardHeader">
-                <div className="storyAvatar">
-                  <User size={18} aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="storyName">{story.name}</h3>
-                  <span className="storyRole">{story.role}</span>
+            <article key={story.id} className="dispatchRecord">
+              <div className="dispatchHeader">
+                <span className="dispatchIndex">Case Record {story.id}</span>
+                <div className="dispatchParticipant">
+                  <h3 className="participantName">{story.name}</h3>
+                  <span className="participantRole">{story.role}</span>
                 </div>
               </div>
 
-              <div className="storyBlock">
-                <span className="storyLabel">The Honest Struggle:</span>
-                <p className="storyText isContext">{story.context}</p>
-              </div>
+              <div className="dispatchBody">
+                <div className="dispatchEntry">
+                  <span className="entryLabel">The Friction:</span>
+                  <p className="entryText isContext">{story.context}</p>
+                </div>
 
-              <div className="storyBlock">
-                <span className="storyLabel">The System Shift:</span>
-                <p className="storyText isShift">{story.shift}</p>
-              </div>
-
-              <div className="storyProofBadge">
-                <Sparkles size={14} aria-hidden="true" />
-                <div>
-                  <strong>Tangible Proof:</strong>
-                  <p>{story.tangibleProof}</p>
+                <div className="dispatchEntry">
+                  <span className="entryLabel">The System Shift:</span>
+                  <p className="entryText isShift">{story.shift}</p>
                 </div>
               </div>
-            </div>
+
+              <div className="dispatchProof">
+                <span className="proofLabel">Verified Artifact:</span>
+                <p className="proofText">{story.tangibleProof}</p>
+              </div>
+            </article>
           ))}
         </div>
       </div>

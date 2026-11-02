@@ -27,57 +27,67 @@ export function EditorialSection({ articles }: EditorialSectionProps) {
   const displayArticles = articles.slice(0, 3);
 
   return (
-    <section className="sectionPad editorialSection" id="articles" aria-labelledby="editorial-heading">
+    <section className="edSection edEditorialSection" id="articles" aria-labelledby="editorial-heading">
       <div className="shell">
-        <div className="editorialHeaderSplit">
+        {/* Section Header */}
+        <div className="edSectionHeaderSplit">
           <div>
-            <span className="editorialEyebrow">Ideas Worth Applying</span>
-            <h2 id="editorial-heading" className="editorialMainHeading">
+            <div className="edSectionMeta">
+              <span>Open Curriculum</span>
+              <span className="edDot" aria-hidden="true">•</span>
+              <span>Section 07</span>
+            </div>
+            <h2 id="editorial-heading" className="edSectionHeading">
               Reading that informs your calendar, not just your intellect.
             </h2>
-            <p className="editorialSubtitle">
+            <p className="edSectionLead">
               Consuming advice without execution is just another form of procrastination. We write for
               practitioners who read to apply. Every essay connects a foundational mental model to a
               concrete action you can put into practice today:
             </p>
           </div>
 
-          <Link href="/blog" className="editorialLink editorialHeaderLink">
+          <Link href="/blog" className="edSecondaryLink edHeaderLink">
             <span>Explore all essays</span>
-            <ArrowRight size={17} aria-hidden="true" />
+            <ArrowRight size={15} aria-hidden="true" />
           </Link>
         </div>
 
-        <div className="editorialGrid">
-          {displayArticles.map((article) => {
+        {/* Editorial Essay Index Grid */}
+        <div className="edEssaysGrid">
+          {displayArticles.map((article, idx) => {
             const principle = ARTICLE_PRINCIPLES[article.slug] || DEFAULT_PRINCIPLE;
+            const num = String(idx + 1).padStart(2, "0");
 
             return (
-              <article key={article.id} className="editorialCard">
-                <div className="editorialCardMeta">
-                  <span className="editorialCategoryPill">{article.category}</span>
-                  <span className="editorialReadTime">
-                    <Clock size={13} aria-hidden="true" />
-                    {article.readMinutes} min read
-                  </span>
+              <article key={article.id} className="essayEntry">
+                <div className="essayMetaHeader">
+                  <span className="essayNum">{num}</span>
+                  <div className="essayMetaRight">
+                    <span className="essayCategory">{article.category}</span>
+                    <span className="essayTime">
+                      <Clock size={12} aria-hidden="true" />
+                      {article.readMinutes} min
+                    </span>
+                  </div>
                 </div>
 
-                <h3 className="editorialCardTitle">
+                <h3 className="essayTitle">
                   <Link href={`/blog/${article.slug}`}>{article.title}</Link>
                 </h3>
 
-                <p className="editorialCardExcerpt">{article.excerpt}</p>
+                <p className="essayExcerpt">{article.excerpt}</p>
 
-                {/* Core Actionable Principle Callout */}
-                <div className="editorialPrincipleBox">
-                  <span className="editorialPrincipleLabel">Actionable Operating Principle</span>
-                  <p className="editorialPrincipleText">{principle}</p>
+                {/* Operating Principle Callout */}
+                <div className="essayPrincipleCallout">
+                  <span className="principleLabel">Operating Principle</span>
+                  <p className="principleText">{principle}</p>
                 </div>
 
-                <div className="editorialCardFooter">
-                  <Link href={`/blog/${article.slug}`} className="editorialCardLink">
+                <div className="essayFooter">
+                  <Link href={`/blog/${article.slug}`} className="essayReadLink">
                     <span>Read essay</span>
-                    <ArrowRight size={15} aria-hidden="true" />
+                    <ArrowRight size={14} aria-hidden="true" />
                   </Link>
                 </div>
               </article>

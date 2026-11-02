@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { getFeaturedArticles } from "@/lib/articles";
-import { HeroSection } from "@/components/home/hero-section";
-import { StartingPointExperience } from "@/components/home/starting-point-experience";
-import { AlignmentFramework } from "@/components/home/alignment-framework";
-import { GrowthOfferings } from "@/components/home/growth-offerings";
-import { CommunitySection } from "@/components/home/community-section";
-import { ProgressStories } from "@/components/home/progress-stories";
-import { EditorialSection } from "@/components/home/editorial-section";
-import { FinalCta } from "@/components/home/final-cta";
+import { ModernHero } from "@/components/home/modern-hero";
+import { ModernStartingPoint } from "@/components/home/modern-starting-point";
+import { ModernSystem } from "@/components/home/modern-system";
+import { ModernOfferings } from "@/components/home/modern-offerings";
+import { ModernCommunity } from "@/components/home/modern-community";
+import { ModernEditorial } from "@/components/home/modern-editorial";
+import { ModernCta } from "@/components/home/modern-cta";
 
 export const metadata: Metadata = {
   title: "Align Mindset Initiative | Purposeful Growth, Systems & Real Progress",
@@ -19,30 +18,27 @@ export default async function Home() {
   const articles = await getFeaturedArticles();
 
   return (
-    <main className="homeRedesign">
-      {/* SECTION 1: HERO — The Wake-up Call */}
-      <HeroSection />
+    <main className="modernHome">
+      {/* 1. HERO: Wake-up call, clear value proposition & interactive 90-day product preview */}
+      <ModernHero />
 
-      {/* SECTION 2: FIND YOUR STARTING POINT — Interactive Diagnostic & 90-Day Plan Preview */}
-      <StartingPointExperience />
+      {/* 2. STARTING POINT: 3-choice interactive diagnostic & personalized blueprint preview */}
+      <ModernStartingPoint />
 
-      {/* SECTION 3: THE ALIGNMENT FRAMEWORK — Connected 8-Stage Pipeline */}
-      <AlignmentFramework />
+      {/* 3. THE SYSTEM: 3-pillar architectural operating framework */}
+      <ModernSystem />
 
-      {/* SECTION 4: HOW YOU CAN GROW HERE — Practical Offerings */}
-      <GrowthOfferings />
+      {/* 4. PRACTICAL OFFERINGS: 4 execution pathways (Builder, Workshops, Curriculum, Community) */}
+      <ModernOfferings />
 
-      {/* SECTION 5: COMMUNITY AND ACCOUNTABILITY — The 4-Day Execution Rhythm */}
-      <CommunitySection />
+      {/* 5. COMMUNITY & ACCOUNTABILITY: 4-day rhythm & authentic peer evidence */}
+      <ModernCommunity />
 
-      {/* SECTION 6: PROGRESS STORIES — Grounded Evidence & Habits */}
-      <ProgressStories />
+      {/* 6. ESSENTIAL EDITORIAL: Clear thinking on systems, skills, and value creation */}
+      <ModernEditorial articles={articles} />
 
-      {/* SECTION 7: IDEAS WORTH APPLYING — Actionable Editorial Essays */}
-      <EditorialSection articles={articles} />
-
-      {/* SECTION 8: FINAL ACTIVATION — One Clear Decision */}
-      <FinalCta />
+      {/* 7. ACTIVATION CTA: Modern decision card with single-border vertically stacked inputs */}
+      <ModernCta />
     </main>
   );
 }
