@@ -11,7 +11,7 @@ export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const overlaysDarkHero = pathname === "/" || pathname === "/books";
+  const overlaysDarkHero = pathname === "/books";
 
   const closeMenu = () => setIsMenuOpen(false);
 

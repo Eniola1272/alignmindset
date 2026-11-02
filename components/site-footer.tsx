@@ -32,20 +32,20 @@ export function SiteFooter() {
         <div>
           <h2>Explore</h2>
           <Link href="/start-here">Start Here</Link>
-          <Link href="/resources">Resources</Link>
-          <Link href="/workshops">Workshops</Link>
-          <Link href="/#programs">Programs</Link>
-          <Link href="/blog">Articles</Link>
-          <Link href="/#about">About</Link>
+          <Link href="/progress-builder">90-Day Plan Builder</Link>
+          <Link href="/resources">Free Resources</Link>
+          <Link href="/workshops">Workshops & Labs</Link>
+          <Link href="/#framework">The Framework</Link>
+          <Link href="/blog">Editorial Essays</Link>
         </div>
         <div>
           <h2>Community</h2>
           <a href={site.communityUrl} target="_blank" rel="noreferrer">
-            Join
+            Join Community
           </a>
           <Link href="/volunteer">Volunteer</Link>
           <Link href="/partners">Sponsor / Partner</Link>
-          <Link href="/books">Books</Link>
+          <Link href="/books">Books Bundle</Link>
         </div>
         <div>
           <h2>Connect</h2>
