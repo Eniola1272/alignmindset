@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { getFeaturedArticles } from "@/lib/articles";
 import { HeroSection } from "@/components/home/hero-section";
-import { PathwaySelector } from "@/components/home/pathway-selector";
+import { StartingPointExperience } from "@/components/home/starting-point-experience";
 import { AlignmentFramework } from "@/components/home/alignment-framework";
-import { ProgressPreview } from "@/components/home/progress-preview";
 import { GrowthOfferings } from "@/components/home/growth-offerings";
 import { CommunitySection } from "@/components/home/community-section";
 import { ProgressStories } from "@/components/home/progress-stories";
@@ -24,28 +23,25 @@ export default async function Home() {
       {/* SECTION 1: HERO — The Wake-up Call */}
       <HeroSection />
 
-      {/* SECTION 2: RECOGNITION AND DIRECTION — 3 Interactive Visitor Pathways */}
-      <PathwaySelector />
+      {/* SECTION 2: FIND YOUR STARTING POINT — Interactive Diagnostic & 90-Day Plan Preview */}
+      <StartingPointExperience />
 
       {/* SECTION 3: THE ALIGNMENT FRAMEWORK — Connected 8-Stage Pipeline */}
       <AlignmentFramework />
 
-      {/* SECTION 4: PROGRESS IN PRACTICE — The 90-Day Blueprint Realization */}
-      <ProgressPreview />
-
-      {/* SECTION 5: HOW YOU CAN GROW HERE — Practical Offerings */}
+      {/* SECTION 4: HOW YOU CAN GROW HERE — Practical Offerings */}
       <GrowthOfferings />
 
-      {/* SECTION 6: COMMUNITY AND ACCOUNTABILITY — The 4-Day Execution Rhythm */}
+      {/* SECTION 5: COMMUNITY AND ACCOUNTABILITY — The 4-Day Execution Rhythm */}
       <CommunitySection />
 
-      {/* SECTION 7: PROGRESS STORIES — Grounded Evidence & Habits */}
+      {/* SECTION 6: PROGRESS STORIES — Grounded Evidence & Habits */}
       <ProgressStories />
 
-      {/* SECTION 8: IDEAS WORTH APPLYING — Actionable Editorial Essays */}
+      {/* SECTION 7: IDEAS WORTH APPLYING — Actionable Editorial Essays */}
       <EditorialSection articles={articles} />
 
-      {/* SECTION 9: FINAL ACTIVATION — One Clear Decision */}
+      {/* SECTION 8: FINAL ACTIVATION — One Clear Decision */}
       <FinalCta />
     </main>
   );

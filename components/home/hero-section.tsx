@@ -2,26 +2,16 @@ import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
-  Compass,
+  Clock,
   Flame,
   Layers,
   Sparkles,
   Target
 } from "lucide-react";
-import { site } from "@/lib/site";
 
 export function HeroSection() {
   return (
     <section className="homeHero" aria-labelledby="home-hero-title">
-      <div className="homeHeroBackdrop">
-        <img
-          src="/images/community-reading-session.jpg"
-          alt="Align Mindset Initiative members gathered in a focused study and learning session"
-          className="homeHeroImage"
-        />
-        <div className="homeHeroOverlay" aria-hidden="true" />
-      </div>
-
       <div className="shell homeHeroGrid">
         {/* Left Column: Mission & Priming Copy */}
         <div className="homeHeroCopy">
@@ -43,7 +33,7 @@ export function HeroSection() {
 
           <div className="homeHeroActions">
             <Link
-              href="#pathways"
+              href="#starting-point"
               className="primaryButton homeHeroPrimaryBtn"
               id="hero-find-starting-point"
             >
@@ -59,79 +49,94 @@ export function HeroSection() {
           {/* Proof Badges */}
           <div className="homeHeroProofBar">
             <div className="homeHeroProofItem">
-              <CheckCircle2 size={16} className="textBrandYellow" aria-hidden="true" />
+              <CheckCircle2 size={16} className="heroProofIcon" aria-hidden="true" />
               <span>Grounded in Systems, Not Hype</span>
             </div>
             <div className="homeHeroProofItem">
-              <CheckCircle2 size={16} className="textBrandYellow" aria-hidden="true" />
+              <CheckCircle2 size={16} className="heroProofIcon" aria-hidden="true" />
               <span>Individualized 90-Day Blueprint</span>
             </div>
             <div className="homeHeroProofItem">
-              <CheckCircle2 size={16} className="textBrandYellow" aria-hidden="true" />
+              <CheckCircle2 size={16} className="heroProofIcon" aria-hidden="true" />
               <span>Weekly Evidence Cadence</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Tangible Progress Blueprint Teaser */}
+        {/* Right Column: Layered Editorial Photo & Live Plan Artifact */}
         <div className="homeHeroVisual">
-          <div className="homeHeroCard">
-            <div className="homeHeroCardHeader">
-              <div className="homeHeroCardTag">
-                <Sparkles size={14} aria-hidden="true" />
-                <span>90-Day Progress Plan • Live Architecture</span>
-              </div>
-              <span className="homeHeroCardStatus">Active System</span>
-            </div>
-
-            <div className="homeHeroCardBody">
-              <span className="homeHeroCardEyebrow">Sample 90-Day Destination</span>
-              <h3 className="homeHeroCardHeading">
-                Move from Tutorial Hell to 3 Shipped Production Apps
-              </h3>
-
-              <div className="homeHeroMiniMilestones">
-                <div className="homeHeroMiniStep isDone">
-                  <div className="homeHeroMiniIcon">
-                    <Target size={14} />
-                  </div>
-                  <div>
-                    <strong>Day 30 Milestone (Completed)</strong>
-                    <p>Documented component system with 100% test coverage</p>
-                  </div>
-                </div>
-
-                <div className="homeHeroMiniStep isCurrent">
-                  <div className="homeHeroMiniIcon">
-                    <Layers size={14} />
-                  </div>
-                  <div>
-                    <strong>Day 60 Milestone (In Execution)</strong>
-                    <p>Full-stack web application with authenticated database</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Today's Daily System Callout */}
-              <div className="homeHeroSystemBox">
-                <div className="homeHeroSystemIcon">
-                  <Flame size={16} aria-hidden="true" />
-                </div>
-                <div>
-                  <small>Protected Daily Non-Negotiable</small>
-                  <strong>45 mins deliberate practice before 7:30 AM</strong>
-                </div>
+          <div className="homeHeroVisualStack">
+            {/* Documentary Learning Photo */}
+            <div className="homeHeroPhotoFrame">
+              <img
+                src="/images/focused-learning-duo.jpg"
+                alt="Align Mindset participants in a focused study and discussion session"
+                className="homeHeroPhoto"
+                width={600}
+                height={375}
+                loading="eager"
+                fetchPriority="high"
+              />
+              <div className="homeHeroPhotoCaption">
+                <span>Authentic Learning Environment</span>
+                <p>Real study, peer discussion, and deliberate skill acquisition.</p>
               </div>
             </div>
 
-            <div className="homeHeroCardFooter">
-              <Link
-                href="/progress-builder"
-                className="homeHeroCardLink"
-              >
-                <span>Build your personal 90-day progress plan</span>
-                <ArrowRight size={15} aria-hidden="true" />
-              </Link>
+            {/* Overlaid Live 90-Day Plan Blueprint Card */}
+            <div className="homeHeroBlueprintCard">
+              <div className="blueprintCardHeader">
+                <div className="blueprintCardTag">
+                  <Sparkles size={14} aria-hidden="true" />
+                  <span>90-Day Progress Plan • Live System</span>
+                </div>
+                <span className="blueprintCardStatus">Active</span>
+              </div>
+
+              <div className="blueprintCardBody">
+                <span className="blueprintCardEyebrow">Sample Destination</span>
+                <h3 className="blueprintCardHeading">
+                  Move from Tutorial Hell to 2 Shipped Production Apps
+                </h3>
+
+                <div className="blueprintMiniSteps">
+                  <div className="blueprintMiniStep isDone">
+                    <div className="blueprintStepIcon isSuccess">
+                      <Target size={13} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <strong>Day 30 Milestone (Completed)</strong>
+                      <p>Component library with 100% test coverage</p>
+                    </div>
+                  </div>
+
+                  <div className="blueprintMiniStep isCurrent">
+                    <div className="blueprintStepIcon isProgress">
+                      <Layers size={13} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <strong>Day 60 Milestone (In Execution)</strong>
+                      <p>Full-stack web app with authenticated database</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Today's Daily Routine Protected Window */}
+                <div className="blueprintSystemBox">
+                  <Flame size={16} className="blueprintSystemIcon" aria-hidden="true" />
+                  <div>
+                    <small>Protected Daily Non-Negotiable</small>
+                    <strong>45 mins deliberate practice before 7:30 AM</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className="blueprintCardFooter">
+                <Link href="/progress-builder" className="blueprintFooterLink">
+                  <span>Build your personal 90-day progress plan</span>
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

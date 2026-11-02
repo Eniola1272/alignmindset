@@ -37,15 +37,15 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="headerActions">
-          <Link
+          <a
             className="pillButton desktopHeaderCta"
             href={site.communityUrl}
             target="_blank"
             rel="noreferrer"
           >
-            Join
+            Join Community
             <ArrowRight size={16} aria-hidden="true" />
-          </Link>
+          </a>
         </div>
         <button
           className="mobileMenuButton"
@@ -74,7 +74,7 @@ export function SiteHeader() {
                 </Link>
               ))}
             </nav>
-            <Link
+            <a
               className="pillButton mobileMenuCta"
               href={site.communityUrl}
               target="_blank"
@@ -83,7 +83,7 @@ export function SiteHeader() {
             >
               Join the movement
               <ArrowRight size={16} aria-hidden="true" />
-            </Link>
+            </a>
           </div>
         </div>
       ) : null}

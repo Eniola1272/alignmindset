@@ -11,6 +11,9 @@ export function FinalCta() {
           src="/images/starter-kit-planning.jpg"
           alt="Hands organizing a structured growth roadmap and focus notebook"
           className="finalActivationImage"
+          width={1200}
+          height={700}
+          loading="lazy"
         />
         <div className="finalActivationOverlay" aria-hidden="true" />
       </div>

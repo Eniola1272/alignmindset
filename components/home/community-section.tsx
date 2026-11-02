@@ -82,6 +82,9 @@ export function CommunitySection() {
                 src="/images/collaborative-growth-workshop.jpg"
                 alt="Align Mindset Initiative participants collaborating in a hands-on learning workshop"
                 className="communityImg"
+                width={640}
+                height={480}
+                loading="lazy"
               />
               <div className="communityPhotoCaption">
                 <span>Align Mindset Workshop Session</span>
