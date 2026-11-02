@@ -1,4 +1,5 @@
 :root {
+  --font-source-serif: "Source Serif 4", Georgia, Cambria, "Times New Roman", Times, serif;
   --ink: #171421;
   --muted: #625f6d;
   --paper: #fffdf8;
@@ -15592,5 +15593,933 @@ button:disabled,
   .editorialAllLink {
     width: 100%;
     justify-content: center;
+  }
+}
+
+
+/* ==========================================================================
+   JAMES CLEAR MINIMALIST REDESIGN (jamesclear.com aesthetic)
+   Content-first typography, warm paper ivory, generous whitespace, restraint
+   ========================================================================== */
+
+.jcPage {
+  background: #faf8f5;
+  color: #1a1918;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Shell Layouts */
+.jcNarrowShell {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.jcHeroShell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Common Typographic Elements */
+.jcEyebrow {
+  display: inline-block;
+  font-size: 0.71875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8c867a;
+  margin-bottom: 16px;
+}
+
+.jcSectionHeader {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 5vw, 56px);
+}
+
+.jcSectionTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #141312;
+  margin: 0 0 14px;
+}
+
+.jcSectionLead {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #5c574f;
+  margin: 0;
+}
+
+/* Buttons */
+.jcPrimaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 6px;
+  background: #ffb700;
+  color: #141312;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: 1px solid #ffb700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.jcPrimaryBtn:hover {
+  background: #f0ac00;
+  transform: translateY(-1px);
+}
+
+.jcSecondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 22px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1c1a17;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: 1px solid #ddd7cc;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.jcSecondaryBtn:hover {
+  border-color: #b8b0a0;
+  background: #fdfdfc;
+  transform: translateY(-1px);
+}
+
+.jcTextLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #141312;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.jcTextLink:hover {
+  color: #b87c00;
+}
+
+/* ==========================================================================
+   1. HERO SECTION
+   ========================================================================== */
+.jcHero {
+  padding: clamp(64px, 8vw, 112px) 0 clamp(56px, 7vw, 96px);
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcHeroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.jcHeroCopy {
+  max-width: 620px;
+}
+
+.jcHeroTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(2.45rem, 4.4vw, 3.85rem);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  color: #141312;
+  margin: 0 0 24px;
+}
+
+.jcHeroLead {
+  font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
+  line-height: 1.7;
+  color: #4d4942;
+  margin: 0 0 36px;
+}
+
+.jcHeroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.jcTrustNote {
+  font-size: 0.8125rem;
+  color: #787368;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.jcTrustSep {
+  color: #ddd7cc;
+}
+
+/* Hero Right: Book Presentation Card */
+.jcHeroVisual {
+  display: flex;
+  justify-content: center;
+}
+
+.jcBookCard {
+  background: #ffffff;
+  border: 1px solid #ebe5db;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  max-width: 360px;
+  width: 100%;
+}
+
+.jcBookCoverWrap {
+  display: inline-block;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.16));
+  transform: rotate(1deg);
+  transition: transform 0.3s ease;
+}
+
+.jcBookCoverWrap:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.jcBookCoverImg {
+  border-radius: 4px;
+  display: block;
+  height: auto;
+}
+
+.jcBookTag {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8c867a;
+  margin-bottom: 6px;
+}
+
+.jcBookTitle {
+  display: block;
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.1875rem;
+  font-weight: 600;
+  color: #141312;
+  margin-bottom: 8px;
+}
+
+.jcBookDesc {
+  font-size: 0.84375rem;
+  line-height: 1.6;
+  color: #5c574f;
+  margin: 0 0 18px;
+}
+
+.jcBookLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84375rem;
+  font-weight: 700;
+  color: #141312;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.jcBookLink:hover {
+  color: #b87c00;
+}
+
+/* ==========================================================================
+   2. MANIFESTO / TYPOGRAPHIC QUOTE
+   ========================================================================== */
+.jcManifestoSection {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-bottom: 1px solid #ece7de;
+  text-align: center;
+}
+
+.jcQuoteBox {
+  margin-bottom: 32px;
+}
+
+.jcBigQuote {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
+  color: #141312;
+  margin: 0 0 16px;
+}
+
+.jcQuoteCite {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8c867a;
+  font-style: normal;
+  display: block;
+}
+
+.jcManifestoLead {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #4d4942;
+  max-width: 720px;
+  margin: 0 auto 56px;
+  text-align: left;
+}
+
+.jcTenetsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  text-align: left;
+}
+
+.jcTenetCol {
+  border-top: 2px solid #ffb700;
+  padding-top: 18px;
+}
+
+.jcTenetNum {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffb700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.jcTenetTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #141312;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.jcTenetDesc {
+  font-size: 0.84375rem;
+  line-height: 1.6;
+  color: #5c574f;
+  margin: 0;
+}
+
+/* ==========================================================================
+   3. FLAGSHIP PILLARS
+   ========================================================================== */
+.jcPillarsSection {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcPillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.jcPillarCard {
+  background: #ffffff;
+  border: 1px solid #ebe5db;
+  border-radius: 8px;
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.jcPillarCard:hover {
+  border-color: #b8b0a0;
+  transform: translateY(-2px);
+}
+
+.jcPillarNum {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffb700;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.jcPillarTag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8c867a;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.jcPillarTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.3125rem;
+  font-weight: 600;
+  color: #141312;
+  margin: 0 0 12px;
+}
+
+.jcPillarDesc {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: #4d4942;
+  margin: 0 0 24px;
+  flex: 1;
+}
+
+.jcPillarFooter {
+  padding-top: 18px;
+  border-top: 1px solid #f0ece4;
+}
+
+.jcPillarLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #141312;
+  text-decoration: none;
+  transition: gap 0.15s ease, color 0.15s ease;
+}
+
+.jcPillarLink:hover {
+  gap: 9px;
+  color: #b87c00;
+}
+
+/* ==========================================================================
+   4. STARTING POINT EXPERIENCE (MINIMAL TABS)
+   ========================================================================== */
+.jcStartingSection {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcTabsTrack {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #ddd7cc;
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.jcTabBtn {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6e685e;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.jcTabBtn:hover {
+  color: #141312;
+  background: #f0ece4;
+}
+
+.jcTabBtn.isActive {
+  background: #141312;
+  color: #ffffff;
+}
+
+.jcTabBtn.isActive .jcTabNum {
+  color: #ffb700;
+}
+
+.jcTabNum {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-weight: 700;
+}
+
+.jcPathwayCard {
+  background: #ffffff;
+  border: 1px solid #ebe5db;
+  border-radius: 8px;
+  padding: clamp(24px, 4vw, 36px);
+}
+
+.jcPathwayHeader {
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #f0ece4;
+}
+
+.jcPathwayTag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8c867a;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.jcPathwayBottleneck {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.1875rem;
+  font-style: italic;
+  color: #141312;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.jcPathwayBody {
+  margin-bottom: 28px;
+}
+
+.jcDiagnosisBlock {
+  margin-bottom: 24px;
+}
+
+.jcDiagnosisText {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #4d4942;
+  margin: 6px 0 0;
+}
+
+.jcSublabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8c867a;
+  display: block;
+}
+
+.jcStrategyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  background: #faf8f5;
+  border: 1px solid #ece7de;
+  border-radius: 6px;
+  padding: 18px;
+}
+
+.jcStrategyItem p {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #1c1a17;
+  margin: 6px 0 0;
+}
+
+.jcPathwayFooter {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   5. ARTICLES & ESSAYS (JAMES CLEAR EDITORIAL LIST)
+   ========================================================================== */
+.jcArticlesSection {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcArticlesHeadRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 36px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.jcArticlesList {
+  display: flex;
+  flex-direction: column;
+}
+
+.jcArticleItem {
+  padding: 28px 0;
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcArticleMeta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8c867a;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jcArticleDot {
+  color: #ddd7cc;
+}
+
+.jcArticleTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #141312;
+  margin: 0 0 8px;
+}
+
+.jcArticleTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.jcArticleTitle a:hover {
+  text-decoration: underline;
+  text-decoration-color: #ffb700;
+  text-underline-offset: 4px;
+}
+
+.jcArticleExcerpt {
+  font-size: 0.90625rem;
+  line-height: 1.65;
+  color: #5c574f;
+  margin: 0 0 12px;
+  max-width: 680px;
+}
+
+.jcArticleReadLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #141312;
+  text-decoration: none;
+}
+
+.jcArticleReadLink:hover {
+  color: #b87c00;
+}
+
+.jcArticlesBottom {
+  margin-top: 36px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   6. COMMUNITY COHORT FEATURE
+   ========================================================================== */
+.jcCommunitySection {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcCommunityCard {
+  background: #ffffff;
+  border: 1px solid #ebe5db;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: clamp(28px, 4vw, 44px);
+}
+
+.jcCommunityGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 5vw, 56px);
+  align-items: center;
+}
+
+.jcCommunityImageWrap {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #eae5dc;
+}
+
+.jcCommunityImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.jcCommunityTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(1.85rem, 2.8vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #141312;
+  margin: 0 0 16px;
+}
+
+.jcCommunityLead {
+  font-size: 0.96875rem;
+  line-height: 1.7;
+  color: #4d4942;
+  margin: 0 0 24px;
+}
+
+.jcRhythmSummary {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 28px;
+  border-top: 1px solid #f0ece4;
+  border-bottom: 1px solid #f0ece4;
+  padding: 14px 0;
+}
+
+.jcRhythmItem strong {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #141312;
+}
+
+.jcRhythmItem span {
+  font-size: 0.75rem;
+  color: #706b62;
+}
+
+.jcCommunityActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   7. WEEKLY DISPATCH NEWSLETTER (3-2-1 STYLE FUNNEL)
+   ========================================================================== */
+.jcNewsletterSection {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-bottom: 1px solid #ece7de;
+}
+
+.jcNewsletterBox {
+  background: #ffffff;
+  border: 1px solid #ebe5db;
+  border-radius: 12px;
+  padding: clamp(36px, 5vw, 60px) clamp(24px, 5vw, 54px);
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.jcNewsletterTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #141312;
+  margin: 0 0 16px;
+}
+
+.jcNewsletterDesc {
+  font-size: 0.96875rem;
+  line-height: 1.7;
+  color: #5c574f;
+  margin: 0 auto 32px;
+  max-width: 540px;
+}
+
+.jcForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.jcFormField {
+  width: 100%;
+}
+
+/* Single-border input with zero double border, aligned on border */
+.jcInput {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #ddd7cc;
+  border-radius: 6px;
+  padding: 0 16px;
+  background: #faf8f5;
+  color: #141312;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.jcInput::placeholder {
+  color: #8c867a;
+}
+
+.jcInput:focus,
+.jcInput:focus-visible {
+  outline: none;
+  border-color: #ffb700;
+  box-shadow: 0 0 0 1px #ffb700;
+  background: #ffffff;
+}
+
+.jcSubmitBtn {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 6px;
+  background: #ffb700;
+  color: #141312;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border: 1px solid #ffb700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.jcSubmitBtn:hover {
+  background: #f0ac00;
+  transform: translateY(-1px);
+}
+
+.jcSubmitBtn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.jcFormGuarantee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #7a7468;
+  margin: 8px 0 0;
+}
+
+/* ==========================================================================
+   8. FINAL MINIMALIST CTA
+   ========================================================================== */
+.jcFinalCtaSection {
+  padding: clamp(72px, 9vw, 112px) 0;
+  text-align: center;
+}
+
+.jcFinalCtaBox {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.jcFinalCtaTitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #141312;
+  margin: 0 0 16px;
+}
+
+.jcFinalCtaLead {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #5c574f;
+  margin: 0 0 32px;
+}
+
+.jcFinalCtaActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN FOR JAMES CLEAR MINIMAL LAYOUT
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .jcHeroGrid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .jcHeroCopy {
+    max-width: 100%;
+  }
+
+  .jcTenetsGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .jcPillarsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .jcStrategyGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .jcCommunityGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .jcHeroActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .jcPrimaryBtn,
+  .jcSecondaryBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .jcFinalCtaActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .jcArticlesHeadRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .jcTabsTrack {
+    flex-direction: column;
+  }
+
+  .jcTabBtn {
+    width: 100%;
   }
 }

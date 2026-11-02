@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Source_Serif_4 } from "next/font/google";
 import { AppChrome } from "@/components/app-chrome";
 import { ToastProvider } from "@/components/toast-provider";
 import { site } from "@/lib/site";
 import { getSiteSettings } from "@/lib/site-settings";
 import "./globals.css";
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-source-serif",
-  display: "swap"
-});
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={sourceSerif.variable}>
+      <body>
         <ToastProvider>
           <AppChrome
             newsletterPopupEnabled={siteSettings.newsletterPopupEnabled}

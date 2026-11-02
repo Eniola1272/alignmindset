@@ -1,44 +1,48 @@
 import type { Metadata } from "next";
 import { getFeaturedArticles } from "@/lib/articles";
-import { ModernHero } from "@/components/home/modern-hero";
-import { ModernStartingPoint } from "@/components/home/modern-starting-point";
-import { ModernSystem } from "@/components/home/modern-system";
-import { ModernOfferings } from "@/components/home/modern-offerings";
-import { ModernCommunity } from "@/components/home/modern-community";
-import { ModernEditorial } from "@/components/home/modern-editorial";
-import { ModernCta } from "@/components/home/modern-cta";
+import { JcHero } from "@/components/home/jc-hero";
+import { JcManifesto } from "@/components/home/jc-manifesto";
+import { JcPillars } from "@/components/home/jc-pillars";
+import { JcStartingPoint } from "@/components/home/jc-starting-point";
+import { JcArticles } from "@/components/home/jc-articles";
+import { JcCommunity } from "@/components/home/jc-community";
+import { JcNewsletter } from "@/components/home/jc-newsletter";
+import { JcCta } from "@/components/home/jc-cta";
 
 export const metadata: Metadata = {
-  title: "Align Mindset Initiative | Purposeful Growth, Systems & Real Progress",
+  title: "Align Mindset Initiative | Better Habits, Clear Systems, Real Progress",
   description:
-    "We help you align your identity, goals, skills, systems, and daily habits so you can stop drifting, overcome mediocrity, and build verifiable proof of progress."
+    "We help ambitious people align identity, daily systems, and skills toward purposeful growth and verifiable progress."
 };
 
 export default async function Home() {
   const articles = await getFeaturedArticles();
 
   return (
-    <main className="modernHome">
-      {/* 1. HERO: Wake-up call, clear value proposition & interactive 90-day product preview */}
-      <ModernHero />
+    <div className="jcPage">
+      {/* 1. HERO: Book feature + clear value proposition + primary actions */}
+      <JcHero />
 
-      {/* 2. STARTING POINT: 3-choice interactive diagnostic & personalized blueprint preview */}
-      <ModernStartingPoint />
+      {/* 2. MANIFESTO: Large-format typographic quote & core operating tenets */}
+      <JcManifesto />
 
-      {/* 3. THE SYSTEM: 3-pillar architectural operating framework */}
-      <ModernSystem />
+      {/* 3. CORE PILLARS: 3 practical pathways (Literature, 90-Day Plan, Community) */}
+      <JcPillars />
 
-      {/* 4. PRACTICAL OFFERINGS: 4 execution pathways (Builder, Workshops, Curriculum, Community) */}
-      <ModernOfferings />
+      {/* 4. STARTING POINT: Minimalist interactive diagnostic */}
+      <JcStartingPoint />
 
-      {/* 5. COMMUNITY & ACCOUNTABILITY: 4-day rhythm & authentic peer evidence */}
-      <ModernCommunity />
+      {/* 5. ARTICLES & ESSAYS: Clean vertical editorial list (James Clear style) */}
+      <JcArticles articles={articles} />
 
-      {/* 6. ESSENTIAL EDITORIAL: Clear thinking on systems, skills, and value creation */}
-      <ModernEditorial articles={articles} />
+      {/* 6. COMMUNITY & EXECUTION LABS: Authentic cohort feature */}
+      <JcCommunity />
 
-      {/* 7. ACTIVATION CTA: Modern decision card with single-border vertically stacked inputs */}
-      <ModernCta />
-    </main>
+      {/* 7. WEEKLY DISPATCH NEWSLETTER: The signature 3-2-1 style funnel with single-border focus */}
+      <JcNewsletter />
+
+      {/* 8. FINAL CTA: Quiet, dignified closing invitation */}
+      <JcCta />
+    </div>
   );
 }
