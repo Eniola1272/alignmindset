@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowRight, CalendarDays, MessageCircle } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Workshops",
   description:
-    "Upcoming Align Mindset workshops and Wednesday live sessions."
+    "Wednesday live sessions hosted directly in the Align Mindset WhatsApp community."
 };
 
 const workshops = [
@@ -18,7 +17,7 @@ const workshops = [
       "Clarify who you are becoming, why your goals matter, and what daily choices support that identity.",
     audience:
       "People who feel scattered, inconsistent, or unsure where to begin.",
-    price: "Free community session",
+    location: "Live in WhatsApp Community (Free)",
     image: "/images/community-goals-session.jpg"
   },
   {
@@ -28,7 +27,7 @@ const workshops = [
       "Build a weekly rhythm for planning, accountability, habit tracking, and low-friction execution.",
     audience:
       "Members who start with energy but struggle to stay consistent.",
-    price: "Free community session",
+    location: "Live in WhatsApp Community (Free)",
     image: "/images/starter-kit-planning.jpg"
   },
   {
@@ -38,7 +37,7 @@ const workshops = [
       "Choose one useful skill, practice deliberately, and create proof that can open opportunities.",
     audience:
       "Students, early professionals, creators, and builders who want to become more valuable.",
-    price: "Free community session",
+    location: "Live in WhatsApp Community (Free)",
     image: "/images/workshop-live-session.jpg"
   }
 ];
@@ -49,9 +48,9 @@ export default function WorkshopsPage() {
       <div className="shell">
         <div className="visualHeader">
           <SectionHeading
-            eyebrow="Workshops"
-            title="Wednesday live sessions for learning, reflection, and action."
-            copy="Every session is designed to help people leave with a clearer mindset, a practical tool, and a next step they can take that week."
+            eyebrow="Wednesday Workshops"
+            title="Wednesday live sessions happen in our WhatsApp community."
+            copy="No tickets, no registration forms, and no sign-up hurdles. Every Wednesday, our community gathers on WhatsApp for live interactive teaching, practical frameworks, and open Q&As."
           />
           <figure className="imageFrame workshopHeaderImage">
             <img
@@ -59,6 +58,66 @@ export default function WorkshopsPage() {
               alt="A facilitator leading a practical live learning session"
             />
           </figure>
+        </div>
+
+        {/* WhatsApp Direct Banner */}
+        <div
+          style={{
+            background: "#fffcf5",
+            border: "1px solid var(--line)",
+            padding: "26px 30px",
+            marginBottom: "36px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "24px",
+            flexWrap: "wrap"
+          }}
+        >
+          <div>
+            <span
+              style={{
+                fontSize: "11px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                fontWeight: 700,
+                color: "#7a8075"
+              }}
+            >
+              NO REGISTRATION REQUIRED
+            </span>
+            <h3
+              style={{
+                margin: "6px 0 8px",
+                fontSize: "1.45rem",
+                fontFamily: "var(--font-source-serif), serif",
+                color: "#1e2a22"
+              }}
+            >
+              All workshops take place live inside our WhatsApp community
+            </h3>
+            <p
+              style={{
+                margin: 0,
+                color: "#555b52",
+                maxWidth: "640px",
+                fontSize: "0.95rem",
+                lineHeight: 1.55
+              }}
+            >
+              Simply join the WhatsApp group below. Session links, live discussion prompts, and weekly practical worksheets are shared directly with group members every Wednesday.
+            </p>
+          </div>
+          <a
+            href={site.communityUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-yellow"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            <span>Join WhatsApp Group</span>
+            <span className="arrow">↗</span>
+          </a>
         </div>
 
         <div className="workshopList">
@@ -81,20 +140,20 @@ export default function WorkshopsPage() {
                     <dd>{workshop.audience}</dd>
                   </div>
                   <div>
-                    <dt>Price</dt>
-                    <dd>{workshop.price}</dd>
+                    <dt>Where</dt>
+                    <dd>{workshop.location}</dd>
                   </div>
                 </dl>
               </div>
-              <Link
+              <a
                 className="primaryButton"
                 href={site.communityUrl}
                 target="_blank"
                 rel="noreferrer"
               >
-                Register
+                Join via WhatsApp
                 <ArrowRight size={17} aria-hidden="true" />
-              </Link>
+              </a>
             </article>
           ))}
         </div>

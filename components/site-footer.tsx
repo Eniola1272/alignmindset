@@ -36,7 +36,7 @@ export function SiteFooter() {
             <h4>GROW</h4>
             <div className="footer-links">
               <Link href="/progress-builder?start=true">Find your starting point</Link>
-              <Link href="/workshops">Learning experiences</Link>
+              <Link href="/workshops">Wednesday Workshops</Link>
               <Link href="/blog">Ideas &amp; insights</Link>
               <a href={site.communityUrl} target="_blank" rel="noreferrer">
                 WhatsApp Community

@@ -71,9 +71,9 @@ export function EditorialExperiences() {
                 loading="lazy"
               />
               <div className="experience-text">
-                <small>03 / PUT IDEAS TO WORK</small>
-                <h3>Learn. Apply. Repeat.</h3>
-                <p>Turn the things you read and hear into something useful.</p>
+                <small>03 / WEDNESDAY WORKSHOPS</small>
+                <h3>Live on WhatsApp.</h3>
+                <p>Interactive weekly sessions hosted directly in our WhatsApp community.</p>
               </div>
             </div>
           </div>
@@ -81,11 +81,10 @@ export function EditorialExperiences() {
 
         <div className="experiences-note">
           <p>
-            From thoughtful weekly conversations to learning circles and practical challenges, the
-            goal is always the same: less theory left on the shelf, more growth in real life.
+            Wednesday workshops happen live inside our WhatsApp community—no registration forms or tickets needed. Join the group to receive live links, discussion prompts, and weekly tools.
           </p>
           <a className="text-link" href={site.communityUrl} target="_blank" rel="noreferrer">
-            <span>Become part of the journey</span>
+            <span>Join Wednesday workshops on WhatsApp</span>
             <span className="arrow">↗</span>
           </a>
         </div>

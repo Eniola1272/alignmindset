@@ -85,11 +85,6 @@ export function EditorialHero() {
           <div className="hero-vertical">ALIGN WHAT YOU DO WITH WHERE YOU&apos;RE GOING</div>
         </div>
       </div>
-
-      <div className="container hero-caption">
-        <span>01 / A BETTER WAY FORWARD</span>
-        <span>Identity &nbsp; / &nbsp; Direction &nbsp; / &nbsp; Action</span>
-      </div>
     </section>
   );
 }

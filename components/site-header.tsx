@@ -43,7 +43,7 @@ export function SiteHeader() {
             <Link href="/#start" onClick={closeMenu}>Start here</Link>
             <Link href="/progress-builder" onClick={closeMenu}>90-Day Plan</Link>
             <Link href="/books" onClick={closeMenu}>Books</Link>
-            <Link href="/workshops" onClick={closeMenu}>Experiences</Link>
+            <Link href="/workshops" onClick={closeMenu}>Workshops</Link>
             <Link href="/blog" onClick={closeMenu}>Ideas &amp; insights</Link>
             <a
               href={site.communityUrl}

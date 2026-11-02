@@ -41,9 +41,10 @@ const firstSteps = [
     image: "/images/starter-kit-planning.jpg"
   },
   {
-    title: "Attend the next session",
-    copy: "Wednesday live sessions are where we learn, reflect, ask questions, and plan action.",
-    href: "/workshops",
+    title: "Attend Wednesday workshops",
+    copy: "Live weekly sessions happen directly inside our WhatsApp community for learning, reflection, and action.",
+    href: site.communityUrl,
+    external: true,
     icon: CalendarDays,
     image: "/images/workshop-live-session.jpg"
   }
