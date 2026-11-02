@@ -1,10 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Calendar,
-  CheckCircle2,
   Clock,
-  Compass,
   FileCheck,
   Flame,
   Layers,
@@ -19,35 +16,35 @@ export function ProgressPreview() {
         <div className="practiceHeaderCenter">
           <span className="editorialEyebrow">Progress in Practice</span>
           <h2 id="practice-heading" className="practiceMainHeading">
-            How a vague ambition becomes an unstoppable reality.
+            The difference between wanting change and building a life that supports change.
           </h2>
           <p className="practiceSubtitle">
-            Good intentions crumble under ambiguity. Here is the concrete translation that happens when
-            you run your goals through the Align Mindset progress architecture:
+            Ambition without structure is just wishful thinking. Notice what happens when you stop
+            relying on vague intentions and translate your goals into a clear, non-negotiable operational architecture:
           </p>
         </div>
 
         {/* Before vs After Contrast Banner */}
         <div className="practiceContrastGrid">
           <div className="practiceContrastCard isBefore">
-            <span className="practiceContrastBadge">The Vague Ambition (Before)</span>
+            <span className="practiceContrastBadge">Wishful Thinking (Left to Chance)</span>
             <blockquote className="practiceQuote">
-              &ldquo;I want to get better at tech, stop procrastinating on tutorials, and finally find a
-              good developer role or freelance gig this year.&rdquo;
+              &ldquo;I want to get serious about tech, stop procrastinating on online courses, read more
+              books, and finally land a better role or freelance client this year.&rdquo;
             </blockquote>
             <p className="practiceProblemNote">
-              Result: Endless bookmarks, zero deployed projects, constant guilt, and silent drift.
+              The Reality: 40 open browser tabs, constant low-grade guilt, zero deployed work, and another six months lost to passive drift.
             </p>
           </div>
 
           <div className="practiceContrastCard isAfter">
-            <span className="practiceContrastBadge isSuccess">The Aligned Structure (After)</span>
+            <span className="practiceContrastBadge isSuccess">Aligned Architecture (Engineered for Execution)</span>
             <blockquote className="practiceQuote">
-              &ldquo;Deploy 3 production full-stack apps, write 3 public case studies, and maintain a 60-minute
-              morning practice window 5 days a week.&rdquo;
+              &ldquo;Ship 2 production web apps and publish 2 case studies in 90 days. Protect 60 minutes
+              at 6:30 AM before checking messages. 15-minute emergency minimum if overwhelmed.&rdquo;
             </blockquote>
             <p className="practiceSuccessNote">
-              Result: Visible proof of work, daily momentum, verifiable competence, and undeniable confidence.
+              The Reality: Verifiable proof of competence, calm daily consistency, undeniable skills, and compounding momentum.
             </p>
           </div>
         </div>
@@ -67,13 +64,13 @@ export function ProgressPreview() {
             <div className="practiceTile isDestination">
               <div className="practiceTileHeader">
                 <Target size={18} className="practiceTileIcon" aria-hidden="true" />
-                <span>1. Specific 90-Day Destination</span>
+                <span>1. Concrete 90-Day Finish Line</span>
               </div>
               <h3 className="practiceTileTitle">
-                Frontend Developer with 3 Deployed SaaS Case Studies
+                Frontend Engineer with 2 Documented Production Case Studies
               </h3>
               <p className="practiceTileMeta">
-                <strong>Primary Track:</strong> Next.js, TypeScript & Accessible UI Systems
+                <strong>Primary Skill Track:</strong> Next.js, TypeScript & Component Architecture
               </p>
             </div>
 
@@ -81,7 +78,7 @@ export function ProgressPreview() {
             <div className="practiceTile isSystem">
               <div className="practiceTileHeader">
                 <Clock size={18} className="practiceTileIcon" aria-hidden="true" />
-                <span>2. Repeatable Daily Progress System</span>
+                <span>2. Repeatable Daily Execution Routine</span>
               </div>
               <div className="practiceSystemMetrics">
                 <div className="practiceMetric">
@@ -90,7 +87,7 @@ export function ProgressPreview() {
                 </div>
                 <div className="practiceMetric">
                   <strong>15 mins</strong>
-                  <span>Notes & Git Commit</span>
+                  <span>Git Commit & Notes</span>
                 </div>
                 <div className="practiceMetric">
                   <strong>6:30 AM</strong>
@@ -98,7 +95,7 @@ export function ProgressPreview() {
                 </div>
               </div>
               <p className="practiceRecoveryRule">
-                <strong>Emergency Minimum:</strong> 15 mins reviewing PR diffs if exhausted. Never miss twice.
+                <strong>The Emergency Minimum:</strong> If exhausted or overwhelmed, spend 15 mins reviewing PR diffs. Never miss twice.
               </p>
             </div>
 
@@ -106,13 +103,13 @@ export function ProgressPreview() {
             <div className="practiceTile isMilestones">
               <div className="practiceTileHeader">
                 <Layers size={18} className="practiceTileIcon" aria-hidden="true" />
-                <span>3. Tangible Project Deliverables</span>
+                <span>3. Verifiable Project Milestones</span>
               </div>
               <div className="practiceMilestonesList">
                 <div className="practiceMilestoneItem isDone">
                   <span className="milestoneBadge">Day 30</span>
                   <div>
-                    <strong>Interactive Component Library</strong>
+                    <strong>Accessible Component Library</strong>
                     <p>Documented in Storybook with 100% test coverage</p>
                   </div>
                 </div>
@@ -120,16 +117,16 @@ export function ProgressPreview() {
                 <div className="practiceMilestoneItem isDone">
                   <span className="milestoneBadge">Day 60</span>
                   <div>
-                    <strong>Full-Stack E-Commerce Storefront</strong>
-                    <p>Supabase database, Stripe checkout, automated emails</p>
+                    <strong>Full-Stack Production Application</strong>
+                    <p>Authenticated database, payment gateway, and automated email flows</p>
                   </div>
                 </div>
 
                 <div className="practiceMilestoneItem isCapstone">
                   <span className="milestoneBadge isGold">Day 90 Capstone</span>
                   <div>
-                    <strong>Collaborative SaaS Workspace</strong>
-                    <p>Live production deployment with video walkthrough</p>
+                    <strong>Interactive SaaS Case Study</strong>
+                    <p>Live production deployment with documented technical architecture</p>
                   </div>
                 </div>
               </div>
@@ -142,21 +139,21 @@ export function ProgressPreview() {
                 <span>4. First 24-Hour Commitment</span>
               </div>
               <div className="practiceActionBox">
-                <strong>Initialize GitHub repository and write Day 30 component specification.</strong>
-                <p>Do not wait for another Monday. Activate the commitment today.</p>
+                <strong>Initialize the GitHub repository, configure dependencies, and write the Day 30 component specification.</strong>
+                <p>Stop waiting for next Monday or ideal circumstances. Momentum begins with one completed task today.</p>
               </div>
 
               <div className="practiceReviewBox">
                 <FileCheck size={16} aria-hidden="true" />
-                <span>Sunday Review: Submit commit log and demo link to mentor channel.</span>
+                <span>Sunday Audit Cadence: Submit commit log and milestone review to mentor channel.</span>
               </div>
             </div>
           </div>
 
           <div className="practiceBlueprintFooter">
             <div>
-              <h4>Ready to build your personalized 90-day progress plan?</h4>
-              <p>Takes 15–20 minutes. Saves automatically. Generates your customized 12-week blueprint.</p>
+              <h4>Take responsibility for where you are going.</h4>
+              <p>Our diagnostic takes 15–20 minutes, autosaves your answers, and outputs your customized 12-week blueprint.</p>
             </div>
             <Link href="/progress-builder?start=true" className="primaryButton practiceCtaBtn">
               Build My 90-Day Progress Plan
@@ -168,4 +165,3 @@ export function ProgressPreview() {
     </section>
   );
 }
-

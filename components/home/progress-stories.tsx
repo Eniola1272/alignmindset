@@ -1,4 +1,4 @@
-import { Quote, Sparkles, User } from "lucide-react";
+import { Sparkles, User } from "lucide-react";
 
 type Story = {
   name: string;
@@ -12,30 +12,42 @@ const STORIES: Story[] = [
   {
     name: "Daniel O.",
     role: "Early-Career Developer",
-    context: "Stuck in 8 months of tutorial hell, watching endless videos without deploying a single project.",
-    shift: "Applied the Day 30 / Day 60 milestone system and protected 60 morning minutes before work.",
-    tangibleProof: "Shipped two full-stack applications with Supabase auth and published documented case studies on GitHub."
+    context:
+      "Trapped in 8 months of tutorial paralysis — consuming endless video lectures without ever deploying a project or writing original code from scratch.",
+    shift:
+      "Adopted the 90-day milestone framework and locked in a 60-minute protected morning focus window before starting his workday.",
+    tangibleProof:
+      "Shipped two full-stack applications with authenticated databases and published documented case studies on GitHub."
   },
   {
     name: "Aisha M.",
     role: "University Student",
-    context: "Constantly waiting for mood and energy, repeatedly missing self-imposed study schedules.",
-    shift: "Adopted the 15-minute emergency minimum rule and Sunday weekly reviews.",
-    tangibleProof: "Maintained a 42-day continuous study habit and completed her foundational data analysis curriculum."
+    context:
+      "Constantly waited for mood and inspiration to strike, resulting in erratic study sessions, frantic cramming, and weeks of unacknowledged drift.",
+    shift:
+      "Implemented the 15-minute emergency minimum rule and instituted a non-negotiable Sunday evening reflection audit.",
+    tangibleProof:
+      "Maintained a 42-day unbroken study habit and finished her foundational data analysis curriculum with completed project files."
   },
   {
     name: "Mariam T.",
     role: "Community Member",
-    context: "Felt isolated building alone with no external accountability or feedback loop.",
-    shift: "Joined Wednesday live calls and committed to logging Friday proof-of-work updates.",
-    tangibleProof: "Organized her chaotic notes into a published resource guide and received her first paid client inquiry."
+    context:
+      "Built in complete isolation without external accountability, allowing self-doubt and quiet procrastination to delay her launch for months.",
+    shift:
+      "Began attending Wednesday live cohort labs and committed to publicly logging Friday evidence of work completed.",
+    tangibleProof:
+      "Synthesized her scattered notes into a published resource guide and received her first paid client inquiry."
   },
   {
     name: "Fisayo L.",
     role: "Product Designer",
-    context: "Had scattered design concepts stored locally on Figma without public visibility.",
-    shift: "Committed to the 'From Learning to Assets' framework, packaging practice drills into public case studies.",
-    tangibleProof: "Published 3 end-to-end case studies and secured a junior product design apprenticeship."
+    context:
+      "Kept dozens of unfinished design explorations private on Figma, waiting for them to feel 'perfect' before showing anyone.",
+    shift:
+      "Applied the 'From Learning to Assets' framework, choosing to package practice drills into public, documented case studies.",
+    tangibleProof:
+      "Published 3 end-to-end user experience case studies and earned an apprenticeship with a digital product team."
   }
 ];
 
@@ -44,13 +56,14 @@ export function ProgressStories() {
     <section className="sectionPad storiesSection" id="stories" aria-labelledby="stories-heading">
       <div className="shell">
         <div className="storiesHeaderCenter">
-          <span className="editorialEyebrow">Authentic Proof</span>
+          <span className="editorialEyebrow">Progress Stories</span>
           <h2 id="stories-heading" className="storiesMainHeading">
-            Real people. Honest struggles. Concrete progress.
+            Not overnight miracles. The quiet dignity of daily execution.
           </h2>
           <p className="storiesSubtitle">
-            We don&apos;t celebrate overnight miracles or exaggerated claims. We celebrate people who
-            replace drift with daily systems and leave tangible artifacts behind:
+            We do not celebrate sudden overnight transformations or exaggerated claims. We celebrate
+            people who recognized where their routines were failing, took responsibility for their
+            calendar, and built tangible proof of progress:
           </p>
         </div>
 
@@ -91,4 +104,3 @@ export function ProgressStories() {
     </section>
   );
 }
-

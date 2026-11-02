@@ -17,28 +17,28 @@ const RHYTHMS = [
     badge: "Mindset & Direction Prompt",
     title: "Focus Alignment",
     description:
-      "A short, grounded prompt sent to the community group to strip away noise and establish your single highest-leverage priority for the week."
+      "A grounded prompt delivered to the group to strip away cognitive noise and establish your single highest-leverage priority for the week."
   },
   {
     day: "Wednesday",
     badge: "Live Interactive Call",
     title: "Teaching & Q&A Lab",
     description:
-      "Our live community session on WhatsApp and virtual room. Practical breakdown of systems, habit architecture, and live member problem-solving."
+      "Our live community session on WhatsApp and virtual rooms. Practical breakdowns of systems, habit architecture, and live member problem-solving."
   },
   {
     day: "Friday",
     badge: "Proof of Work",
     title: "Evidence Submission",
     description:
-      "Members submit proof of what was built during the week: GitHub commits, written drafts, designs, or completed client calls. Zero fluff."
+      "Members submit proof of what was actually built during the week: code commits, written drafts, design mockups, or completed client calls. Zero fluff."
   },
   {
     day: "Sunday",
     badge: "Weekly Audit",
     title: "Reflection & Reset",
     description:
-      "A guided review to evaluate what worked, what slipped, and adjust your protected focus blocks for the upcoming 7 days."
+      "A guided 15-minute review to evaluate what was accomplished, diagnose where friction occurred, and set protected focus blocks for the coming week."
   }
 ];
 
@@ -50,11 +50,13 @@ export function CommunitySection() {
           <div className="communityHeaderCopy">
             <span className="editorialEyebrow">Community & Accountability</span>
             <h2 id="community-heading" className="communityTitle">
-              Progress is easier to sustain when you aren&apos;t building in silence.
+              Mediocrity spreads quietly in isolation. Standards rise when people hold you to your word.
             </h2>
             <p className="communityLead">
-              Willpower collapses in isolation. When you enter an environment where disciplined execution
-              is normal, excuses fade and consistency takes their place. Here is how our members keep each other moving:
+              When you build in secret, quiet compromises go unnoticed. Skipping your morning study session,
+              abandoning a project halfway, or making excuses feels harmless because nobody is looking. When
+              you step into a community of people who expect consistency and celebrate real evidence, your baseline
+              shifts. Showing up stops being an argument.
             </p>
 
             <div className="communityActionRow">
@@ -83,7 +85,7 @@ export function CommunitySection() {
               />
               <div className="communityPhotoCaption">
                 <span>Align Mindset Workshop Session</span>
-                <p>Turning abstract ambitions into weekly verifiable artifacts.</p>
+                <p>Turning abstract ambition into weekly verifiable artifacts.</p>
               </div>
             </div>
           </div>
@@ -97,13 +99,13 @@ export function CommunitySection() {
               <h3 className="rhythmTitle">What you actually participate in every week</h3>
             </div>
             <p className="rhythmSub">
-              No constant notification spam. A structured 4-day heartbeat that respects your focus and
-              demands real progress.
+              No 24/7 noise or meaningless chat spam. A structured 4-day heartbeat that respects your
+              attention and demands real execution:
             </p>
           </div>
 
           <div className="communityRhythmGrid">
-            {RHYTHMS.map((r, idx) => (
+            {RHYTHMS.map((r) => (
               <div key={r.day} className="rhythmCard">
                 <div className="rhythmCardTop">
                   <span className="rhythmDay">{r.day}</span>
@@ -119,4 +121,3 @@ export function CommunitySection() {
     </section>
   );
 }
-

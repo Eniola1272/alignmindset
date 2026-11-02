@@ -6,11 +6,7 @@ import {
   Compass,
   FileText,
   Hammer,
-  HelpCircle,
-  MessageCircle,
-  ShieldCheck,
-  Sparkles,
-  Users
+  ShieldCheck
 } from "lucide-react";
 import { site } from "@/lib/site";
 
@@ -28,11 +24,11 @@ type Offering = {
 const OFFERINGS: Offering[] = [
   {
     icon: Compass,
-    eyebrow: "Guided Blueprint",
+    eyebrow: "Diagnostic Architecture",
     title: "90-Day Progress Builder",
     description:
-      "A structured 10-step intake diagnostic that turns your scattered goals into a concrete 12-week development roadmap with 30/60/90-day deliverables and daily protected focus windows.",
-    outcome: "You walk away with an individualized roadmap and downloadable PDF blueprint.",
+      "A 10-step intake diagnostic that cuts through scattered distractions. It evaluates your honest bandwidth, maps out 30/60/90-day deliverables, and establishes a personalized 12-week roadmap with clear criteria for completion.",
+    outcome: "You walk away with an individualized roadmap and a downloadable PDF execution blueprint.",
     linkText: "Build your 90-day plan",
     linkHref: "/progress-builder"
   },
@@ -41,51 +37,51 @@ const OFFERINGS: Offering[] = [
     eyebrow: "Weekly Live Lab",
     title: "Wednesday Cohort Sessions",
     description:
-      "Every Wednesday, our community meets live on WhatsApp and virtual rooms for practical teaching on systems, identity, and execution, followed by honest peer Q&A.",
-    outcome: "Weekly clarity, real-time feedback, and one defined action for the week ahead.",
-    linkText: "Join Wednesday session",
+      "Every Wednesday, our community gathers live for practical, unvarnished teaching on systems, identity, and personal productivity, followed by an open Q&A where we work through real execution blockers.",
+    outcome: "Clarity on your primary obstacle and one concrete action to complete before the weekend.",
+    linkText: "Join Wednesday's session",
     linkHref: site.communityUrl,
     external: true
   },
   {
     icon: Hammer,
     eyebrow: "Skill Sprints",
-    title: "Practical Workshops & Challenges",
+    title: "Hands-On Sprints & Capstones",
     description:
-      "Intensive cohorts focused on creating tangible proof of work — from coding and design to writing, systems architecture, and public project launches.",
-    outcome: "Verifiable artifacts and public case studies that prove competence to the world.",
+      "Intensive, short-term challenges focused on creating tangible proof of work — from coding projects and design prototypes to technical writing, financial models, and public portfolio launches.",
+    outcome: "Verifiable artifacts and public case studies that prove your competence to the market.",
     linkText: "View upcoming workshops",
     linkHref: "/workshops"
   },
   {
     icon: BookOpen,
-    eyebrow: "Learning Circles",
-    title: "Curated Reading & Books",
+    eyebrow: "Foundational Curriculum",
+    title: "Curated Reading Circles",
     description:
-      "Guided study circles exploring foundational works on discipline, capital, and leverage, including our core curriculum text: How to Create Value When You Do Not Have Capital.",
-    outcome: "Deep comprehension of mental models, distilled into actionable daily habits.",
-    linkText: "Explore the books",
+      "Focused study circles dissecting foundational works on leverage, capital, and discipline — anchored by our core curriculum text: How to Create Value When You Do Not Have Capital.",
+    outcome: "A deep understanding of economic value creation, distilled into daily operating principles.",
+    linkText: "Explore the book collection",
     linkHref: "/books"
   },
   {
     icon: ShieldCheck,
-    eyebrow: "Peer Support",
-    title: "Accountability & Mentorship",
+    eyebrow: "Peer Accountability",
+    title: "Evidence Circles & Reviews",
     description:
-      "Community reviews where members share Friday evidence, log weekly git commits or project drafts, and receive constructive guidance from experienced practitioners.",
-    outcome: "An environment where standards remain high and quiet drift is replaced by momentum.",
-    linkText: "Meet the community",
+      "A culture where talk is cheap and progress is evidenced. Members submit Friday work logs, share project links, and receive honest critique and encouragement from experienced mentors.",
+    outcome: "An environment of high standards where quiet drift is noticed and interrupted.",
+    linkText: "Step into the community",
     linkHref: site.communityUrl,
     external: true
   },
   {
     icon: FileText,
-    eyebrow: "Open Curriculum",
-    title: "Editorial Essays & Frameworks",
+    eyebrow: "Open Editorial Curriculum",
+    title: "Essays on Systems & Discipline",
     description:
-      "Carefully written essays dissecting mental models, daily progress systems, time management, and the practical economics of personal skill acquisition.",
-    outcome: "Zero-fluff insights ready to apply directly to your calendar today.",
-    linkText: "Read the articles",
+      "In-depth, thoughtfully written essays dissecting mental models, time architecture, deliberate practice, and the reality of overcoming creative resistance.",
+    outcome: "Practical, zero-fluff perspectives you can immediately apply to your calendar and work.",
+    linkText: "Read the editorial essays",
     linkHref: "/blog"
   }
 ];
@@ -96,13 +92,14 @@ export function GrowthOfferings() {
       <div id="programs" className="scrollAnchor" aria-hidden="true" />
       <div className="shell">
         <div className="offeringsHeaderCenter">
-          <span className="editorialEyebrow">What We Offer</span>
+          <span className="editorialEyebrow">How You Can Grow Here</span>
           <h2 id="offerings-heading" className="offeringsMainHeading">
-            Structured environments for intentional progress.
+            Practical environments designed for execution, not passive consumption.
           </h2>
           <p className="offeringsSubtitle">
-            We don&apos;t sell generic promises or motivational hype. Everything at Align Mindset is
-            designed to help you build direction, develop competence, and follow through:
+            Information alone does not change a life. If reading another book or watching another
+            tutorial produced progress, everyone would be thriving. We build structured environments
+            where you actually build the habits, skills, and systems required to follow through:
           </p>
         </div>
 

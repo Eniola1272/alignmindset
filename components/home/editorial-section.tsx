@@ -1,23 +1,23 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock } from "lucide-react";
+import { ArrowRight, Clock } from "lucide-react";
 import type { Article } from "@/lib/articles";
 
 // Actionable principles paired with articles
 const ARTICLE_PRINCIPLES: Record<string, string> = {
   "align-your-identity-before-your-goals":
-    "Identity creates the emotional stability that makes hard goals feel normal.",
+    "Identity creates the emotional stability that makes demanding standards feel natural.",
   "build-systems-not-motivation":
-    "When the daily next action is friction-free, willpower is no longer the bottleneck.",
+    "When your daily next action is friction-free and protected, willpower is no longer the bottleneck.",
   "skills-that-increase-your-value":
-    "Proof of work and public artifacts beat certificates and credentials every time.",
+    "Indisputable proof of work and public artifacts beat certificates and credentials every time.",
   "from-learning-to-assets":
-    "Every lesson you consume should produce one durable artifact within 48 hours.",
+    "Every concept you study should produce one durable, public artifact within 48 hours.",
   "how-to-revive-a-quiet-community":
-    "Accountability succeeds when participation is structured around evidence, not noise."
+    "Accountability succeeds when participation is structured around tangible evidence, not empty noise."
 };
 
 const DEFAULT_PRINCIPLE =
-  "Turn every concept into an immediate calendar block and verifiable proof of work.";
+  "Translate every concept into a protected calendar block and verifiable proof of work.";
 
 type EditorialSectionProps = {
   articles: Article[];
@@ -33,11 +33,12 @@ export function EditorialSection({ articles }: EditorialSectionProps) {
           <div>
             <span className="editorialEyebrow">Ideas Worth Applying</span>
             <h2 id="editorial-heading" className="editorialMainHeading">
-              Essays on systems, skills, and disciplined execution.
+              Reading that informs your calendar, not just your intellect.
             </h2>
             <p className="editorialSubtitle">
-              We write for people who read to apply. Every piece connects a core concept directly
-              to an actionable principle you can put into practice today:
+              Consuming advice without execution is just another form of procrastination. We write for
+              practitioners who read to apply. Every essay connects a foundational mental model to a
+              concrete action you can put into practice today:
             </p>
           </div>
 
@@ -69,7 +70,7 @@ export function EditorialSection({ articles }: EditorialSectionProps) {
 
                 {/* Core Actionable Principle Callout */}
                 <div className="editorialPrincipleBox">
-                  <span className="editorialPrincipleLabel">Actionable Principle</span>
+                  <span className="editorialPrincipleLabel">Actionable Operating Principle</span>
                   <p className="editorialPrincipleText">{principle}</p>
                 </div>
 
@@ -87,4 +88,3 @@ export function EditorialSection({ articles }: EditorialSectionProps) {
     </section>
   );
 }
-

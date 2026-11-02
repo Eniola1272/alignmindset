@@ -35,8 +35,10 @@ export function HeroSection() {
           </h1>
 
           <p className="homeHeroLead">
-            We help you align your mindset, goals, skills, systems, and daily actions so you can stop
-            drifting and start making meaningful, visible progress.
+            Mediocrity is rarely a lack of talent. It is what happens when real ambition has no
+            structure, daily systems are fragile, and execution is left to mood. We help you align
+            your identity, goals, skills, and routines so you can stop drifting and build verifiable
+            proof of progress.
           </p>
 
           <div className="homeHeroActions">
@@ -58,15 +60,15 @@ export function HeroSection() {
           <div className="homeHeroProofBar">
             <div className="homeHeroProofItem">
               <CheckCircle2 size={16} className="textBrandYellow" aria-hidden="true" />
-              <span>Diagnostic 90-Day Blueprint</span>
+              <span>Grounded in Systems, Not Hype</span>
             </div>
             <div className="homeHeroProofItem">
               <CheckCircle2 size={16} className="textBrandYellow" aria-hidden="true" />
-              <span>Weekly Live Cohorts</span>
+              <span>Individualized 90-Day Blueprint</span>
             </div>
             <div className="homeHeroProofItem">
               <CheckCircle2 size={16} className="textBrandYellow" aria-hidden="true" />
-              <span>Zero Generic Slogans</span>
+              <span>Weekly Evidence Cadence</span>
             </div>
           </div>
         </div>
@@ -77,15 +79,15 @@ export function HeroSection() {
             <div className="homeHeroCardHeader">
               <div className="homeHeroCardTag">
                 <Sparkles size={14} aria-hidden="true" />
-                <span>90-Day Progress Plan • Live Preview</span>
+                <span>90-Day Progress Plan • Live Architecture</span>
               </div>
-              <span className="homeHeroCardStatus">On Track</span>
+              <span className="homeHeroCardStatus">Active System</span>
             </div>
 
             <div className="homeHeroCardBody">
               <span className="homeHeroCardEyebrow">Sample 90-Day Destination</span>
               <h3 className="homeHeroCardHeading">
-                Move from Tutorial Hell to 3 Deployed Products
+                Move from Tutorial Hell to 3 Shipped Production Apps
               </h3>
 
               <div className="homeHeroMiniMilestones">
@@ -94,8 +96,8 @@ export function HeroSection() {
                     <Target size={14} />
                   </div>
                   <div>
-                    <strong>Day 30 Milestone</strong>
-                    <p>Component library with complete test suite</p>
+                    <strong>Day 30 Milestone (Completed)</strong>
+                    <p>Documented component system with 100% test coverage</p>
                   </div>
                 </div>
 
@@ -104,8 +106,8 @@ export function HeroSection() {
                     <Layers size={14} />
                   </div>
                   <div>
-                    <strong>Day 60 Milestone (In Progress)</strong>
-                    <p>Full-stack web application with Supabase</p>
+                    <strong>Day 60 Milestone (In Execution)</strong>
+                    <p>Full-stack web application with authenticated database</p>
                   </div>
                 </div>
               </div>
@@ -116,8 +118,8 @@ export function HeroSection() {
                   <Flame size={16} aria-hidden="true" />
                 </div>
                 <div>
-                  <small>Today&apos;s Protected Focus</small>
-                  <strong>45 mins deliberate practice before 8:00 AM</strong>
+                  <small>Protected Daily Non-Negotiable</small>
+                  <strong>45 mins deliberate practice before 7:30 AM</strong>
                 </div>
               </div>
             </div>
@@ -127,7 +129,7 @@ export function HeroSection() {
                 href="/progress-builder"
                 className="homeHeroCardLink"
               >
-                <span>Build your individualized progress plan</span>
+                <span>Build your personal 90-day progress plan</span>
                 <ArrowRight size={15} aria-hidden="true" />
               </Link>
             </div>
@@ -137,4 +139,3 @@ export function HeroSection() {
     </section>
   );
 }
-

@@ -6,12 +6,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Compass,
-  FileCheck,
-  Flame,
-  HelpCircle,
-  MessageCircle,
   Repeat,
-  ShieldCheck,
   Users
 } from "lucide-react";
 import { site } from "@/lib/site";
@@ -36,18 +31,19 @@ const PATHWAYS: Pathway[] = [
     id: "clarity",
     tabLabel: "I don't know where to start.",
     icon: Compass,
-    highlightPill: "Direction & Focus Diagnostic",
-    diagnosis: "You have ambition, but it is scattered across too many tabs, ideas, and half-started courses.",
+    highlightPill: "The Clarity Bottleneck",
+    diagnosis:
+      "You have genuine drive, but it is fragmented across ten different open tabs, conflicting tutorials, and half-started projects. You start new ideas easily, but you never stay with one long enough to create proof.",
     rootObstacle:
-      "Information overload and lack of a singular baseline. When everything feels important, nothing gets executed.",
-    solutionTitle: "Synthesize an Individualized 90-Day Roadmap",
+      "A lack of clarity. When you refuse to choose one singular priority, you protect yourself from the discomfort of being tested. Ambiguity feels safe; commitment feels vulnerable.",
+    solutionTitle: "Lock In Your Primary Track & 90-Day Finish Line",
     solutionDescription:
-      "Take our guided 10-step intake assessment. We analyze your time capacity, current skillset, and constraints to lock in ONE primary skill track, 30/60/90-day deliverables, and an emergency minimum rule.",
+      "Take our guided 10-step intake diagnostic. We evaluate your actual time constraints, existing capabilities, and honest bandwidth to strip away distractions and establish ONE core capability, clear 30/60/90-day deliverables, and an emergency minimum rule.",
     deliverables: [
       "10-section diagnostic intake (~15 mins)",
-      "Automated personalized 12-week progression plan",
-      "Defined Day 30, Day 60, and Day 90 capstone projects",
-      "Downloadable PDF blueprint with daily focus windows"
+      "One defined primary skill track (eliminating distraction)",
+      "Concrete 30, 60, and 90-day capstone deliverables",
+      "Individualized 12-week roadmap and downloadable blueprint"
     ],
     ctaLabel: "Build My 90-Day Progress Plan",
     ctaHref: "/progress-builder?start=true"
@@ -56,18 +52,19 @@ const PATHWAYS: Pathway[] = [
     id: "systems",
     tabLabel: "I have goals, but I struggle to follow through.",
     icon: Repeat,
-    highlightPill: "Systems & Discipline Architecture",
-    diagnosis: "You get bursts of inspiration on Sunday, set lofty goals, and run out of willpower by Wednesday evening.",
+    highlightPill: "The Systems & Execution Bottleneck",
+    diagnosis:
+      "You experience bursts of Sunday night inspiration, make ambitious task lists, and run out of willpower by Wednesday evening. Then guilt sets in, followed by another cycle of waiting for motivation.",
     rootObstacle:
-      "Relying on emotions instead of friction-free daily systems. Willpower is a depreciating resource; systems are permanent.",
-    solutionTitle: "Build Daily Execution Rhythms & Emergency Minimums",
+      "Weak daily systems. You are asking willpower to carry a routine with too much friction. Motivation is an emotion that fluctuates hourly; a system is an environment where showing up is the default.",
+    solutionTitle: "Install Protected Windows & The Emergency Minimum Rule",
     solutionDescription:
-      "Switch from high-friction targets to protected time-blocking, the 'Never Miss Twice' recovery rule, and weekly proof-of-work reviews that keep working even when your mood drops.",
+      "Stop relying on dramatic surges of energy. Build a sustainable structure using protected calendar blocks, the 'Never Miss Twice' recovery rule, and weekly proof-of-work reviews that keep you executing even when your mood drops.",
     deliverables: [
-      "Protected morning/evening focus slot configuration",
-      "The 15-minute emergency minimum rule for busy days",
-      "Weekly Sunday review framework to audit execution",
-      "Practical open-source templates and growth guides"
+      "Protected daily focus windows before distraction enters",
+      "The 15-minute emergency minimum rule for exhausted days",
+      "A repeatable Sunday review audit to catch drift early",
+      "Open-source frameworks and value creation guides"
     ],
     ctaLabel: "Explore Practical Systems & Guides",
     ctaHref: "/resources"
@@ -76,18 +73,19 @@ const PATHWAYS: Pathway[] = [
     id: "community",
     tabLabel: "I want to grow with people who challenge me.",
     icon: Users,
-    highlightPill: "Peer Accountability Cohort",
-    diagnosis: "You are building in silence. Without a peer circle expecting your progress, quiet drifting goes unnoticed.",
+    highlightPill: "The Environment & Standards Bottleneck",
+    diagnosis:
+      "You are trying to raise your standards while remaining in an everyday environment that tolerates passive drifting. In isolation, quiet compromises go unnoticed, and settling for less feels normal.",
     rootObstacle:
-      "Isolation. It is statistically near-impossible to maintain exceptional standards in an environment of casual settling.",
-    solutionTitle: "Join the Weekly Wednesday Live Growth Session",
+      "Environment. It is nearly impossible to sustain disciplined execution when nobody around you expects it. Who you talk to and compare your daily progress against shapes what you consider acceptable.",
+    solutionTitle: "Enter a Structured Cadence of Real Proof",
     solutionDescription:
-      "Step into a disciplined community of students, builders, creators, and professionals who meet live every Wednesday for practical teaching, honest Q&A, and Friday evidence check-ins.",
+      "Join a community of students, builders, and professionals who refuse to settle for passive drift. We meet every Wednesday live for practical problem-solving and check in every Friday with verifiable evidence of work completed.",
     deliverables: [
-      "Live Wednesday teaching & interactive Q&A workshops",
-      "Friday evidence logging: show proof of what you built",
-      "Curated reading circles & shared challenges",
-      "Active WhatsApp community of serious builders"
+      "Live Wednesday teaching sessions & honest Q&A",
+      "Friday evidence submissions (show proof, not intentions)",
+      "Focused reading circles around high-leverage books",
+      "An active WhatsApp community of serious practitioners"
     ],
     ctaLabel: "Join Wednesday's Live Session",
     ctaHref: site.communityUrl,
@@ -108,8 +106,9 @@ export function PathwaySelector() {
             You don&apos;t need another motivational speech. You need a way forward.
           </h2>
           <p className="pathwaySubtitle">
-            Growth starts by diagnosing the honest bottleneck. Select what best describes your current
-            challenge to see the exact structure that gets you moving:
+            Mediocrity is sustained when we mistake the symptom for the cause. We don&apos;t judge where
+            you are right now — but taking responsibility starts with an honest diagnosis. Choose what
+            best reflects your current friction:
           </p>
         </div>
 
@@ -206,4 +205,3 @@ export function PathwaySelector() {
     </section>
   );
 }
-

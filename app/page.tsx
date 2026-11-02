@@ -11,9 +11,9 @@ import { EditorialSection } from "@/components/home/editorial-section";
 import { FinalCta } from "@/components/home/final-cta";
 
 export const metadata: Metadata = {
-  title: "Align Mindset Initiative | Intentional Personal Growth & Practical Systems",
+  title: "Align Mindset Initiative | Purposeful Growth, Systems & Real Progress",
   description:
-    "We help you align your mindset, goals, skills, systems, and daily actions so you can stop drifting and start making meaningful progress."
+    "We help you align your identity, goals, skills, systems, and daily habits so you can stop drifting, overcome mediocrity, and build verifiable proof of progress."
 };
 
 export default async function Home() {
