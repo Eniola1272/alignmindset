@@ -9,84 +9,73 @@ import { site } from "@/lib/site";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const overlaysDarkHero = pathname === "/books";
 
   const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
-    const updateHeader = () => setIsScrolled(window.scrollY > 28);
-
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeader);
-  }, []);
+    closeMenu();
+  }, [pathname]);
 
   return (
-    <header
-      className={`siteHeader ${overlaysDarkHero ? "isOverlay" : "isLight"} ${isScrolled ? "isScrolled" : ""}`}
-    >
-      <div className="shell headerInner">
-        <Logo />
-        <nav className="headerNav" aria-label="Primary navigation">
-          {site.nav.map((item) => (
-            <Link key={item.href} href={item.href}>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="headerActions">
-          <a
-            className="pillButton desktopHeaderCta"
-            href={site.communityUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Join Community
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
+    <>
+      {/* Top Announcement Bar */}
+      <div className="announcement">
+        <div className="container announcementInner">
+          <span>
+            <strong>AN INVITATION TO MORE.</strong> &nbsp; You don&apos;t have to figure everything out alone.
+          </span>
+          <span className="small-hide">
+            Less drifting. More deliberate living. &nbsp; ↗
+          </span>
         </div>
-        <button
-          className="mobileMenuButton"
-          type="button"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-menu"
-          onClick={() => setIsMenuOpen((current) => !current)}
-        >
-          {isMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-        </button>
       </div>
-      {isMenuOpen ? (
-        <div className="mobileMenu" id="mobile-menu">
-          <button
-            className="mobileMenuBackdrop"
-            type="button"
-            aria-label="Close menu"
-            onClick={closeMenu}
-          />
-          <div className="mobileMenuPanel">
-            <nav aria-label="Mobile navigation">
-              {site.nav.map((item) => (
-                <Link key={item.href} href={item.href} onClick={closeMenu}>
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+
+      {/* Sticky Main Navigation */}
+      <header className="nav-shell">
+        <div className="nav container">
+          <div className="brandWrap">
+            <Logo />
+          </div>
+
+          <nav className={`nav-links ${isMenuOpen ? "open" : ""}`} id="main-nav" aria-label="Main navigation">
+            <Link href="/#approach" onClick={closeMenu}>Our approach</Link>
+            <Link href="/#start" onClick={closeMenu}>Start here</Link>
+            <Link href="/progress-builder" onClick={closeMenu}>90-Day Plan</Link>
+            <Link href="/books" onClick={closeMenu}>Books</Link>
+            <Link href="/workshops" onClick={closeMenu}>Experiences</Link>
+            <Link href="/blog" onClick={closeMenu}>Ideas &amp; insights</Link>
             <a
-              className="pillButton mobileMenuCta"
               href={site.communityUrl}
               target="_blank"
               rel="noreferrer"
+              className="mobileOnlyLink"
               onClick={closeMenu}
             >
-              Join the movement
-              <ArrowRight size={16} aria-hidden="true" />
+              WhatsApp Community ↗
             </a>
+          </nav>
+
+          <div className="navCtaWrap">
+            <Link href="/progress-builder?start=true" className="btn btn-dark nav-cta">
+              <span>Find your starting point</span>
+              <span className="arrow">↗</span>
+            </Link>
           </div>
+
+          <button
+            className="menu-button"
+            id="menu-button"
+            type="button"
+            aria-expanded={isMenuOpen}
+            aria-controls="main-nav"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
         </div>
-      ) : null}
-    </header>
+      </header>
+    </>
   );
 }

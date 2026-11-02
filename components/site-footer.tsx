@@ -1,67 +1,72 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { NewsletterForm } from "@/components/newsletter-form";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="siteFooter">
-      <div className="shell footerSubscribe">
-        <div>
-          <span>Stay in the movement</span>
-          <h2>Useful ideas for a more purposeful life.</h2>
-          <p>
-            Get practical notes on discipline, skills, business, money, and
-            value creation.
-          </p>
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-grid">
+          {/* Brand & Mission Column */}
+          <div>
+            <div className="footerBrandWrap">
+              <Logo />
+            </div>
+            <p className="footer-note">
+              Useful ideas. Better systems. Meaningful action. A community committed to growing on purpose.
+            </p>
+            <span className="eyebrow on-dark">KEEP BECOMING. ↗</span>
+          </div>
+
+          {/* Explore Column */}
+          <div>
+            <h4>EXPLORE</h4>
+            <div className="footer-links">
+              <Link href="/#about">Our philosophy</Link>
+              <Link href="/#approach">Our approach</Link>
+              <Link href="/progress-builder">90-day planning</Link>
+              <Link href="/books">Books &amp; Curriculum</Link>
+            </div>
+          </div>
+
+          {/* Grow Column */}
+          <div>
+            <h4>GROW</h4>
+            <div className="footer-links">
+              <Link href="/progress-builder?start=true">Find your starting point</Link>
+              <Link href="/workshops">Learning experiences</Link>
+              <Link href="/blog">Ideas &amp; insights</Link>
+              <a href={site.communityUrl} target="_blank" rel="noreferrer">
+                WhatsApp Community
+              </a>
+            </div>
+          </div>
+
+          {/* Callout Column */}
+          <div>
+            <h4>ONE GOOD STEP</h4>
+            <div className="footer-links">
+              <span>
+                Every meaningful change begins with a decision to do something differently.
+              </span>
+              <Link
+                href="/progress-builder?start=true"
+                style={{ color: "var(--yellow)", marginTop: "8px", fontWeight: 700 }}
+              >
+                Make yours today ↗
+              </Link>
+            </div>
+          </div>
         </div>
-        <NewsletterForm
-          className="footerNewsletterForm"
-          label="Subscribe"
-          submitLabel="Join"
-        />
-      </div>
-      <div className="shell footerGrid">
-        <div>
-          <Logo />
-          <p>
-            Align Mindset Initiative helps people build identity, systems,
-            skills, and disciplined action for purposeful growth.
-          </p>
-        </div>
-        <div>
-          <h2>Explore</h2>
-          <Link href="/start-here">Start Here</Link>
-          <Link href="/progress-builder">90-Day Plan Builder</Link>
-          <Link href="/resources">Free Resources</Link>
-          <Link href="/workshops">Workshops & Labs</Link>
-          <Link href="/#framework">The Framework</Link>
-          <Link href="/blog">Editorial Essays</Link>
-        </div>
-        <div>
-          <h2>Community</h2>
-          <a href={site.communityUrl} target="_blank" rel="noreferrer">
-            Join Community
-          </a>
-          <Link href="/volunteer">Volunteer</Link>
-          <Link href="/partners">Sponsor / Partner</Link>
-          <Link href="/books">Books Bundle</Link>
-        </div>
-        <div>
-          <h2>Connect</h2>
-          <a href={site.communityUrl} target="_blank" rel="noreferrer">
-            WhatsApp
-          </a>
-          <a href={`mailto:${site.email}`}>{site.email}</a>
-          <a href="tel:+2349038681717">+234 9038681717</a>
-        </div>
-      </div>
-      <div className="shell footerBottom">
-        <span>© {new Date().getFullYear()} Align Mindset Initiative.</span>
-        <div>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-          <Link href="/admin">Admin</Link>
+
+        <div className="footer-bottom">
+          <span>© {currentYear} Align Mindset Initiative. Built for intentional growth.</span>
+          <span>
+            Designed to help people make progress, not just promises. &nbsp;
+            <a href="#top">Back to top ↑</a>
+          </span>
         </div>
       </div>
     </footer>
