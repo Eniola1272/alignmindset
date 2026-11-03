@@ -15,7 +15,7 @@ export const site = {
     { label: "Blog", href: "/blog" },
     { label: "Volunteer", href: "/volunteer" },
     { label: "Partners", href: "/partners" },
-    { label: "About", href: "/#about" }
+    { label: "About", href: "/about" }
   ]
 };
 

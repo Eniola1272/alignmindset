@@ -39,7 +39,7 @@ export function SiteHeader() {
           </div>
 
           <nav className={`nav-links ${isMenuOpen ? "open" : ""}`} id="main-nav" aria-label="Main navigation">
-            <Link href="/#approach" onClick={closeMenu}>Our approach</Link>
+            <Link href="/about" onClick={closeMenu}>About</Link>
             <Link href="/#start" onClick={closeMenu}>Start here</Link>
             <Link href="/progress-builder" onClick={closeMenu}>90-Day Plan</Link>
             <Link href="/books" onClick={closeMenu}>Books</Link>

@@ -4,7 +4,13 @@ export function Logo() {
   return (
     <Link className="logo" href="/" aria-label="Align Mindset home">
       <span className="logoImageWrap" aria-hidden="true">
-        <img src="/brand/align-mindset-logo.png" alt="" />
+        <img
+          src="/brand/align-mindset-logo.png"
+          alt="Align Mindset Initiative"
+          width={140}
+          height={44}
+          loading="eager"
+        />
       </span>
     </Link>
   );

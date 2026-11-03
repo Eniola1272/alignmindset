@@ -24,7 +24,7 @@ export function SiteFooter() {
           <div>
             <h4>EXPLORE</h4>
             <div className="footer-links">
-              <Link href="/#about">Our philosophy</Link>
+              <Link href="/about">About &amp; Philosophy</Link>
               <Link href="/#approach">Our approach</Link>
               <Link href="/progress-builder">90-day planning</Link>
               <Link href="/books">Books &amp; Curriculum</Link>
