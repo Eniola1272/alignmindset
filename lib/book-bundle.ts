@@ -38,7 +38,7 @@ export const askForHelpPreorder = {
   slug: "ask-for-help-preorder",
   title: "Ask for Help",
   subtitle: "A guide to the single greatest skill you will ever learn",
-  price: 3500,
+  price: 2000,
   currency: "NGN",
   format: "Digital first edition",
   coverImage: "/images/books/ask-for-help-book-cover.png",
