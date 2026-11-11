@@ -9,7 +9,7 @@ import {
   setAdminSession
 } from "@/lib/admin";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
-import { bookBundle } from "@/lib/book-bundle";
+import { askForHelpPreorder, bookBundle } from "@/lib/book-bundle";
 import { initializeFlutterwavePayment } from "@/lib/flutterwave";
 import {
   escapeHtml,
@@ -981,9 +981,20 @@ export async function updateNewsletterPopupSetting(
   };
 }
 
-export async function initiateBookBundleCheckout(
-  _previousState: CheckoutState,
-  formData: FormData
+type BookCheckoutProduct = {
+  slug: string;
+  title: string;
+  amount: number;
+  currency: string;
+  description: string;
+  redirectPath: string;
+  txPrefix: string;
+  meta?: Record<string, string | number | boolean>;
+};
+
+async function initiateBookCheckout(
+  formData: FormData,
+  product: BookCheckoutProduct
 ): Promise<CheckoutState> {
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
@@ -1003,12 +1014,12 @@ export async function initiateBookBundleCheckout(
     };
   }
 
-  const txRef = `AMI-BOOKS-${Date.now()}-${crypto
+  const txRef = `${product.txPrefix}-${Date.now()}-${crypto
     .randomUUID()
     .slice(0, 8)
     .toUpperCase()}`;
   const supabase = createSupabaseServerClient();
-  const redirectUrl = `${site.url.replace(/\/$/, "")}/books/thank-you`;
+  const redirectUrl = `${site.url.replace(/\/$/, "")}${product.redirectPath}`;
 
   if (supabase) {
     await supabase.from("book_orders").insert({
@@ -1016,28 +1027,28 @@ export async function initiateBookBundleCheckout(
       customer_name: name,
       customer_email: email,
       customer_phone: phone || null,
-      product_slug: bookBundle.slug,
-      amount: bookBundle.bundlePrice,
-      currency: bookBundle.currency,
+      product_slug: product.slug,
+      amount: product.amount,
+      currency: product.currency,
       status: "pending"
     });
   }
 
   const checkout = await initializeFlutterwavePayment({
     txRef,
-    amount: bookBundle.bundlePrice,
-    currency: bookBundle.currency,
+    amount: product.amount,
+    currency: product.currency,
     redirectUrl,
     customer: {
       name,
       email,
       phonenumber: phone || undefined
     },
-    title: bookBundle.title,
-    description: `4-book Align Mindset bundle for ${bookBundle.currency} ${bookBundle.bundlePrice}.`,
+    title: product.title,
+    description: product.description,
     meta: {
-      product_slug: bookBundle.slug,
-      book_count: bookBundle.books.length
+      product_slug: product.slug,
+      ...product.meta
     }
   });
 
@@ -1058,4 +1069,41 @@ export async function initiateBookBundleCheckout(
   }
 
   redirect(checkout.link);
+}
+
+export async function initiateBookBundleCheckout(
+  _previousState: CheckoutState,
+  formData: FormData
+): Promise<CheckoutState> {
+  return initiateBookCheckout(formData, {
+    slug: bookBundle.slug,
+    title: bookBundle.title,
+    amount: bookBundle.bundlePrice,
+    currency: bookBundle.currency,
+    description: `4-book Align Mindset bundle for ${bookBundle.currency} ${bookBundle.bundlePrice}.`,
+    redirectPath: "/books/thank-you",
+    txPrefix: "AMI-BOOKS",
+    meta: {
+      book_count: bookBundle.books.length
+    }
+  });
+}
+
+export async function initiateAskForHelpPreorder(
+  _previousState: CheckoutState,
+  formData: FormData
+): Promise<CheckoutState> {
+  return initiateBookCheckout(formData, {
+    slug: askForHelpPreorder.slug,
+    title: `${askForHelpPreorder.title} preorder`,
+    amount: askForHelpPreorder.price,
+    currency: askForHelpPreorder.currency,
+    description: `${askForHelpPreorder.title} digital first-edition preorder.`,
+    redirectPath: "/books/ask-for-help/thank-you",
+    txPrefix: "AMI-ASK-HELP",
+    meta: {
+      order_type: "preorder",
+      format: askForHelpPreorder.format
+    }
+  });
 }

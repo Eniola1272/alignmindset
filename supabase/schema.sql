@@ -305,7 +305,7 @@ comment on table public.site_settings is
   'Admin-managed settings that control public website features.';
 
 comment on table public.book_orders is
-  'Server-created Flutterwave checkout orders for Align Mindset book bundles.';
+  'Server-created Flutterwave checkout orders for Align Mindset books and bundles.';
 
 -- ==================================================
 -- AMI 90-Day Progress Builder

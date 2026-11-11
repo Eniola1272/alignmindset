@@ -19,7 +19,8 @@ export function AppChrome({
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
   const isHome = pathname === "/";
-  const isLandingPage = isHome || pathname === "/books";
+  const isLandingPage =
+    isHome || pathname === "/books" || pathname === "/books/ask-for-help";
 
   return (
     <>

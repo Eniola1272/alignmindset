@@ -193,6 +193,12 @@ export default function BooksPage() {
                   <small>{book.tag}</small>
                   <h3>{book.title}</h3>
                   <p>{book.promise}</p>
+                  {index === 0 ? (
+                    <Link className="bookPreorderLink" href="/books/ask-for-help">
+                      Preorder Ask for Help
+                      <ArrowRight size={15} aria-hidden="true" />
+                    </Link>
+                  ) : null}
                 </div>
               </article>
             ))}

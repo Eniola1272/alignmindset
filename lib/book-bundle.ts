@@ -34,6 +34,18 @@ export const bookBundle = {
   ]
 };
 
+export const askForHelpPreorder = {
+  slug: "ask-for-help-preorder",
+  title: "Ask for Help",
+  subtitle: "A guide to the single greatest skill you will ever learn",
+  price: 3500,
+  currency: "NGN",
+  format: "Digital first edition",
+  coverImage: "/images/books/ask-for-help-book-cover.png",
+  description:
+    "A practical guide to asking better questions, finding the right support, and moving forward without struggling in silence."
+};
+
 export function formatNaira(amount: number) {
   return new Intl.NumberFormat("en-NG", {
     style: "currency",

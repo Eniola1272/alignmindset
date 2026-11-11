@@ -3,6 +3,7 @@
 import { useActionState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import {
+  initiateAskForHelpPreorder,
   initiateBookBundleCheckout,
   type CheckoutState
 } from "@/lib/actions";
@@ -13,10 +14,24 @@ const initialState: CheckoutState = {
   message: ""
 };
 
-export function BookCheckoutForm() {
+type BookCheckoutFormProps = {
+  product?: "bundle" | "ask-for-help";
+  submitLabel?: string;
+  disabledReason?: string;
+};
+
+export function BookCheckoutForm({
+  product = "bundle",
+  submitLabel,
+  disabledReason
+}: BookCheckoutFormProps) {
   const { showToast } = useToast();
+  const checkoutAction =
+    product === "ask-for-help"
+      ? initiateAskForHelpPreorder
+      : initiateBookBundleCheckout;
   const [state, formAction, pending] = useActionState(
-    initiateBookBundleCheckout,
+    checkoutAction,
     initialState
   );
 
@@ -46,10 +61,24 @@ export function BookCheckoutForm() {
         Phone number
         <input name="phone" type="tel" placeholder="+234..." />
       </label>
-      <button className="primaryButton" type="submit" disabled={pending}>
-        {pending ? "Opening checkout" : "Get the 4-book bundle"}
+      <button
+        className="primaryButton"
+        type="submit"
+        disabled={pending || Boolean(disabledReason)}
+      >
+        {pending
+          ? "Opening checkout"
+          : submitLabel ??
+            (product === "ask-for-help"
+              ? "Preorder Ask for Help"
+              : "Get the 4-book bundle")}
         <ArrowRight size={17} aria-hidden="true" />
       </button>
+      {disabledReason ? (
+        <p className="checkoutSetupNote" role="status">
+          {disabledReason}
+        </p>
+      ) : null}
     </form>
   );
 }
