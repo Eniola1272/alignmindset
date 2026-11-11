@@ -13495,6 +13495,21 @@ button:disabled,
   font-weight: 400;
 }
 
+.askHelpCoverStage figcaption s {
+  color: #f29a90;
+  text-decoration-color: #e45345;
+  text-decoration-thickness: 2px;
+}
+
+.askHelpCoverStage figcaption small {
+  display: block;
+  margin-top: 4px;
+  color: #cbd5cb;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .askHelpStatement {
   padding: 84px 0;
   background: var(--forest);
@@ -13719,11 +13734,29 @@ button:disabled,
   gap: 18px;
 }
 
-.askHelpFinalAction > strong {
+.askHelpFinalPrice {
+  display: grid;
+  gap: 4px;
+}
+
+.askHelpFinalPrice s {
+  width: fit-content;
+  color: #f4aaa1;
+  font-size: 16px;
+  text-decoration-color: #ef6658;
+  text-decoration-thickness: 2px;
+}
+
+.askHelpFinalPrice strong {
   color: var(--yellow);
   font-family: var(--serif);
   font-size: 42px;
   font-weight: 400;
+}
+
+.askHelpFinalPrice span {
+  color: #cbd5cb;
+  font-size: 11px;
 }
 
 .preorderModalOverlay {
@@ -13810,6 +13843,19 @@ button:disabled,
   font-family: var(--serif);
   font-size: 25px;
   font-weight: 400;
+}
+
+.preorderModalPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.preorderModalPrice s {
+  color: #b84035;
+  font-size: 13px;
+  text-decoration-color: #d23e31;
+  text-decoration-thickness: 2px;
 }
 
 .preorderModalForm {

@@ -89,7 +89,10 @@ export function AskForHelpPreorderModal({
                 <span>Digital first-edition preorder</span>
                 <h2 id={titleId}>{askForHelpPreorder.title}</h2>
                 <p>{askForHelpPreorder.subtitle}</p>
-                <strong>{formatNaira(askForHelpPreorder.price)}</strong>
+                <div className="preorderModalPrice">
+                  <s>{formatNaira(askForHelpPreorder.regularPrice)}</s>
+                  <strong>{formatNaira(askForHelpPreorder.price)}</strong>
+                </div>
               </div>
             </div>
 

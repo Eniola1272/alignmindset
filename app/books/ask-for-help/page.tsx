@@ -55,6 +55,8 @@ const readerFit = [
 
 export default function AskForHelpPreorderPage() {
   const paymentReady = hasFlutterwaveConfig();
+  const preorderSaving =
+    askForHelpPreorder.regularPrice - askForHelpPreorder.price;
 
   return (
     <div className="askHelpPage">
@@ -81,7 +83,7 @@ export default function AskForHelpPreorderPage() {
                 Secure Flutterwave checkout
               </span>
               <span>{askForHelpPreorder.format}</span>
-              <span>{formatNaira(askForHelpPreorder.price)}</span>
+              <span>Save {formatNaira(preorderSaving)}</span>
             </div>
           </div>
 
@@ -96,8 +98,12 @@ export default function AskForHelpPreorderPage() {
               sizes="(max-width: 760px) 72vw, 420px"
             />
             <figcaption>
-              <span>Preorder price</span>
+              <span>
+                <s>{formatNaira(askForHelpPreorder.regularPrice)}</s> regular
+                price
+              </span>
               <strong>{formatNaira(askForHelpPreorder.price)}</strong>
+              <small>Preorder price</small>
             </figcaption>
           </figure>
         </div>
@@ -201,7 +207,11 @@ export default function AskForHelpPreorderPage() {
             </p>
           </div>
           <div className="askHelpFinalAction">
-            <strong>{formatNaira(askForHelpPreorder.price)}</strong>
+            <div className="askHelpFinalPrice">
+              <s>{formatNaira(askForHelpPreorder.regularPrice)}</s>
+              <strong>{formatNaira(askForHelpPreorder.price)}</strong>
+              <span>Save {formatNaira(preorderSaving)} when you preorder</span>
+            </div>
             <AskForHelpPreorderModal
               paymentReady={paymentReady}
               buttonLabel="Preorder now"
