@@ -123,6 +123,29 @@ create table if not exists public.book_orders (
   updated_at timestamptz not null default now()
 );
 
+alter table public.book_orders
+  add column if not exists delivery_status text not null default 'pending'
+    check (delivery_status in ('pending', 'awaiting_file', 'sending', 'sent', 'failed')),
+  add column if not exists delivery_attempts integer not null default 0,
+  add column if not exists delivery_email_sent_at timestamptz,
+  add column if not exists delivered_at timestamptz,
+  add column if not exists last_delivery_error text,
+  add column if not exists download_count integer not null default 0,
+  add column if not exists last_downloaded_at timestamptz;
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'digital-products',
+  'digital-products',
+  false,
+  52428800,
+  array['application/pdf']
+)
+on conflict (id) do update set
+  public = false,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
+
 insert into public.site_settings (
   id,
   newsletter_popup_enabled,
@@ -305,7 +328,10 @@ comment on table public.site_settings is
   'Admin-managed settings that control public website features.';
 
 comment on table public.book_orders is
-  'Server-created Flutterwave checkout orders for Align Mindset books and bundles.';
+  'Server-created Flutterwave orders with payment verification and private digital delivery tracking.';
+
+comment on column public.book_orders.delivery_status is
+  'Tracks automatic email delivery of a paid digital product.';
 
 -- ==================================================
 -- AMI 90-Day Progress Builder

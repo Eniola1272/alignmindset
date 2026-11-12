@@ -3,7 +3,7 @@
 import { useActionState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import {
-  initiateAskForHelpPreorder,
+  initiateAskForHelpCheckout,
   initiateBookBundleCheckout,
   type CheckoutState
 } from "@/lib/actions";
@@ -28,7 +28,7 @@ export function BookCheckoutForm({
   const { showToast } = useToast();
   const checkoutAction =
     product === "ask-for-help"
-      ? initiateAskForHelpPreorder
+      ? initiateAskForHelpCheckout
       : initiateBookBundleCheckout;
   const [state, formAction, pending] = useActionState(
     checkoutAction,
@@ -70,7 +70,7 @@ export function BookCheckoutForm({
           ? "Opening checkout"
           : submitLabel ??
             (product === "ask-for-help"
-              ? "Preorder Ask for Help"
+              ? "Buy Ask for Help"
               : "Get the 4-book bundle")}
         <ArrowRight size={17} aria-hidden="true" />
       </button>

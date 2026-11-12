@@ -2340,6 +2340,113 @@ button:disabled,
   color: var(--muted);
 }
 
+.bookDeliveryUploader {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 340px) auto;
+  gap: 18px;
+  align-items: center;
+  background: var(--paper);
+}
+
+.bookDeliveryUploader strong {
+  display: block;
+  color: var(--ink);
+}
+
+.bookDeliveryUploader p {
+  max-width: 580px;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.bookDeliveryUploader input[type="file"] {
+  min-width: 0;
+  border: 1px solid var(--line);
+  padding: 11px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.orderStats {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line);
+}
+
+.orderStats > div {
+  min-height: 92px;
+  display: grid;
+  align-content: space-between;
+  border-right: 1px solid var(--line);
+  padding: 16px;
+  background: var(--paper);
+}
+
+.orderStats > div:last-child {
+  border-right: 0;
+}
+
+.orderStats strong,
+.orderStats span {
+  display: block;
+}
+
+.orderStats strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.orderStats span,
+.orderMuted {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.orderTableWrap {
+  border: 1px solid var(--line);
+}
+
+.orderStatus {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.orderStatus.is-paid,
+.orderStatus.is-sent {
+  background: #e4f5e8;
+  color: #24613a;
+}
+
+.orderStatus.is-failed,
+.orderStatus.is-awaiting_file {
+  background: #fff0ed;
+  color: #8b3028;
+}
+
+.orderStatus.is-sending {
+  background: #fff6d9;
+  color: #735b16;
+}
+
+.orderResendButton {
+  min-height: 36px;
+  padding: 0 12px;
+}
+
 .popupSettingRow {
   margin-top: 18px;
   border: 1px solid var(--line);
@@ -13278,7 +13385,7 @@ button:disabled,
   }
 }
 
-/* Ask for Help preorder */
+/* Ask for Help digital book */
 .askHelpPage {
   overflow: hidden;
   background: var(--paper);
@@ -14006,6 +14113,42 @@ button:disabled,
   color: var(--forest);
   font-size: 13px;
   font-weight: 700;
+}
+
+.askHelpThankYouActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .bookDeliveryUploader {
+    grid-template-columns: 1fr;
+  }
+
+  .bookDeliveryUploader .primaryButton {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 640px) {
+  .orderStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .orderStats > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .orderStats > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .askHelpThankYouActions,
+  .askHelpThankYouActions > a {
+    width: 100%;
+  }
 }
 
 @media (max-width: 900px) {

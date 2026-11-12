@@ -60,7 +60,7 @@ const faqs = [
   {
     question: "What happens after I pay?",
     answer:
-      "You will be redirected back to the site after Flutterwave checkout. Delivery can then be handled by email or a protected download page once your book files are uploaded."
+      "After Flutterwave verifies your payment, the download appears on the confirmation page and a personal download link is sent to your email."
   },
   {
     question: "Can I buy one book only?",
@@ -195,7 +195,7 @@ export default function BooksPage() {
                   <p>{book.promise}</p>
                   {index === 0 ? (
                     <Link className="bookPreorderLink" href="/books/ask-for-help">
-                      Preorder Ask for Help
+                      Buy Ask for Help
                       <ArrowRight size={15} aria-hidden="true" />
                     </Link>
                   ) : null}

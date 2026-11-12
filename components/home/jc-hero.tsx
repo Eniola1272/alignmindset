@@ -55,14 +55,14 @@ export function JcHero() {
                 />
               </div>
               <div className="jcBookMeta">
-                <span className="jcBookTag">New book preorder</span>
+                <span className="jcBookTag">New digital book</span>
                 <strong className="jcBookTitle">Ask for Help</strong>
                 <p className="jcBookDesc">
                   A practical guide to asking better questions, finding the right support, and
                   moving forward without struggling in silence.
                 </p>
                 <Link href="/books/ask-for-help" className="jcBookLink">
-                  <span>Preorder the book</span>
+                  <span>Buy the book</span>
                   <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </div>

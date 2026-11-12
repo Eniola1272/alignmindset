@@ -4,18 +4,20 @@ import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { ArrowRight, ShieldCheck, X } from "lucide-react";
 import { BookCheckoutForm } from "@/components/book-checkout-form";
-import { askForHelpPreorder, formatNaira } from "@/lib/book-bundle";
+import { askForHelpBook, formatNaira } from "@/lib/book-bundle";
 
 type AskForHelpPreorderModalProps = {
   buttonLabel?: string;
   buttonClassName?: string;
-  paymentReady: boolean;
+  checkoutReady: boolean;
+  disabledReason?: string;
 };
 
 export function AskForHelpPreorderModal({
-  buttonLabel = "Preorder the book",
+  buttonLabel = "Buy the digital book",
   buttonClassName = "primaryButton",
-  paymentReady
+  checkoutReady,
+  disabledReason
 }: AskForHelpPreorderModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const titleId = useId();
@@ -71,7 +73,7 @@ export function AskForHelpPreorderModal({
             <button
               className="preorderModalClose"
               type="button"
-              aria-label="Close preorder form"
+              aria-label="Close checkout form"
               onClick={() => setIsOpen(false)}
             >
               <X size={19} aria-hidden="true" />
@@ -79,19 +81,19 @@ export function AskForHelpPreorderModal({
 
             <div className="preorderModalBook">
               <Image
-                src={askForHelpPreorder.coverImage}
+                src={askForHelpBook.coverImage}
                 alt="Ask for Help book cover"
                 width={1024}
                 height={1536}
                 sizes="(max-width: 640px) 32vw, 180px"
               />
               <div>
-                <span>Digital first-edition preorder</span>
-                <h2 id={titleId}>{askForHelpPreorder.title}</h2>
-                <p>{askForHelpPreorder.subtitle}</p>
+                <span>Digital edition · Instant download</span>
+                <h2 id={titleId}>{askForHelpBook.title}</h2>
+                <p>{askForHelpBook.subtitle}</p>
                 <div className="preorderModalPrice">
-                  <s>{formatNaira(askForHelpPreorder.regularPrice)}</s>
-                  <strong>{formatNaira(askForHelpPreorder.price)}</strong>
+                  <s>{formatNaira(askForHelpBook.regularPrice)}</s>
+                  <strong>{formatNaira(askForHelpBook.price)}</strong>
                 </div>
               </div>
             </div>
@@ -106,15 +108,15 @@ export function AskForHelpPreorderModal({
               </div>
               <BookCheckoutForm
                 product="ask-for-help"
-                submitLabel={`Pay ${formatNaira(askForHelpPreorder.price)}`}
+                submitLabel={`Pay ${formatNaira(askForHelpBook.price)}`}
                 disabledReason={
-                  paymentReady
+                  checkoutReady
                     ? undefined
-                    : "Checkout is awaiting the Flutterwave secret key."
+                    : disabledReason || "Checkout is not ready yet."
                 }
               />
               <small>
-                Your preorder receipt and release updates will be sent to the
+                Your download appears after payment and is also sent to the
                 email you provide.
               </small>
             </div>

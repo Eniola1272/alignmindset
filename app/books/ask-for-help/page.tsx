@@ -8,17 +8,21 @@ import {
   ShieldCheck
 } from "lucide-react";
 import { AskForHelpPreorderModal } from "@/components/ask-for-help-preorder-modal";
-import { askForHelpPreorder, formatNaira } from "@/lib/book-bundle";
+import { askForHelpBook, formatNaira } from "@/lib/book-bundle";
+import { isAskForHelpDigitalFileReady } from "@/lib/book-delivery";
 import { hasFlutterwaveConfig } from "@/lib/flutterwave";
+import { isResendConfigured } from "@/lib/resend";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Ask for Help | Preorder",
+  title: "Ask for Help | Digital Book",
   description:
-    "Preorder Ask for Help, a practical guide to asking better questions, finding the right support, and moving forward without struggling in silence.",
+    "Buy Ask for Help, a practical digital guide to asking better questions, finding the right support, and moving forward without struggling in silence.",
   openGraph: {
-    title: "Ask for Help | Preorder",
-    description: askForHelpPreorder.description,
-    images: [askForHelpPreorder.coverImage]
+    title: "Ask for Help | Digital Book",
+    description: askForHelpBook.description,
+    images: [askForHelpBook.coverImage]
   }
 };
 
@@ -53,17 +57,29 @@ const readerFit = [
   "You want to build stronger relationships around learning and growth."
 ];
 
-export default function AskForHelpPreorderPage() {
+export default async function AskForHelpPage() {
   const paymentReady = hasFlutterwaveConfig();
-  const preorderSaving =
-    askForHelpPreorder.regularPrice - askForHelpPreorder.price;
+  const fileReady = await isAskForHelpDigitalFileReady();
+  const emailReady = isResendConfigured();
+  const webhookReady = Boolean(process.env.FLUTTERWAVE_WEBHOOK_SECRET_HASH);
+  const checkoutReady = paymentReady && fileReady && emailReady && webhookReady;
+  const checkoutReason = !paymentReady
+    ? "Checkout is awaiting the Flutterwave secret key."
+    : !webhookReady
+      ? "Instant payment confirmation is being configured. Please check back shortly."
+      : !emailReady
+        ? "Email delivery is being configured. Please check back shortly."
+    : !fileReady
+      ? "The digital edition is being prepared. Please check back shortly."
+      : undefined;
+  const saving = askForHelpBook.regularPrice - askForHelpBook.price;
 
   return (
     <div className="askHelpPage">
       <section className="askHelpHero">
         <div className="container askHelpHeroGrid">
           <div className="askHelpHeroCopy">
-            <span className="askHelpEyebrow">Preorder the first edition</span>
+            <span className="askHelpEyebrow">Digital edition · Download instantly</span>
             <h1>You do not have to figure everything out alone.</h1>
             <p>
               <em>Ask for Help</em> is a practical guide to asking better
@@ -71,7 +87,10 @@ export default function AskForHelpPreorderPage() {
               struggling in silence.
             </p>
             <div className="askHelpHeroActions">
-              <AskForHelpPreorderModal paymentReady={paymentReady} />
+              <AskForHelpPreorderModal
+                checkoutReady={checkoutReady}
+                disabledReason={checkoutReason}
+              />
               <a className="askHelpTextLink" href="#inside-the-book">
                 See what is inside
                 <ArrowRight size={16} aria-hidden="true" />
@@ -82,15 +101,15 @@ export default function AskForHelpPreorderPage() {
                 <ShieldCheck size={16} aria-hidden="true" />
                 Secure Flutterwave checkout
               </span>
-              <span>{askForHelpPreorder.format}</span>
-              <span>Save {formatNaira(preorderSaving)}</span>
+              <span>{askForHelpBook.format}</span>
+              <span>Save {formatNaira(saving)}</span>
             </div>
           </div>
 
           <figure className="askHelpCoverStage">
             <div className="askHelpCoverGlow" aria-hidden="true" />
             <Image
-              src={askForHelpPreorder.coverImage}
+              src={askForHelpBook.coverImage}
               alt="Ask for Help by Eniola Aderounmu"
               width={1024}
               height={1536}
@@ -99,11 +118,11 @@ export default function AskForHelpPreorderPage() {
             />
             <figcaption>
               <span>
-                <s>{formatNaira(askForHelpPreorder.regularPrice)}</s> regular
+                <s>{formatNaira(askForHelpBook.regularPrice)}</s> regular
                 price
               </span>
-              <strong>{formatNaira(askForHelpPreorder.price)}</strong>
-              <small>Preorder price</small>
+              <strong>{formatNaira(askForHelpBook.price)}</strong>
+              <small>Launch price</small>
             </figcaption>
           </figure>
         </div>
@@ -199,22 +218,23 @@ export default function AskForHelpPreorderPage() {
         <div className="container askHelpFinalGrid">
           <div>
             <MessageCircleQuestion size={32} aria-hidden="true" />
-            <span>Preorder Ask for Help</span>
+            <span>Get Ask for Help</span>
             <h2>Stop carrying every question by yourself.</h2>
             <p>
-              Reserve the digital first edition today. We will use your checkout
-              email for your receipt and release updates.
+              Pay securely and download the digital edition immediately. A
+              personal download link will also be sent to your email.
             </p>
           </div>
           <div className="askHelpFinalAction">
             <div className="askHelpFinalPrice">
-              <s>{formatNaira(askForHelpPreorder.regularPrice)}</s>
-              <strong>{formatNaira(askForHelpPreorder.price)}</strong>
-              <span>Save {formatNaira(preorderSaving)} when you preorder</span>
+              <s>{formatNaira(askForHelpBook.regularPrice)}</s>
+              <strong>{formatNaira(askForHelpBook.price)}</strong>
+              <span>Save {formatNaira(saving)} at the launch price</span>
             </div>
             <AskForHelpPreorderModal
-              paymentReady={paymentReady}
-              buttonLabel="Preorder now"
+              checkoutReady={checkoutReady}
+              disabledReason={checkoutReason}
+              buttonLabel="Buy and download"
             />
           </div>
         </div>

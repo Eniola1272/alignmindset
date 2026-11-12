@@ -9,6 +9,7 @@ import {
   HandHeart,
   LayoutDashboard,
   Mail,
+  ShoppingBag,
   UsersRound
 } from "lucide-react";
 
@@ -25,6 +26,7 @@ const icons = {
   subscribers: UsersRound,
   volunteers: HandHeart,
   broadcasts: Mail,
+  orders: ShoppingBag,
   editor: Edit3
 };
 

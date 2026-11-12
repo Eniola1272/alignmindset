@@ -34,14 +34,14 @@ export const bookBundle = {
   ]
 };
 
-export const askForHelpPreorder = {
-  slug: "ask-for-help-preorder",
+export const askForHelpBook = {
+  slug: "ask-for-help",
   title: "Ask for Help",
   subtitle: "A guide to the single greatest skill you will ever learn",
   regularPrice: 3500,
   price: 2000,
   currency: "NGN",
-  format: "Digital first edition",
+  format: "Digital edition (PDF)",
   coverImage: "/images/books/ask-for-help-book-cover.png",
   description:
     "A practical guide to asking better questions, finding the right support, and moving forward without struggling in silence."

@@ -9,7 +9,12 @@ import {
   setAdminSession
 } from "@/lib/admin";
 import type { ArticleBlock, ArticleCategory } from "@/lib/articles";
-import { askForHelpPreorder, bookBundle } from "@/lib/book-bundle";
+import { askForHelpBook, bookBundle } from "@/lib/book-bundle";
+import {
+  deliverPendingAskForHelpOrders,
+  isAskForHelpDigitalFileReady,
+  resendAskForHelpDelivery
+} from "@/lib/book-delivery";
 import { initializeFlutterwavePayment } from "@/lib/flutterwave";
 import {
   escapeHtml,
@@ -1089,21 +1094,69 @@ export async function initiateBookBundleCheckout(
   });
 }
 
-export async function initiateAskForHelpPreorder(
+export async function initiateAskForHelpCheckout(
   _previousState: CheckoutState,
   formData: FormData
 ): Promise<CheckoutState> {
+  if (!process.env.FLUTTERWAVE_WEBHOOK_SECRET_HASH || !isResendConfigured()) {
+    return {
+      ok: false,
+      message: "Instant digital delivery is still being configured. Please check back shortly."
+    };
+  }
+
+  if (!(await isAskForHelpDigitalFileReady())) {
+    return {
+      ok: false,
+      message: "The digital edition is being prepared. Please check back shortly."
+    };
+  }
+
   return initiateBookCheckout(formData, {
-    slug: askForHelpPreorder.slug,
-    title: `${askForHelpPreorder.title} preorder`,
-    amount: askForHelpPreorder.price,
-    currency: askForHelpPreorder.currency,
-    description: `${askForHelpPreorder.title} digital first-edition preorder.`,
+    slug: askForHelpBook.slug,
+    title: askForHelpBook.title,
+    amount: askForHelpBook.price,
+    currency: askForHelpBook.currency,
+    description: `${askForHelpBook.title} digital edition.`,
     redirectPath: "/books/ask-for-help/thank-you",
     txPrefix: "AMI-ASK-HELP",
     meta: {
-      order_type: "preorder",
-      format: askForHelpPreorder.format
+      order_type: "digital_purchase",
+      format: askForHelpBook.format
     }
   });
+}
+
+export async function publishAskForHelpDigitalFile(): Promise<UploadState> {
+  if (!(await isAdminAuthenticated())) {
+    return { ok: false, message: "Your admin session expired. Sign in again." };
+  }
+
+  if (!(await isAskForHelpDigitalFileReady())) {
+    return { ok: false, message: "Supabase has not received the PDF yet." };
+  }
+
+  const delivery = await deliverPendingAskForHelpOrders();
+  revalidatePath("/admin/orders");
+  revalidatePath("/books/ask-for-help");
+
+  return {
+    ok: true,
+    message: delivery.sent
+      ? `PDF published. ${delivery.sent} waiting order${delivery.sent === 1 ? "" : "s"} delivered.`
+      : "PDF published. New paid orders can now download it instantly."
+  };
+}
+
+export async function resendBookDelivery(formData: FormData) {
+  if (!(await isAdminAuthenticated())) {
+    return;
+  }
+
+  const orderId = String(formData.get("orderId") ?? "");
+
+  if (orderId) {
+    await resendAskForHelpDelivery(orderId);
+    revalidatePath("/admin/orders");
+  }
 }

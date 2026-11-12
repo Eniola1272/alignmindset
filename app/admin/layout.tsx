@@ -17,6 +17,7 @@ const sidebarItems: AdminNavItem[] = [
   { href: "/admin/subscribers", label: "Subscribers", icon: "subscribers" },
   { href: "/admin/volunteers", label: "Volunteers", icon: "volunteers" },
   { href: "/admin/broadcasts", label: "Broadcasts", icon: "broadcasts" },
+  { href: "/admin/orders", label: "Orders", icon: "orders" },
   { href: "/admin/editor", label: "Editor", icon: "editor" }
 ];
 
